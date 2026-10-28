@@ -8,6 +8,18 @@ It is a single static page: no backend, no build step, no API keys.
 
 ## Features
 
+### Home dashboard
+- **Welcome screen** with the date, a greeting and a "Where are you headed?" search.
+- **Surprise me** picks a random place you haven't visited that's open now and shows the route there. There's also a one-tap button for your regular commute.
+- **Budget ring:** an animated view of what's left this month, how much you can spend per day and your biggest spending category. You can log spending from here in two taps.
+- **Your plan at a glance:** today's stops with a live **Now / Next** line ("Next: Jama Masjid at 12:10 · leave by 11:52"), and a tick for each stop as you visit it.
+- **Ready-made days:** load a full plan in one tap (Old Delhi heritage, Mughal tombs & gardens, Lutyens' Delhi, Qutub to Hauz Khas).
+- **Discover:** a carousel of random places you haven't been to yet, with travel time and fare from your starting point.
+  - Filter by monuments, gardens, temples, museums, markets, food, free entry or open now, and press Shuffle for new picks.
+  - Places you mark as visited, or already have in your trip, are left out.
+- **Explored:** how many of the 45 sights you've visited, broken down by kind of place, with recent visits you can undo.
+- **Travel tips** you can flip through: women's coach, smart-card savings, Sunday fares, branch lines and more.
+
 ### Routes for every way of getting around
 - **Metro routing over the real network:** 244 stations and 12 services, including through-running branches. A Vaishali train runs on to Dwarka Sector 21, so you only see a change where you actually change trains.
 - **Platform numbers with direction and next stop** at every boarding, e.g. *"Platform 3, towards Vaishali (next stop Barakhamba Road)"*. 231 of 244 stations are covered.
@@ -43,7 +55,8 @@ It is a single static page: no backend, no build step, no API keys.
 
 ### Works on phones
 - Built for phones held upright: compact header, four equal tabs, 16 px form text (so iOS doesn't zoom when you tap a box), large tap targets.
-- Light and dark themes.
+- A bottom navigation bar on phones.
+- Light and dark themes, and gentle animations that switch off if your device is set to reduce motion.
 
 ---
 

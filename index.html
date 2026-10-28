@@ -12,6 +12,7 @@
   --board:#0F3049; --board-ink:#F1F7FA; --board-muted:#A7C0CF; --board-rule:#26506F; --signal:#F5B700;
   --good:#1B7A45; --good-soft:#E0F1E7; --warn:#935A00; --warn-soft:#FAEFD8; --bad:#B42318; --bad-soft:#FBE3DF;
   --m-metro:#0A5B78; --m-ae:#C2620A; --m-bus:#2D7A4C; --m-auto:#776500; --m-cab:#46525C; --m-bike:#7E3B95; --m-erick:#1F7480; --m-walk:#6A5D45;
+  --c-monument:#B0502A; --c-garden:#2D7A4C; --c-faith:#B86200; --c-museum:#4F46A5; --c-market:#A21C6B; --c-landmark:#1F5F99; --c-food:#B42318;
   --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
   --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-num:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -25,6 +26,7 @@
     --board:#081D2D; --board-ink:#EAF3F8; --board-muted:#8EA9BA; --board-rule:#1E3D55; --signal:#F5B700;
     --good:#5BC489; --good-soft:#12301F; --warn:#E4A94B; --warn-soft:#352610; --bad:#F27D6E; --bad-soft:#3A1713;
     --m-metro:#5DB3D2; --m-ae:#F09A4A; --m-bus:#6CC48F; --m-auto:#D9C14A; --m-cab:#AFBBC5; --m-bike:#C995DA; --m-erick:#6FC2CD; --m-walk:#C9B793;
+    --c-monument:#E08A63; --c-garden:#6CC48F; --c-faith:#F0A64A; --c-museum:#A7A1F0; --c-market:#E07AB4; --c-landmark:#7DB3E8; --c-food:#F27D6E;
     color-scheme:dark;
   }
 }
@@ -34,6 +36,7 @@
   --board:#081D2D; --board-ink:#EAF3F8; --board-muted:#8EA9BA; --board-rule:#1E3D55; --signal:#F5B700;
   --good:#5BC489; --good-soft:#12301F; --warn:#E4A94B; --warn-soft:#352610; --bad:#F27D6E; --bad-soft:#3A1713;
   --m-metro:#5DB3D2; --m-ae:#F09A4A; --m-bus:#6CC48F; --m-auto:#D9C14A; --m-cab:#AFBBC5; --m-bike:#C995DA; --m-erick:#6FC2CD; --m-walk:#C9B793;
+  --c-monument:#E08A63; --c-garden:#6CC48F; --c-faith:#F0A64A; --c-museum:#A7A1F0; --c-market:#E07AB4; --c-landmark:#7DB3E8; --c-food:#F27D6E;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -317,6 +320,76 @@ body:not(.has-ai) .ai-only{display:none!important}
   .exp li{grid-template-columns:52px minmax(0,1fr) auto 32px;gap:8px}
 }
 .tabs .tab-short{display:none}
+/* Home dashboard */
+.hero{position:relative;overflow:hidden;background:var(--board);color:var(--board-ink);border-radius:14px;padding:22px 22px 30px;display:grid;gap:10px}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:6px;background:linear-gradient(90deg,#E2231A 0 11.1%,#F4C300 0 22.2%,#1A5DC8 0 33.3%,#1B9E4B 0 44.4%,#7B3FA0 0 55.5%,#E5649A 0 66.6%,#B0207E 0 77.7%,#8A8F96 0 88.8%,#F07F13 0)}
+.hero .eyebrow{color:var(--board-muted);margin:0}
+.hero h1{font:800 46px/1 var(--f-display);font-stretch:76%}
+.hero-sub{color:var(--board-muted);font-size:15px}
+.hero .combo{max-width:640px}
+.hero .combo input{background:var(--surface);border-color:transparent;font-size:16px}
+.hero-actions{margin-top:2px}
+.btn.signal{background:var(--signal);border-color:var(--signal);color:#13212B}
+.btn.signal:hover{filter:brightness(1.06)}
+.btn.ghost-light{background:transparent;border-color:var(--board-rule);color:var(--board-ink);white-space:normal;text-align:left}
+.btn.ghost-light:hover{border-color:var(--board-muted)}
+#homeBody{display:grid;gap:16px;margin-top:16px}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;align-items:start}
+.hcard h3,.discover h3{font:700 20px/1.15 var(--f-display);font-stretch:85%}
+.small{font-size:13px}
+.ring-row{display:flex;gap:18px;align-items:center}
+.ring{width:118px;height:118px;flex:none}
+.ring-bg{fill:none;stroke:var(--sunk);stroke-width:12}
+.ring-fg{fill:none;stroke:var(--good);stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.2,.7,.2,1)}
+.ring-fg.warn{stroke:var(--warn)}
+.ring-fg.over{stroke:var(--bad)}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.quick .inp{flex:1 1 110px;min-width:0}
+.plans{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.plans button{width:100%;text-align:left;background:var(--paper);border:1px solid var(--rule);border-radius:9px;padding:10px 12px;cursor:pointer;display:grid;gap:2px;color:var(--ink);transition:border-color .15s,transform .15s}
+.plans button:hover{border-color:var(--accent);transform:translateX(2px)}
+.plans b{font-weight:600}
+.plans small{color:var(--muted);font-size:12.5px}
+.plans .seen{color:var(--good)}
+.live{margin:2px 0 8px;font-size:14px}
+.mini-tl{list-style:none;margin:6px 0 0;padding:0;display:grid}
+.mini-tl li{display:grid;grid-template-columns:48px minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--rule)}
+.mini-tl time{font:600 13px var(--f-num);color:var(--muted)}
+.mini-tl .nm{min-width:0}
+.mini-tl li.done .nm{text-decoration:line-through;color:var(--muted)}
+.tick{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--rule);background:var(--surface);color:var(--rule);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .15s}
+.tick svg{width:16px;height:16px}
+.tick:hover{border-color:var(--good);color:var(--good)}
+.tick:active{transform:scale(.9)}
+.tick[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:var(--surface)}
+.dcats{margin-top:6px}
+.carousel{list-style:none;margin:14px 0 0;padding:2px 2px 12px;display:grid;grid-auto-flow:column;grid-auto-columns:260px;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;overscroll-behavior-x:contain}
+.dcard{scroll-snap-align:start;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--surface);display:flex;flex-direction:column;transition:transform .22s ease,opacity .22s ease,box-shadow .22s ease}
+.dcard:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgb(0 0 0 / .1)}
+.dcard.leaving{transform:scale(.88);opacity:0}
+.dtop{position:relative;height:84px;background:color-mix(in srgb,var(--cc) 16%,var(--surface));border-bottom:3px solid var(--cc);overflow:hidden;padding:10px 12px}
+.dcat{position:relative;z-index:1;font:600 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--cc)}
+.dhi{position:absolute;right:-6px;bottom:-14px;font:600 56px/1 var(--f-hi);color:var(--cc);opacity:.24;white-space:nowrap;pointer-events:none}
+.dbody{padding:12px;display:flex;flex-direction:column;gap:5px;flex:1}
+.dbody h4{font:700 18px/1.15 var(--f-display);font-stretch:85%}
+.dbody h4 .nm{background:none;border:0;padding:0;font:inherit;color:var(--ink);cursor:pointer;text-align:left}
+.dbody h4 .nm:hover{color:var(--accent)}
+.dbody .meta{font-size:12.5px;color:var(--muted)}
+.dact{display:flex;gap:6px;margin-top:auto;padding-top:8px;align-items:center}
+.dact .icon-btn{margin-left:auto}
+.dact .icon-btn:hover{color:var(--good);border-color:var(--good)}
+.recent{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:2px;font-size:13.5px}
+.recent li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center}
+.tip-text{font-size:16px;line-height:1.5;margin:4px 0 8px;min-height:3em}
+.tip-text.fade{animation:enter .3s ease-out}
+[role="tabpanel"].enter{animation:enter .28s ease-out}
+@keyframes enter{from{transform:translateY(8px)}to{transform:none}}
+.btn.on{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.tl-stop.done .nm{text-decoration:line-through;color:var(--muted)}
+.done-btn[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:var(--surface)}
+.done-btn svg{width:16px;height:16px}
+.tabs .tab-ic{display:none}
+
 /* Phone portrait: compact header, four equal tabs, 16px form text (no iOS zoom on focus), finger-sized targets, chip strips that scroll sideways. */
 @media (max-width:520px){
   .board-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;padding-block:10px 4px}
@@ -348,6 +421,29 @@ body:not(.has-ai) .ai-only{display:none!important}
   .toast{left:max(16px,env(safe-area-inset-left,0px));right:calc(80px + env(safe-area-inset-right,0px));transform:none;max-width:none}
   .ai-quick .chip{text-align:left}
 }
+/* Phone portrait: the section tabs become a bottom navigation bar; floating bits sit above it. */
+@media (max-width:520px){
+  .tabs{position:fixed;left:0;right:0;bottom:0;z-index:44;background:var(--board);border-top:1px solid var(--board-rule);padding:2px max(4px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(4px,env(safe-area-inset-left,0px));box-shadow:0 -6px 18px rgb(0 0 0 / .2)}
+  .tabs button{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 2px 6px;border-bottom:0;border-top:3px solid transparent;font-size:11.5px}
+  .tabs button[aria-selected="true"]{border-top-color:var(--signal);border-bottom-color:transparent}
+  .tabs .tab-ic{display:block;width:22px;height:22px}
+  .tabs .count{position:absolute;top:3px;left:calc(50% + 7px);margin:0;min-width:16px;font-size:10px;line-height:15px;padding:0 4px}
+  main{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+  footer{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+  .ai-fab{bottom:calc(74px + env(safe-area-inset-bottom,0px))}
+  .toast{bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+  .hero{padding:18px 16px 26px}
+  .hero h1{font-size:38px}
+  .ring{width:96px;height:96px}
+  .ring-row{gap:14px}
+  .car-btn{display:none}
+  .carousel{grid-auto-columns:80%;margin-inline:-14px;padding-inline:14px;scroll-padding-inline:14px}
+  .dcats{flex-wrap:nowrap;overflow-x:auto;margin-inline:-14px;padding:2px 14px 6px;scrollbar-width:none}
+  .dcats::-webkit-scrollbar{display:none}
+  .dcats .chip{flex:none}
+  .quick .seg{order:3;width:100%;display:flex}
+  .quick .seg button{flex:1}
+}
 </style>
 
 <header class="board">
@@ -365,16 +461,28 @@ body:not(.has-ai) .ai-only{display:none!important}
       <button class="mm" id="mm" type="button" aria-label="This month's budget"></button>
     </div>
     <nav class="tabs" role="tablist" aria-label="Sections">
-      <button role="tab" id="tab-explore" aria-controls="explore" data-tab="explore"><span class="tab-long">Explore &amp; routes</span><span class="tab-short">Routes</span></button>
-      <button role="tab" id="tab-guide" aria-controls="guide" data-tab="guide"><span class="tab-long">Shops &amp; food</span><span class="tab-short">Shops</span></button>
-      <button role="tab" id="tab-trip" aria-controls="trip" data-tab="trip"><span class="tab-long">My trip</span><span class="tab-short">Trip</span><span class="count" id="tripCount">0</span></button>
-      <button role="tab" id="tab-budget" aria-controls="budget" data-tab="budget">Budget</button>
+      <button role="tab" id="tab-home" aria-controls="home" data-tab="home"><svg class="tab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span>Home</span></button>
+      <button role="tab" id="tab-explore" aria-controls="explore" data-tab="explore"><svg class="tab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h6.5"/></svg><span class="tab-long">Explore &amp; routes</span><span class="tab-short">Routes</span></button>
+      <button role="tab" id="tab-guide" aria-controls="guide" data-tab="guide"><svg class="tab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="tab-long">Shops &amp; food</span><span class="tab-short">Shops</span></button>
+      <button role="tab" id="tab-trip" aria-controls="trip" data-tab="trip"><svg class="tab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span class="tab-long">My trip</span><span class="tab-short">Trip</span><span class="count" id="tripCount">0</span></button>
+      <button role="tab" id="tab-budget" aria-controls="budget" data-tab="budget"><svg class="tab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1z"/><path d="M4 7l11-3v3"/><circle cx="16" cy="13.5" r="1.2" fill="currentColor"/></svg><span>Budget</span></button>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
   <div id="askStatus" hidden></div>
+  <!-- HOME -->
+  <section id="home" role="tabpanel" aria-labelledby="tab-home" hidden>
+    <div class="hero">
+      <p class="eyebrow" id="helloDate"></p>
+      <h1 id="helloTitle">Namaste</h1>
+      <p class="hero-sub">Where are you headed?</p>
+      <div class="combo to" id="homeCombo"><span class="dot"></span><input id="homeInput" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-label="Search a place" placeholder="A sight, market, eatery or metro station"><ul class="list" role="listbox" hidden></ul></div>
+      <div class="row hero-actions"><button class="btn signal" type="button" id="surprise">Surprise me</button><button class="btn ghost-light" type="button" id="commuteChip" hidden></button></div>
+    </div>
+    <div id="homeBody"></div>
+  </section>
   <!-- EXPLORE -->
   <section id="explore" role="tabpanel" aria-labelledby="tab-explore">
     <div class="panel">
@@ -817,11 +925,13 @@ const DEFAULTS = () => ({
   saved: [], expenses: [], custom: [],
   commute: { from: 'st:Dwarka Sector 21', to: 'st:Rajiv Chowk', perWeek: 10 },
   guide: { need: 'electronics_components', q: '', near: null, open: false },
+  visited: {}, home: { cat: 'all', seed: Number(todayISO().replace(/-/g, '')), qcat: 'commute' },
 });
 function hydrate(x) { const d = DEFAULTS(); if (!x || typeof x !== 'object') return d;
   const arr = v => Array.isArray(v) ? v : [];
   return { ...d, ...x, explore: { ...d.explore, ...(x.explore || {}) }, trip: { ...d.trip, ...(x.trip || {}), stops: arr(x.trip?.stops ?? d.trip.stops) },
-    commute: { ...d.commute, ...(x.commute || {}) }, guide: { ...d.guide, ...(x.guide || {}) }, saved: arr(x.saved), expenses: arr(x.expenses), custom: arr(x.custom) }; }
+    commute: { ...d.commute, ...(x.commute || {}) }, guide: { ...d.guide, ...(x.guide || {}) }, home: { ...d.home, ...(x.home || {}) },
+    visited: x.visited && typeof x.visited === 'object' && !Array.isArray(x.visited) ? x.visited : {}, saved: arr(x.saved), expenses: arr(x.expenses), custom: arr(x.custom) }; }
 function loadLocal() { try { const s = localStorage.getItem(LS_KEY); return s ? JSON.parse(s) : null; } catch { return null; } }
 let S = hydrate(loadLocal());
 let cloud = null, saveTimer = null, writing = Promise.resolve();
@@ -1039,12 +1149,13 @@ function renderExplore() {
   const opts = planRoute(o, d, sunday);
   let html = '';
   const addBtn = inTrip(d.ref) ? `<button class="btn" type="button" data-act="viewtrip">In your trip ✓</button>` : `<button class="btn primary" type="button" data-add="${esc(d.ref)}">Add to trip</button>`;
+  const beenBtn = d.kind === 'place' && !d.place.guide ? `<button class="btn${isVisited(d.ref) ? ' on' : ''}" type="button" data-been="${esc(d.ref)}" aria-pressed="${isVisited(d.ref)}">${isVisited(d.ref) ? 'Visited' : 'Been there'}</button>` : '';
   const askBtn = `<button class="btn ai-only" type="button" data-ask="${esc(`What should I know before going to ${d.name}${d.place ? ' in ' + d.place.area : ''}, Delhi? Best time, what to do there and good food nearby.`)}">Ask AI</button>`;
   if (d.kind === 'place' && d.place.guide) {
     const p = d.place, g = p.guide, os = openState(p), gm = guideMetro(p);
     html += `<article class="panel place">
       <div class="place-head"><div><p class="eyebrow">${esc((g.cats || []).map(c => NEED_LABEL[c] || c).join(' · '))} · ${esc(p.area)}</p><h2>${esc(p.n)}</h2>${g.addr ? `<p class="muted" style="margin-top:4px">${esc(g.addr)}</p>` : ''}</div>
-      <div class="row">${askBtn}${addBtn}</div></div>
+      <div class="row">${askBtn}${beenBtn}${addBtn}</div></div>
       <dl class="facts">
         <div><dt>Good for</dt><dd>${esc(g.buy || '')}</dd></div>
         <div><dt>Hours</dt><dd>${esc(hoursText(p))} <span class="pill ${os.open ? 'good' : os.open === false ? 'bad' : 'info'}">${esc(os.text)}</span><small>${esc(closedText(p))}</small></dd></div>
@@ -1058,7 +1169,7 @@ function renderExplore() {
     const p = d.place, closedToday = p.closed.includes(dayOf(today));
     html += `<article class="panel place">
       <div class="place-head"><div><p class="eyebrow">${esc(CATS[p.cat] || 'Place')} · ${esc(p.area)}</p><h2>${esc(p.n)}</h2>${p.hi ? `<p class="hi" lang="hi">${esc(p.hi)}</p>` : ''}</div>
-      <div class="row">${askBtn}${addBtn}</div></div>
+      <div class="row">${askBtn}${beenBtn}${addBtn}</div></div>
       <dl class="facts">
         <div><dt>Entry</dt><dd>${esc(ticketText(p))}${p.tNote ? `<small>${esc(p.tNote)}</small>` : ''}${p.extra ? `<small>${esc(p.extra.label)}: ${inr(p.extra.t[0])} adult, ${inr(p.extra.t[2])} child</small>` : ''}</dd></div>
         <div><dt>Hours</dt><dd>${esc(hoursText(p))}<small>${esc(closedText(p))}</small></dd></div>
@@ -1166,10 +1277,10 @@ function renderTrip() {
     html += legHTML(row.leg, row.i);
     const p = row.p;
     const visitSel = `<select data-visit="${row.i}" aria-label="Time to spend">${[...new Set([...VISIT_CHOICES, row.mins])].sort((a, b) => a - b).map(m => `<option value="${m}"${m === row.mins ? ' selected' : ''}>${dur(m)}</option>`).join('')}</select>`;
-    html += `<li class="tl-stop"><time>${hhmm(row.begin)}</time><div style="min-width:0"><span class="nm">${esc(row.r.name)}</span>
+    html += `<li class="tl-stop${isVisited(row.s.ref) ? ' done' : ''}"><time>${hhmm(row.begin)}</time><div style="min-width:0"><span class="nm">${esc(row.r.name)}</span>
       <div class="sub"><span>Stay ${visitSel}</span>${p ? `<span>${row.cost ? inr(row.cost) + ' tickets' : 'Free entry'}</span>` : ''}${p && p.extra ? `<label class="check" style="font-size:13px"><input type="checkbox" data-extra="${row.i}"${row.s.extra ? ' checked' : ''}> ${esc(p.extra.label)} +${inr(placeTickets({ t: p.extra.t }, +T.adults || 0, +T.kids || 0, T.who))}</label>` : ''}<span>Leave ${hhmm(row.begin + row.mins)}</span></div>
       ${row.warns.map(([lvl, m]) => `<div class="warn-line ${lvl}"><span class="pill ${lvl}">${lvl === 'bad' ? 'Problem' : 'Heads up'}</span>${esc(m)}</div>`).join('')}</div>
-      <div class="acts"><button class="icon-btn" type="button" data-move="${row.i}:-1" aria-label="Move ${esc(row.r.name)} earlier"${n === 0 ? ' disabled' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 15l6-6 6 6"/></svg></button><button class="icon-btn" type="button" data-move="${row.i}:1" aria-label="Move ${esc(row.r.name)} later"${n === c.rows.length - 1 ? ' disabled' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><button class="icon-btn" type="button" data-remove="${row.i}" aria-label="Remove ${esc(row.r.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></li>`;
+      <div class="acts"><button class="icon-btn done-btn" type="button" data-been="${esc(row.s.ref)}" aria-pressed="${isVisited(row.s.ref)}" aria-label="Mark ${esc(row.r.name)} as visited" title="Visited">${CHECK}</button><button class="icon-btn" type="button" data-move="${row.i}:-1" aria-label="Move ${esc(row.r.name)} earlier"${n === 0 ? ' disabled' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 15l6-6 6 6"/></svg></button><button class="icon-btn" type="button" data-move="${row.i}:1" aria-label="Move ${esc(row.r.name)} later"${n === c.rows.length - 1 ? ' disabled' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><button class="icon-btn" type="button" data-remove="${row.i}" aria-label="Remove ${esc(row.r.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></li>`;
   });
   if (c.back) { html += legHTML(c.back, 'back'); html += `<li class="tl-stop tl-end"><time>${hhmm(c.end)}</time><div><span class="nm">Back at start</span><div class="sub">${esc(c.start.name)}</div></div></li>`; }
   else if (c.rows.length) html += `<li class="tl-stop tl-end"><time>${hhmm(c.end)}</time><div><span class="nm">Day ends</span></div></li>`;
@@ -1314,6 +1425,7 @@ function applyGuide(d) {
   renderGuide();
   if ([S.explore.from, S.explore.to].some(r => String(r).startsWith('gd:'))) renderExplore();
   if (S.trip.stops.some(s => s.ref.startsWith('gd:'))) { renderTrip(); renderSide(); }
+  if (!$('#home').hidden) renderHome();
 }
 // Live store when the host provides one; otherwise the copy shipped next to the page.
 function subscribeGuide(db) {
@@ -1379,6 +1491,7 @@ function tripBrief() {
   return { trip: { name: S.trip.name, date: S.trip.date, start: S.trip.start, from: c.start?.name, people: c.people, getting_around: S.trip.pref,
       stops: c.rows.map(r => ({ name: r.r.name, arrive: hhmm(r.begin), leave: hhmm(r.begin + r.mins), tickets_inr: r.cost, travel_here: r.leg && !r.leg.none ? `${r.leg.opt.label || MODES[r.leg.opt.k].name}, ${dur(r.leg.t)}, ${inr(r.leg.cost)}` : null, warnings: r.warns.map(w => w[1]) })),
       ends: hhmm(c.end), tickets_inr: Math.round(c.tickets), travel_inr: Math.round(c.travel), food_inr: Math.round(c.food), total_inr: Math.round(c.total), cheapest_possible_travel_inr: Math.round(c.cheapTravel) },
+    visited_places: Object.keys(S.visited).map(r => resolve(r)?.name).filter(Boolean),
     budget: { per_trip_inr: +S.tripBudget || 0, month: monthName(todayISO().slice(0, 7)), monthly_inr: +S.monthly || 0, spent_this_month_inr: Math.round(m.spent), by_category: m.parts } };
 }
 const AI_TOOLS = [
@@ -1420,6 +1533,7 @@ How to answer:
 - Quote metro platform numbers, directions, branch warnings and gates exactly as plan_route gives them. Where it says a platform number is not on record, don’t invent one. Always pass on “IMPORTANT” branch notes (e.g. Vaishali vs Noida Electronic City trains splitting at Yamuna Bank).
 - For shopping and food, start from find_shops. You may add well-known places from your own knowledge, but say they aren’t in the app’s checked list and that timings should be confirmed.
 - Reply in the user’s language (English, Hindi or Hinglish). Keep it short: 2–6 lines or a short list. No tables or headings.
+- Don’t suggest places listed in visited_places (from get_trip_and_budget) unless the user asks for them.
 - When you change something (trip, budget, what’s on screen), say exactly what you changed.`;
 }
 function md(s) {
@@ -1487,6 +1601,197 @@ async function initAI() {
   renderGuide();
 }
 
+/* ------------------------------------------------------------------ visited places */
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const isVisited = ref => !!S.visited[ref];
+function toggleVisited(ref) {
+  const r = resolve(ref); if (!r) return;
+  if (isVisited(ref)) { delete S.visited[ref]; persist(); renderTrip(); renderExplore(); toast(`${r.name} unmarked`); return; }
+  S.visited[ref] = todayISO(); persist(); renderTrip(); renderExplore();
+  const stops = S.trip.stops.filter(s => resolve(s.ref)), dayDone = inTrip(ref) && stops.length > 1 && stops.every(s => isVisited(s.ref));
+  toast(dayDone ? `Day complete: all ${stops.length} places visited` : `${r.name} marked as visited`, 'Undo', () => { delete S.visited[ref]; persist(); renderTrip(); renderExplore(); });
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-been]'); if (!b) return;
+  const card = b.closest('.dcard');
+  if (card && !matchMedia('(prefers-reduced-motion: reduce)').matches) { card.classList.add('leaving'); setTimeout(() => toggleVisited(b.dataset.been), 220); }
+  else toggleVisited(b.dataset.been);
+});
+
+/* ------------------------------------------------------------------ home dashboard */
+const CAT_COLOR = { Monument: '--c-monument', Museum: '--c-museum', Faith: '--c-faith', Garden: '--c-garden', Market: '--c-market', Landmark: '--c-landmark', Food: '--c-food', Other: '--c-landmark' };
+const CAT_SHORT = { Monument: 'Monuments', Garden: 'Gardens', Faith: 'Faith', Museum: 'Museums', Market: 'Markets', Landmark: 'Landmarks' };
+const DISCOVER_CATS = [['all', 'Anything'], ['Monument', 'Monuments'], ['Garden', 'Gardens'], ['Faith', 'Temples & shrines'], ['Museum', 'Museums'], ['Market', 'Markets'], ['Food', 'Food'], ['free', 'Free entry'], ['open', 'Open now']];
+const DAY_PLANS = [
+  { name: 'Old Delhi heritage', stops: ['red-fort', 'jama-masjid', 'chandni-chowk', 'khari-baoli'], note: 'Red Fort is shut on Mondays' },
+  { name: 'Mughal tombs & gardens', stops: ['humayun', 'sunder-nursery', 'nizamuddin', 'lodhi-garden', 'safdarjung'] },
+  { name: 'Lutyens’ Delhi', stops: ['rashtrapati', 'national-museum', 'war-memorial', 'india-gate', 'bangla-sahib'], note: 'The museum and Rashtrapati Bhavan tour are shut on Mondays' },
+  { name: 'Qutub to Hauz Khas', stops: ['qutub', 'mehrauli', 'hauz-khas', 'dilli-haat'] },
+];
+const TIPS = [
+  'The first coach in the direction of travel is reserved for women on every Delhi Metro train.',
+  'A metro smart card takes 10% off every ride, plus another 10% at off-peak hours.',
+  'Metro fares are lower on Sundays and national holidays.',
+  'East of Yamuna Bank the Blue Line splits: check the train front says Vaishali or Noida Electronic City before you board.',
+  'The Airport Express needs its own ticket. Changing to or from it means leaving the gates.',
+  'Children under 15 enter ASI monuments such as Red Fort, Qutub Minar and Humayun’s Tomb free.',
+  'Autos should run on the meter: ₹30 for the first 1.5 km, then ₹11 a km, with 25% extra from 11 pm to 5 am.',
+  'Women ride DTC and cluster buses free.',
+  'Most Delhi markets close one day a week by area. The Shops tab shows each one’s day off.',
+  'ASI monument tickets cost a little less when you pay online than in cash at the counter.',
+  'Red Fort, the National Museum and Lotus Temple are closed on Mondays; Delhi Zoo is closed on Fridays.',
+  'The Pink and Magenta Line interchanges at Rajouri Garden and Azadpur involve long walks. Allow 7–8 minutes.',
+];
+let tipIdx = Math.floor(Math.random() * TIPS.length);
+function rng32(seed) { return () => { seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+function shuffled(arr, seed) { const a = [...arr], r = rng32(seed); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+// Places worth suggesting: not visited yet and not already in the plan.
+function discoverPool(cat) {
+  let pool = cat === 'Food' ? GUIDE.items.filter(p => p.cat === 'Food').map(p => ({ ref: 'gd:' + p.id, p }))
+    : [...PLACES.map(p => ({ ref: 'pl:' + p.id, p })), ...S.custom.map(p => ({ ref: 'cu:' + p.id, p }))];
+  pool = pool.filter(x => !isVisited(x.ref) && !inTrip(x.ref));
+  if (cat === 'free') pool = pool.filter(x => !x.p.t[0] && !x.p.t[1]);
+  else if (cat === 'open') pool = pool.filter(x => openState(x.p).open === true);
+  else if (cat !== 'all' && cat !== 'Food') pool = pool.filter(x => x.p.cat === cat);
+  return pool;
+}
+const greeting = () => { const h = new Date().getHours(); return h < 5 ? 'Good night' : h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'; };
+function dayLabel(iso) { const d = Math.round((new Date(iso + 'T12:00:00') - new Date(todayISO() + 'T12:00:00')) / 864e5); return d === 0 ? 'Today' : d === 1 ? 'Tomorrow' : d === -1 ? 'Yesterday' : d > 1 ? `In ${d} days` : `${-d} days ago`; }
+function countUp(el, to, fmt) {
+  if (!el) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = fmt(to); return; }
+  const t0 = performance.now(), ms = 700, step = now => { const k = Math.min(1, (now - t0) / ms); el.textContent = fmt(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+function loadPlan(i) {
+  const d = DAY_PLANS[i];
+  S.trip = { ...S.trip, example: false, name: d.name, stops: d.stops.map(id => ({ ref: 'pl:' + id })) }; delete S.trip.backMode;
+  persist(); renderAll(); showTab('trip'); toast(`Loaded “${d.name}”.${d.note ? ' ' + d.note + '.' : ''}`);
+}
+const homeCombo = makeCombo($('#homeCombo'), { get: () => null, set: r => { S.explore.to = r; persist(); renderExplore(); showTab('explore'); }, defaults: DEF_TO });
+$('#surprise').addEventListener('click', () => {
+  const open = discoverPool('open'), pool = open.length ? open : discoverPool('all');
+  if (!pool.length) { toast('You’ve visited everything on the list!'); return; }
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  S.explore.to = pick.ref; persist(); renderExplore(); showTab('explore');
+  toast(`How about ${pick.p.n}?`, 'Another', () => $('#surprise').click());
+});
+$('#commuteChip').addEventListener('click', () => { S.explore.from = S.commute.from; S.explore.to = S.commute.to; persist(); renderExplore(); showTab('explore'); });
+
+function renderHome(animate) {
+  const el = $('#homeBody'); if (!el) return;
+  const now = new Date(), mk = todayISO().slice(0, 7), m = monthStats(mk), b = +S.monthly || 0, left = b - m.spent;
+  const daysLeft = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate() - now.getDate() + 1;
+  $('#helloDate').textContent = now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+  $('#helloTitle').textContent = greeting();
+  homeCombo.label();
+  const ca = resolve(S.commute.from), cz = resolve(S.commute.to);
+  $('#commuteChip').hidden = !(ca && cz);
+  if (ca && cz) $('#commuteChip').textContent = `${ca.name.replace(' metro', '')} → ${cz.name.replace(' metro', '')}`;
+
+  // Budget: ring + numbers + quick add
+  const pct = b ? Math.min(1, m.spent / b) : 0, C = 2 * Math.PI * 52, off = C * (1 - pct);
+  const top = Object.entries(m.parts).sort((x, y) => y[1] - x[1])[0], qcat = S.home.qcat || 'commute';
+  const budgetHTML = `<article class="panel hcard">
+    <div class="sec-head"><h3>${esc(monthName(mk))}</h3><button class="btn link" type="button" data-tab-go="budget">Details</button></div>
+    <div class="ring-row">
+      <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="${b ? Math.round(pct * 100) + '% of the monthly budget used' : 'No monthly budget set'}"><circle cx="60" cy="60" r="52" class="ring-bg"/><circle cx="60" cy="60" r="52" class="ring-fg${left < 0 ? ' over' : pct > .85 ? ' warn' : ''}" stroke-dasharray="${C}" stroke-dashoffset="${animate ? C : off}" data-off="${off}" transform="rotate(-90 60 60)"/></svg>
+      <div style="min-width:0"><p class="eyebrow">${b ? (left >= 0 ? 'Left to spend' : 'Over budget by') : 'Spent this month'}</p><p class="big" id="leftNum">${inr(b ? Math.abs(left) : m.spent)}</p>
+        <p class="muted small">${b ? `Spent ${inr(m.spent)} of ${inr(b)}` : 'Set a monthly budget under Budget'}</p>
+        ${b && left > 0 ? `<p class="small">${inr(left / daysLeft)} a day for ${daysLeft} day${daysLeft > 1 ? 's' : ''}</p>` : ''}
+        ${top && top[1] > 0 ? `<p class="muted small">Most on ${CAT_LABEL[top[0]].toLowerCase()}: ${inr(top[1])}</p>` : ''}</div>
+    </div>
+    <form class="quick" id="quickAdd"><label class="sr" for="qAmt">Amount to log</label><input class="inp money" id="qAmt" type="number" min="1" step="1" inputmode="numeric" placeholder="₹ spent" required>
+      <div class="seg" role="group" aria-label="Category">${['commute', 'food', 'tickets', 'other'].map(k => `<button type="button" data-qcat="${k}" aria-pressed="${qcat === k}">${CAT_LABEL[k]}</button>`).join('')}</div>
+      <button class="btn primary" type="submit">Log</button></form>
+  </article>`;
+
+  // Plan: live progress on the day, ready-made days when there's nothing planned
+  const c = computeTrip(), T = S.trip, tb = +S.tripBudget || 0;
+  let planHTML;
+  if (!c.rows.length || T.example) {
+    planHTML = `<article class="panel hcard"><div class="sec-head"><h3>${T.example && c.rows.length ? 'Plan your day' : 'No plan yet'}</h3>${T.example && c.rows.length ? `<button class="btn link" type="button" data-tab-go="trip">See the example</button>` : ''}</div>
+      <p class="muted small">Pick a ready-made day, or add places from Discover below.</p>
+      <ul class="plans">${DAY_PLANS.map((d, i) => { const seen = d.stops.filter(id => isVisited('pl:' + id)).length;
+        return `<li><button type="button" data-plan="${i}"><b>${esc(d.name)}</b><small>${d.stops.map(id => esc(PLACE_BY_ID[id].n.replace(/ (&|Village|tour).*$/, ''))).join(' · ')}</small>${seen ? `<small class="seen">${seen} already visited</small>` : ''}</button></li>`; }).join('')}</ul></article>`;
+  } else {
+    const isToday = T.date === todayISO(), nowMin = now.getHours() * 60 + now.getMinutes();
+    const done = c.rows.filter(r => isVisited(r.s.ref)).length, warns = c.rows.reduce((n, r) => n + r.warns.length, 0);
+    let live = '';
+    if (isToday) {
+      const cur = c.rows.find(r => nowMin >= r.begin && nowMin < r.begin + r.mins && !isVisited(r.s.ref));
+      const nxt = c.rows.find(r => r.begin > nowMin && !isVisited(r.s.ref));
+      if (cur) live = `<p class="live"><span class="pill good">Now</span> ${esc(cur.r.name)} until ${hhmm(cur.begin + cur.mins)}</p>`;
+      else if (nxt) live = `<p class="live"><span class="pill info">Next</span> ${esc(nxt.r.name)} at ${hhmm(nxt.begin)}${nxt.leg && !nxt.leg.none ? ` · leave by ${hhmm(nxt.begin - nxt.leg.t)}` : ''}</p>`;
+      else if (done < c.rows.length && nowMin > c.end) live = `<p class="live"><span class="pill warn">Done?</span> Tick off the places you made it to.</p>`;
+    }
+    planHTML = `<article class="panel hcard"><div class="sec-head"><div style="min-width:0"><p class="eyebrow">${esc(dayLabel(T.date))} · ${esc(new Date(T.date + 'T12:00:00').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' }))}</p><h3>${esc(T.name || 'My Delhi day')}</h3></div><button class="btn link" type="button" data-tab-go="trip">Open plan</button></div>
+      ${live}
+      <ol class="mini-tl">${c.rows.map(r => `<li class="${isVisited(r.s.ref) ? 'done' : ''}"><time>${hhmm(r.begin)}</time><span class="nm">${esc(r.r.name)}</span>${r.warns.some(w => w[0] === 'bad') ? '<span class="pill bad">Closed</span>' : '<span></span>'}<button class="tick" type="button" data-been="${esc(r.s.ref)}" aria-pressed="${isVisited(r.s.ref)}" aria-label="Mark ${esc(r.r.name)} as visited">${CHECK}</button></li>`).join('')}</ol>
+      <div class="row" style="justify-content:space-between;font-size:13px;margin-top:10px"><span class="muted">${done}/${c.rows.length} visited · ends ${hhmm(c.end)}${warns ? ` · ${warns} warning${warns > 1 ? 's' : ''}` : ''}</span><span class="num">${inr(c.total)}${tb ? ` of ${inr(tb)}` : ''}</span></div>
+      <div class="meter${tb && c.total > tb ? ' over' : tb && c.total > tb * .85 ? ' warn' : ''}" style="margin-top:5px"><i style="width:${tb ? Math.min(100, c.total / tb * 100) : 0}%"></i></div></article>`;
+  }
+
+  // Discover: a shuffled handful of places not visited yet, with travel from the Routes "From"
+  const cat = S.home.cat || 'all', from = resolve(S.explore.from), sunday = dayOf(todayISO()) === 0;
+  const picks = shuffled(discoverPool(cat), S.home.seed || 1).slice(0, 8);
+  const discoverHTML = `<section class="panel discover"><div class="sec-head"><div style="min-width:0"><h3>Discover</h3><p class="muted">Places you haven’t been to yet${from ? `, with travel from ${esc(from.name)}` : ''}</p></div>
+    <div class="row"><button class="btn small" type="button" id="shuffle">Shuffle</button><button class="icon-btn car-btn" type="button" data-car="-1" aria-label="Scroll suggestions left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button><button class="icon-btn car-btn" type="button" data-car="1" aria-label="Scroll suggestions right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+    <div class="chips dcats" role="group" aria-label="Kind of place">${DISCOVER_CATS.map(([k, l]) => `<button class="chip" type="button" data-dcat="${k}" aria-pressed="${cat === k}">${esc(l)}</button>`).join('')}</div>
+    ${picks.length ? `<ul class="carousel" id="carousel">${picks.map(({ ref, p }) => {
+      const best = from ? rank(planRoute(from, p, sunday), 'mix')[0] : null, os = openState(p);
+      const fee = p.guide ? priceTag(p.guide.price) : (p.t[0] || p.t[1] ? `${inr(p.t[0])} entry` : 'Free entry');
+      const kind = p.guide ? (p.guide.cats || []).map(k => NEED_LABEL[k]).slice(0, 1).join('') : (CATS[p.cat] || 'Place');
+      return `<li class="dcard" style="--cc:var(${CAT_COLOR[p.cat] || '--c-landmark'})"><div class="dtop"><span class="dcat">${esc(kind)}</span>${p.hi ? `<span class="dhi" lang="hi" aria-hidden="true">${esc(p.hi)}</span>` : ''}</div>
+        <div class="dbody"><h4><button class="nm" type="button" data-to="${esc(ref)}">${esc(p.n)}</button></h4>
+        <p class="meta">${esc(p.area)} · ${fee}</p>
+        <p class="meta"><span class="pill ${os.open ? 'good' : os.open === false ? 'bad' : 'info'}">${esc(os.text)}</span>${p.guide ? '' : ` · plan ${dur(p.mins)}`}</p>
+        ${best ? `<p class="meta">${fmtKm(hav(from, p))} · ${esc(best.label || MODES[best.k].name)} ${dur(best.t)}, ${best.k === 'walk' ? 'free' : rng(best.c)}</p>` : ''}
+        <div class="dact"><button class="btn small" type="button" data-to="${esc(ref)}">Route</button><button class="btn small" type="button" data-add="${esc(ref)}">Add</button><button class="icon-btn" type="button" data-been="${esc(ref)}" aria-label="I’ve been to ${esc(p.n)}" title="Been there">${CHECK}</button></div></div></li>`;
+    }).join('')}</ul>` : `<div class="empty" style="margin-top:12px">${cat === 'Food' && GUIDE.state !== 'ready' ? (GUIDE.state === 'loading' ? 'Loading food places…' : 'The food list couldn’t load here.') : discoverPool('all').length ? 'Nothing left in this group. Try another kind of place.' : 'You’ve been to every place on the list.'}</div>`}
+  </section>`;
+
+  // Explored: progress by kind of place, recent visits with undo
+  const all = PLACES.map(p => ({ ref: 'pl:' + p.id, p })), seen = all.filter(x => isVisited(x.ref));
+  const kinds = Object.keys(CAT_SHORT).map(k => [k, all.filter(x => x.p.cat === k).length, seen.filter(x => x.p.cat === k).length]);
+  const recent = Object.entries(S.visited).sort((x, y) => y[1].localeCompare(x[1])).map(([ref, d]) => ({ ref, d, r: resolve(ref) })).filter(x => x.r).slice(0, 4);
+  const exploredHTML = `<article class="panel hcard"><div class="sec-head"><h3>Explored</h3><span class="num muted">${seen.length} of ${all.length} sights</span></div>
+    <div class="meter"><i style="width:${seen.length / all.length * 100}%"></i></div>
+    <div class="cat-bars">${kinds.map(([k, n, v]) => `<div class="cb"><span>${CAT_SHORT[k]}</span><span class="track"><i style="width:${n ? v / n * 100 : 0}%;background:var(${CAT_COLOR[k]})"></i></span><span>${v}/${n}</span></div>`).join('')}</div>
+    ${recent.length ? `<p class="eyebrow" style="margin-top:14px">Recently visited</p><ul class="recent">${recent.map(x => `<li><span class="nm">${esc(x.r.name)}</span><span class="muted small">${esc(new Date(x.d + 'T12:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }))}</span><button class="btn link small" type="button" data-been="${esc(x.ref)}">Undo</button></li>`).join('')}</ul>`
+      : `<p class="muted small" style="margin-top:12px">Tap the tick on any place you’ve been to. It drops out of suggestions and counts here.</p>`}</article>`;
+
+  const tipHTML = `<article class="panel hcard"><div class="sec-head"><h3>Travel tip</h3><button class="btn small" type="button" id="nextTip">Next tip</button></div>
+    <p class="tip-text" id="tipText" aria-live="polite">${esc(TIPS[tipIdx])}</p><p class="muted small" id="tipCount">${tipIdx + 1} of ${TIPS.length}</p></article>`;
+
+  el.innerHTML = `<div class="home-grid">${budgetHTML}${planHTML}</div>${discoverHTML}<div class="home-grid">${exploredHTML}${tipHTML}</div>`;
+  if (animate) {
+    const ring = el.querySelector('.ring-fg');
+    requestAnimationFrame(() => requestAnimationFrame(() => { if (ring) ring.style.strokeDashoffset = ring.dataset.off; }));
+    countUp($('#leftNum'), b ? Math.abs(left) : m.spent, v => inr(v));
+  }
+}
+$('#homeBody').addEventListener('click', e => {
+  const t = e.target;
+  const pl = t.closest('[data-plan]'); if (pl) { loadPlan(+pl.dataset.plan); return; }
+  const dc = t.closest('[data-dcat]'); if (dc) { S.home.cat = dc.dataset.dcat; persist(); renderHome(); return; }
+  if (t.closest('#shuffle')) { S.home.seed = Math.floor(Math.random() * 1e9); persist(); renderHome(); return; }
+  const cb = t.closest('[data-car]'); if (cb) { const c = $('#carousel'); if (c) c.scrollBy({ left: +cb.dataset.car * c.clientWidth * 0.8, behavior: 'smooth' }); return; }
+  const to = t.closest('[data-to]'); if (to) { S.explore.to = to.dataset.to; persist(); renderExplore(); showTab('explore'); return; }
+  const a = t.closest('[data-add]'); if (a) { addToTrip(a.dataset.add); return; }
+  const q = t.closest('[data-qcat]'); if (q) { S.home.qcat = q.dataset.qcat; persist(); el$('#quickAdd [data-qcat]').forEach(x => x.setAttribute('aria-pressed', String(x === q))); return; }
+  if (t.closest('#nextTip')) { tipIdx = (tipIdx + 1) % TIPS.length; const p = $('#tipText'); p.classList.remove('fade'); void p.offsetWidth; p.textContent = TIPS[tipIdx]; p.classList.add('fade'); $('#tipCount').textContent = `${tipIdx + 1} of ${TIPS.length}`; }
+});
+const el$ = s => [...document.querySelectorAll(s)];
+$('#homeBody').addEventListener('submit', e => {
+  if (e.target.id !== 'quickAdd') return; e.preventDefault();
+  const amt = Math.round(+$('#qAmt').value || 0); if (!amt) return;
+  const cat = S.home.qcat || 'commute', parts = { commute: 0, tickets: 0, food: 0, other: 0 }, id = 'e' + Date.now().toString(36); parts[cat] = amt;
+  S.expenses.unshift({ id, date: todayISO(), label: `Quick add · ${CAT_LABEL[cat]}`, parts });
+  persist(); renderBudget(); renderSide(); renderHome(true);
+  toast(`${inr(amt)} logged under ${CAT_LABEL[cat].toLowerCase()}`, 'Undo', () => { S.expenses = S.expenses.filter(x => x.id !== id); persist(); renderBudget(); renderSide(); });
+});
+
 /* ------------------------------------------------------------------ header, side, tabs, toast */
 function renderHeader() {
   const mk = todayISO().slice(0, 7), m = monthStats(mk), b = +S.monthly || 0, el = $('#mm');
@@ -1506,15 +1811,17 @@ function renderSide() {
     <div class="meter${mb && m.spent > mb ? ' over' : mb && m.spent > mb * .85 ? ' warn' : ''}" style="margin-top:5px"><i style="width:${mb ? Math.min(100, m.spent / mb * 100) : 0}%"></i></div>
     <button class="btn" type="button" style="width:100%;margin-top:12px" data-tab-go="budget">Budget &amp; spending</button></div>`;
   renderHeader();
+  if (!$('#home').hidden) renderHome();
 }
 document.addEventListener('click', e => { const g = e.target.closest('[data-tab-go]'); if (g) showTab(g.dataset.tabGo); });
 $('#mm').onclick = () => showTab('budget');
-const TABS = ['explore', 'guide', 'trip', 'budget'];
+const TABS = ['home', 'explore', 'guide', 'trip', 'budget'];
 function showTab(t) {
   if (!TABS.includes(t)) t = 'explore';
   TABS.forEach(x => { $('#' + x).hidden = x !== t; const b = $('#tab-' + x); b.setAttribute('aria-selected', String(x === t)); b.tabIndex = x === t ? 0 : -1; });
   try { localStorage.setItem(LS_KEY + '.tab', t); } catch {}
-  if (t === 'trip') renderTrip(); if (t === 'budget') renderBudget(); if (t === 'guide') renderGuide();
+  if (t === 'trip') renderTrip(); if (t === 'budget') renderBudget(); if (t === 'guide') renderGuide(); if (t === 'home') renderHome(true);
+  const panel = $('#' + t); panel.classList.remove('enter'); void panel.offsetWidth; panel.classList.add('enter');
   window.scrollTo({ top: 0 });
 }
 document.querySelector('.tabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) showTab(b.dataset.tab); });
@@ -1524,9 +1831,10 @@ function toast(msg, action, fn) { const el = $('#toast'); el.innerHTML = `<span>
   if (action) el.querySelector('button').onclick = () => { el.hidden = true; fn(); };
   clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 5000); }
 
-function renderAll() { renderExplore(); renderGuide(); renderTrip(); renderBudget(); renderSide(); }
+function renderAll() { renderExplore(); renderGuide(); renderTrip(); renderBudget(); renderSide(); renderHome(); }
+// Every visit opens on Home unless the link points at a section.
 let startTab = (location.hash || '').slice(1);
-if (!TABS.includes(startTab)) { try { startTab = localStorage.getItem(LS_KEY + '.tab') || 'explore'; } catch { startTab = 'explore'; } }
+if (!TABS.includes(startTab)) startTab = 'home';
 renderAll(); showTab(startTab);
 initCloud(); initAI();
 </script>
