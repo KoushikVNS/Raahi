@@ -55,7 +55,7 @@ It is a single static page: no backend, no build step, no API keys.
 
 ### Works on phones
 - Built for phones held upright: compact header, four equal tabs, 16 px form text (so iOS doesn't zoom when you tap a box), large tap targets.
-- A bottom navigation bar on phones.
+- A modern, layered look: glass header that stays put, pill controls, soft depth and gradient accents. Phones get a floating tab bar.
 - Light and dark themes, and gentle animations that switch off if your device is set to reduce motion.
 
 ---

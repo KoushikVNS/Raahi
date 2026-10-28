@@ -7,11 +7,12 @@
 <style>
 /* Layout: a metro station-board header over a two-column planner (routes left, trip and budget meters right); one column on phones. */
 :root{
-  --paper:#F2F5F4; --surface:#FFFFFF; --sunk:#E8EEEC; --ink:#13212B; --muted:#56656F; --rule:#D3DCDB;
-  --accent:#0A5B78; --accent-ink:#FFFFFF; --accent-soft:#DDEEF3;
-  --board:#0F3049; --board-ink:#F1F7FA; --board-muted:#A7C0CF; --board-rule:#26506F; --signal:#F5B700;
+  --paper:#F3F6F9; --surface:#FFFFFF; --sunk:#EDF2F6; --ink:#0E1A25; --muted:#5A6876; --rule:#E1E7ED;
+  --accent:#0B7894; --accent-2:#13A6B8; --accent-ink:#FFFFFF; --accent-soft:#E1F3F7;
+  --board:#0B1826; --board-2:#16304A; --board-ink:#F2F7FB; --board-muted:#9DB4C6; --board-rule:#24425E; --signal:#F5B700;
+  --sh-1:0 1px 2px rgb(14 26 37 / .05), 0 6px 18px rgb(14 26 37 / .06); --sh-2:0 14px 34px rgb(14 26 37 / .14);
   --good:#1B7A45; --good-soft:#E0F1E7; --warn:#935A00; --warn-soft:#FAEFD8; --bad:#B42318; --bad-soft:#FBE3DF;
-  --m-metro:#0A5B78; --m-ae:#C2620A; --m-bus:#2D7A4C; --m-auto:#776500; --m-cab:#46525C; --m-bike:#7E3B95; --m-erick:#1F7480; --m-walk:#6A5D45;
+  --m-metro:#0B7894; --m-ae:#C2620A; --m-bus:#2D7A4C; --m-auto:#776500; --m-cab:#46525C; --m-bike:#7E3B95; --m-erick:#1F7480; --m-walk:#6A5D45;
   --c-monument:#B0502A; --c-garden:#2D7A4C; --c-faith:#B86200; --c-museum:#4F46A5; --c-market:#A21C6B; --c-landmark:#1F5F99; --c-food:#B42318;
   --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
   --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -21,21 +22,21 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#0C141A; --surface:#131D25; --sunk:#1A2731; --ink:#E4ECF0; --muted:#94A4AF; --rule:#25343F;
-    --accent:#5DB3D2; --accent-ink:#04202B; --accent-soft:#14394A;
-    --board:#081D2D; --board-ink:#EAF3F8; --board-muted:#8EA9BA; --board-rule:#1E3D55; --signal:#F5B700;
+    --paper:#081018; --surface:#101A24; --sunk:#16222E; --ink:#E6EEF4; --muted:#91A2B1; --rule:#1F2D3A;
+    --accent:#3CC0DA; --accent-2:#2BD4C4; --accent-ink:#04202B; --accent-soft:#0E3341;
+    --board:#060E17; --board-2:#10243A; --board-ink:#EAF3F8; --board-muted:#8BA3B6; --board-rule:#1B3550; --signal:#F5B700; --sh-1:0 1px 2px rgb(0 0 0 / .3), 0 8px 22px rgb(0 0 0 / .25); --sh-2:0 16px 40px rgb(0 0 0 / .45);
     --good:#5BC489; --good-soft:#12301F; --warn:#E4A94B; --warn-soft:#352610; --bad:#F27D6E; --bad-soft:#3A1713;
-    --m-metro:#5DB3D2; --m-ae:#F09A4A; --m-bus:#6CC48F; --m-auto:#D9C14A; --m-cab:#AFBBC5; --m-bike:#C995DA; --m-erick:#6FC2CD; --m-walk:#C9B793;
+    --m-metro:#3CC0DA; --m-ae:#F09A4A; --m-bus:#6CC48F; --m-auto:#D9C14A; --m-cab:#AFBBC5; --m-bike:#C995DA; --m-erick:#6FC2CD; --m-walk:#C9B793;
     --c-monument:#E08A63; --c-garden:#6CC48F; --c-faith:#F0A64A; --c-museum:#A7A1F0; --c-market:#E07AB4; --c-landmark:#7DB3E8; --c-food:#F27D6E;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#0C141A; --surface:#131D25; --sunk:#1A2731; --ink:#E4ECF0; --muted:#94A4AF; --rule:#25343F;
-  --accent:#5DB3D2; --accent-ink:#04202B; --accent-soft:#14394A;
-  --board:#081D2D; --board-ink:#EAF3F8; --board-muted:#8EA9BA; --board-rule:#1E3D55; --signal:#F5B700;
+  --paper:#081018; --surface:#101A24; --sunk:#16222E; --ink:#E6EEF4; --muted:#91A2B1; --rule:#1F2D3A;
+  --accent:#3CC0DA; --accent-2:#2BD4C4; --accent-ink:#04202B; --accent-soft:#0E3341;
+  --board:#060E17; --board-2:#10243A; --board-ink:#EAF3F8; --board-muted:#8BA3B6; --board-rule:#1B3550; --signal:#F5B700; --sh-1:0 1px 2px rgb(0 0 0 / .3), 0 8px 22px rgb(0 0 0 / .25); --sh-2:0 16px 40px rgb(0 0 0 / .45);
   --good:#5BC489; --good-soft:#12301F; --warn:#E4A94B; --warn-soft:#352610; --bad:#F27D6E; --bad-soft:#3A1713;
-  --m-metro:#5DB3D2; --m-ae:#F09A4A; --m-bus:#6CC48F; --m-auto:#D9C14A; --m-cab:#AFBBC5; --m-bike:#C995DA; --m-erick:#6FC2CD; --m-walk:#C9B793;
+  --m-metro:#3CC0DA; --m-ae:#F09A4A; --m-bus:#6CC48F; --m-auto:#D9C14A; --m-cab:#AFBBC5; --m-bike:#C995DA; --m-erick:#6FC2CD; --m-walk:#C9B793;
   --c-monument:#E08A63; --c-garden:#6CC48F; --c-faith:#F0A64A; --c-museum:#A7A1F0; --c-market:#E07AB4; --c-landmark:#7DB3E8; --c-food:#F27D6E;
   color-scheme:dark;
 }
@@ -390,6 +391,126 @@ body:not(.has-ai) .ai-only{display:none!important}
 .done-btn svg{width:16px;height:16px}
 .tabs .tab-ic{display:none}
 
+/* ---- Modern finish: soft layered surfaces, depth, pill controls, gentle motion ---- */
+:root{--r:16px}
+body{background:
+  radial-gradient(1100px 520px at -10% -12%, color-mix(in srgb,var(--accent) 12%,transparent), transparent 62%),
+  radial-gradient(900px 420px at 110% -8%, color-mix(in srgb,var(--signal) 10%,transparent), transparent 60%),
+  var(--paper);background-repeat:no-repeat}
+
+/* Header: glassy, sticky, metro-yellow pill for the open section */
+.board{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--board) 86%,transparent);-webkit-backdrop-filter:saturate(1.5) blur(16px);backdrop-filter:saturate(1.5) blur(16px);border-bottom:1px solid color-mix(in srgb,var(--board-rule) 70%,transparent)}
+.brand{align-items:center}
+.brand::before{content:"";width:22px;height:22px;border-radius:50%;border:5px solid var(--signal);box-shadow:0 0 0 4px color-mix(in srgb,var(--signal) 22%,transparent);flex:none}
+.city select{border-radius:10px}
+.tabs{gap:6px;padding-block:2px 10px}
+.tabs button{border:0;border-radius:999px;padding:8px 15px;transition:background .2s,color .2s,transform .12s}
+.tabs button:hover{background:color-mix(in srgb,var(--board-ink) 9%,transparent);color:var(--board-ink)}
+.tabs button:active{transform:scale(.96)}
+.tabs button[aria-selected="true"]{background:var(--signal);color:#13212B;border-bottom-color:transparent}
+.tabs button[aria-selected="true"] .count{background:#13212B;color:var(--signal)}
+.mm .bar{height:6px;border-radius:999px}
+.mm .bar i{border-radius:999px}
+
+/* Surfaces */
+.panel{border-radius:var(--r);border:1px solid color-mix(in srgb,var(--rule) 80%,transparent);box-shadow:var(--sh-1)}
+.empty{border-radius:14px}
+.sec-head h3,.hcard h3,.discover h3{font-stretch:90%;letter-spacing:-.005em}
+.eyebrow{letter-spacing:.11em}
+
+/* Controls */
+.btn{border-radius:12px;transition:transform .12s ease,box-shadow .2s ease,border-color .2s,background .2s,filter .2s}
+.btn:active{transform:scale(.97)}
+.btn.small{border-radius:10px}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));border-color:transparent;box-shadow:0 8px 18px -8px color-mix(in srgb,var(--accent) 70%,transparent)}
+.btn.primary:hover{filter:brightness(1.06);box-shadow:0 12px 24px -8px color-mix(in srgb,var(--accent) 75%,transparent)}
+.icon-btn{border-radius:10px;transition:transform .12s,border-color .2s,color .2s,background .2s}
+.icon-btn:active{transform:scale(.92)}
+.chip{border:1px solid transparent;background:var(--sunk);transition:background .18s,color .18s,transform .12s}
+.chip:hover{background:color-mix(in srgb,var(--accent) 12%,var(--sunk));color:var(--ink);border-color:transparent}
+.chip:active{transform:scale(.95)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:transparent}
+.seg{border:0;border-radius:12px;background:var(--sunk);padding:3px;gap:2px}
+.seg button{background:transparent;border-radius:9px;transition:background .2s,color .2s,box-shadow .2s}
+.seg button + button{border-left:0}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--sh-1)}
+.pill,.badge{border-radius:999px}
+.inp,.combo input{border-radius:12px;background:var(--surface);border:1px solid var(--rule);transition:border-color .2s,box-shadow .2s}
+.inp:focus,.combo input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent);background:var(--surface)}
+.swap{box-shadow:var(--sh-1);transition:transform .25s}
+.swap:hover{transform:rotate(180deg)}
+.list{border-radius:14px;box-shadow:var(--sh-2);border-color:color-mix(in srgb,var(--rule) 80%,transparent)}
+.list li{border-radius:10px}
+.check input{accent-color:var(--accent)}
+
+/* Meters and the budget ring */
+.meter{background:var(--sunk);border-radius:999px}
+.meter i{border-radius:999px;background:linear-gradient(90deg,var(--good),color-mix(in srgb,var(--good) 55%,var(--accent-2)))}
+.meter.warn i{background:linear-gradient(90deg,var(--warn),color-mix(in srgb,var(--warn) 65%,var(--signal)))}
+.meter.over i{background:linear-gradient(90deg,var(--bad),color-mix(in srgb,var(--bad) 70%,var(--signal)))}
+.ring-fg{stroke:url(#ringGrad)}
+.ring-fg.warn{stroke:var(--warn)}
+.ring-fg.over{stroke:var(--bad)}
+.cat-bars .track{border-radius:999px}
+.cat-bars .track i{border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+
+/* Hero */
+.hero{border-radius:22px;padding:28px 26px 34px;box-shadow:var(--sh-2);background:
+  radial-gradient(420px 220px at 88% 8%, rgb(244 195 0 / .24), transparent 70%),
+  radial-gradient(380px 260px at 70% 115%, rgb(26 93 200 / .38), transparent 70%),
+  radial-gradient(320px 220px at -4% 105%, rgb(226 35 26 / .24), transparent 70%),
+  linear-gradient(160deg,var(--board-2),var(--board))}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;background-image:radial-gradient(color-mix(in srgb,var(--board-ink) 14%,transparent) 1px,transparent 1.3px);background-size:18px 18px;-webkit-mask-image:linear-gradient(110deg,transparent 35%,#000);mask-image:linear-gradient(110deg,transparent 35%,#000)}
+.hero > *{position:relative}
+.hello-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hero h1{font-size:54px;letter-spacing:-.01em}
+.sky{width:44px;height:44px;flex:none;color:var(--signal);filter:drop-shadow(0 0 14px color-mix(in srgb,var(--signal) 55%,transparent));animation:float 6s ease-in-out infinite}
+.sky svg{width:100%;height:100%}
+@keyframes float{50%{transform:translateY(-5px)}}
+.hero .combo input{height:56px;border-radius:14px;padding-left:46px;border:0;box-shadow:0 12px 30px rgb(0 0 0 / .28)}
+.hero .combo input:focus{box-shadow:0 0 0 4px color-mix(in srgb,var(--signal) 45%,transparent),0 12px 30px rgb(0 0 0 / .28)}
+.hero .combo .dot{left:18px}
+.btn.signal{border-radius:999px;padding-inline:18px;box-shadow:0 8px 20px -8px color-mix(in srgb,var(--signal) 80%,transparent)}
+.btn.ghost-light{border-radius:999px;background:color-mix(in srgb,var(--board-ink) 8%,transparent);border-color:color-mix(in srgb,var(--board-ink) 18%,transparent)}
+
+/* Cards that move */
+.dcard{border-radius:18px;border:1px solid color-mix(in srgb,var(--rule) 80%,transparent);box-shadow:var(--sh-1)}
+.dcard:hover{transform:translateY(-4px);box-shadow:var(--sh-2)}
+.dtop{height:96px;border-bottom:0;background:
+  radial-gradient(170px 100px at 88% 125%, color-mix(in srgb,var(--cc) 42%,transparent), transparent 70%),
+  linear-gradient(135deg,color-mix(in srgb,var(--cc) 24%,var(--surface)),color-mix(in srgb,var(--cc) 6%,var(--surface)))}
+.dcat{display:inline-block;background:color-mix(in srgb,var(--surface) 78%,transparent);padding:4px 9px;border-radius:999px}
+.dhi{opacity:.3}
+.carousel{gap:14px}
+.gcard,.near li{border-radius:16px;box-shadow:var(--sh-1);border-color:color-mix(in srgb,var(--rule) 80%,transparent);transition:transform .2s,box-shadow .2s}
+.gcard:hover,.near li:hover{transform:translateY(-3px);box-shadow:var(--sh-2)}
+.plans button{border-radius:14px;background:var(--surface);box-shadow:var(--sh-1);border-color:color-mix(in srgb,var(--rule) 80%,transparent)}
+.mini-tl li{border-bottom-style:solid;border-bottom-color:color-mix(in srgb,var(--rule) 70%,transparent)}
+
+/* Routes */
+.opts > li{border-top:0;border-radius:14px;transition:background .15s}
+.opts > li + li{margin-top:4px}
+.opts > li:hover{background:var(--sunk)}
+.opt-row{padding:12px 10px}
+.mi{border-radius:12px}
+.opts details[open]{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.steps{margin-left:30px}
+.steps li.ride::before{box-shadow:0 0 0 4px color-mix(in srgb,var(--lc) 25%,transparent)}
+.ln{border-radius:999px;padding:4px 9px}
+.place h2{font-size:42px}
+.facts > div{background:var(--sunk);border-radius:12px;padding:10px 12px}
+.tip{border-radius:12px;background:color-mix(in srgb,var(--accent) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--accent) 18%,transparent)}
+.banner{border-radius:14px}
+.exp li{border-top-color:color-mix(in srgb,var(--rule) 70%,transparent)}
+
+/* Floating bits */
+.toast{border-radius:14px;background:color-mix(in srgb,var(--ink) 92%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.ai-fab{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);box-shadow:0 14px 30px -10px color-mix(in srgb,var(--accent) 80%,transparent)}
+.ai-fab svg{color:currentColor}
+.ai{border-radius:20px}
+.msg{border-radius:16px}
+.msg.user{background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+
 /* Phone portrait: compact header, four equal tabs, 16px form text (no iOS zoom on focus), finger-sized targets, chip strips that scroll sideways. */
 @media (max-width:520px){
   .board-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;padding-block:10px 4px}
@@ -444,6 +565,28 @@ body:not(.has-ai) .ai-only{display:none!important}
   .quick .seg{order:3;width:100%;display:flex}
   .quick .seg button{flex:1}
 }
+/* Phone portrait, modern finish: a floating glass tab bar with a yellow pill for the open section. */
+@media (max-width:520px){
+  .board{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--board)}
+  .city select{max-width:132px;text-overflow:ellipsis}
+  .brand{gap:8px;min-width:0}
+  .brand::before{width:18px;height:18px;border-width:4px}
+  .brand b{font-size:23px}
+  .brand span{font-size:17px}
+  .tabs{left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));border-radius:22px;padding:6px;gap:2px;border:1px solid color-mix(in srgb,var(--board-rule) 70%,transparent);background:color-mix(in srgb,var(--board) 88%,transparent);-webkit-backdrop-filter:saturate(1.5) blur(18px);backdrop-filter:saturate(1.5) blur(18px);box-shadow:0 14px 34px rgb(0 0 0 / .35)}
+  .tabs button{border-top:0;border-radius:16px;padding:7px 2px 6px}
+  .tabs button[aria-selected="true"]{background:var(--signal);color:#13212B;border-top-color:transparent}
+  .tabs .count{top:2px}
+  main{padding-bottom:calc(130px + env(safe-area-inset-bottom,0px))}
+  footer{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+  .ai-fab{bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+  .toast{bottom:calc(94px + env(safe-area-inset-bottom,0px))}
+  .hero{padding:22px 18px 30px;border-radius:20px}
+  .hero h1{font-size:42px}
+  .sky{width:38px;height:38px}
+  .place h2{font-size:32px}
+  .opt-row{padding:12px 8px}
+}
 </style>
 
 <header class="board">
@@ -476,7 +619,7 @@ body:not(.has-ai) .ai-only{display:none!important}
   <section id="home" role="tabpanel" aria-labelledby="tab-home" hidden>
     <div class="hero">
       <p class="eyebrow" id="helloDate"></p>
-      <h1 id="helloTitle">Namaste</h1>
+      <div class="hello-row"><h1 id="helloTitle">Namaste</h1><span class="sky" id="sky" aria-hidden="true"></span></div>
       <p class="hero-sub">Where are you headed?</p>
       <div class="combo to" id="homeCombo"><span class="dot"></span><input id="homeInput" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-label="Search a place" placeholder="A sight, market, eatery or metro station"><ul class="list" role="listbox" hidden></ul></div>
       <div class="row hero-actions"><button class="btn signal" type="button" id="surprise">Surprise me</button><button class="btn ghost-light" type="button" id="commuteChip" hidden></button></div>
@@ -1684,6 +1827,10 @@ function renderHome(animate) {
   const daysLeft = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate() - now.getDate() + 1;
   $('#helloDate').textContent = now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
   $('#helloTitle').textContent = greeting();
+  const hr = now.getHours();
+  $('#sky').innerHTML = hr >= 5 && hr < 17
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>'
+    : '<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="currentColor"/></svg>';
   homeCombo.label();
   const ca = resolve(S.commute.from), cz = resolve(S.commute.to);
   $('#commuteChip').hidden = !(ca && cz);
@@ -1695,7 +1842,7 @@ function renderHome(animate) {
   const budgetHTML = `<article class="panel hcard">
     <div class="sec-head"><h3>${esc(monthName(mk))}</h3><button class="btn link" type="button" data-tab-go="budget">Details</button></div>
     <div class="ring-row">
-      <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="${b ? Math.round(pct * 100) + '% of the monthly budget used' : 'No monthly budget set'}"><circle cx="60" cy="60" r="52" class="ring-bg"/><circle cx="60" cy="60" r="52" class="ring-fg${left < 0 ? ' over' : pct > .85 ? ' warn' : ''}" stroke-dasharray="${C}" stroke-dashoffset="${animate ? C : off}" data-off="${off}" transform="rotate(-90 60 60)"/></svg>
+      <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="${b ? Math.round(pct * 100) + '% of the monthly budget used' : 'No monthly budget set'}"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--accent-2)"/><stop offset="1" style="stop-color:var(--good)"/></linearGradient></defs><circle cx="60" cy="60" r="52" class="ring-bg"/><circle cx="60" cy="60" r="52" class="ring-fg${left < 0 ? ' over' : pct > .85 ? ' warn' : ''}" stroke-dasharray="${C}" stroke-dashoffset="${animate ? C : off}" data-off="${off}" transform="rotate(-90 60 60)"/></svg>
       <div style="min-width:0"><p class="eyebrow">${b ? (left >= 0 ? 'Left to spend' : 'Over budget by') : 'Spent this month'}</p><p class="big" id="leftNum">${inr(b ? Math.abs(left) : m.spent)}</p>
         <p class="muted small">${b ? `Spent ${inr(m.spent)} of ${inr(b)}` : 'Set a monthly budget under Budget'}</p>
         ${b && left > 0 ? `<p class="small">${inr(left / daysLeft)} a day for ${daysLeft} day${daysLeft > 1 ? 's' : ''}</p>` : ''}
