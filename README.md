@@ -11,7 +11,11 @@ It is a single static page: no backend, no build step, no API keys.
 ### Home dashboard
 - **Welcome screen** with the date, a greeting and a "Where are you headed?" search.
 - **Surprise me** picks a random place you haven't visited that's open now and shows the route there. There's also a one-tap button for your regular commute.
-- **Budget ring:** an animated view of what's left this month, how much you can spend per day and your biggest spending category. You can log spending from here in two taps.
+- **Budget buddy:** a little metro train whose face shows how your month is going.
+  - It looks delighted with plenty left, happy when you're on track, worried when money gets tight or you're spending faster than the month is passing, anxious near the end, and shocked when you go over.
+  - Its colour changes too, its eyes follow your pointer, and tapping it gives another money tip, such as free sights you haven't visited yet.
+  - A small version sits in the header on every tab.
+- **Budget figures:** what's left this month, how much you can spend per day and your biggest spending category. You can log spending from here in two taps.
 - **Your plan at a glance:** today's stops with a live **Now / Next** line ("Next: Jama Masjid at 12:10 · leave by 11:52"), and a tick for each stop as you visit it.
 - **Ready-made days:** load a full plan in one tap (Old Delhi heritage, Mughal tombs & gardens, Lutyens' Delhi, Qutub to Hauz Khas).
 - **Discover:** a carousel of random places you haven't been to yet, with travel time and fare from your starting point.

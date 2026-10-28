@@ -338,12 +338,6 @@ body:not(.has-ai) .ai-only{display:none!important}
 .home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;align-items:start}
 .hcard h3,.discover h3{font:700 20px/1.15 var(--f-display);font-stretch:85%}
 .small{font-size:13px}
-.ring-row{display:flex;gap:18px;align-items:center}
-.ring{width:118px;height:118px;flex:none}
-.ring-bg{fill:none;stroke:var(--sunk);stroke-width:12}
-.ring-fg{fill:none;stroke:var(--good);stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.2,.7,.2,1)}
-.ring-fg.warn{stroke:var(--warn)}
-.ring-fg.over{stroke:var(--bad)}
 .quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
 .quick .inp{flex:1 1 110px;min-width:0}
 .plans{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
@@ -443,14 +437,11 @@ body{background:
 .list li{border-radius:10px}
 .check input{accent-color:var(--accent)}
 
-/* Meters and the budget ring */
+/* Meters */
 .meter{background:var(--sunk);border-radius:999px}
 .meter i{border-radius:999px;background:linear-gradient(90deg,var(--good),color-mix(in srgb,var(--good) 55%,var(--accent-2)))}
 .meter.warn i{background:linear-gradient(90deg,var(--warn),color-mix(in srgb,var(--warn) 65%,var(--signal)))}
 .meter.over i{background:linear-gradient(90deg,var(--bad),color-mix(in srgb,var(--bad) 70%,var(--signal)))}
-.ring-fg{stroke:url(#ringGrad)}
-.ring-fg.warn{stroke:var(--warn)}
-.ring-fg.over{stroke:var(--bad)}
 .cat-bars .track{border-radius:999px}
 .cat-bars .track i{border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 
@@ -511,6 +502,68 @@ body{background:
 .msg{border-radius:16px}
 .msg.user{background:linear-gradient(135deg,var(--accent),var(--accent-2))}
 
+/* Budget buddy: a metro-train face drawn in its own illustration colours, so it reads the same in both themes */
+.avatar{--av-body:var(--accent);overflow:visible;display:block}
+.mood-great{--av-body:var(--good)}
+.mood-good{--av-body:var(--accent)}
+.mood-tight{--av-body:var(--warn)}
+.mood-low{--av-body:color-mix(in srgb,var(--warn) 45%,var(--bad))}
+.mood-over{--av-body:var(--bad)}
+.mood-none{--av-body:var(--muted)}
+.avatar .ex{opacity:0;transition:opacity .35s ease}
+.mood-none :is(.ex-open,.ex-flat),
+.mood-great :is(.ex-happy,.ex-grin,.ex-blush),
+.mood-good :is(.ex-open,.ex-smile,.ex-blush),
+.mood-tight :is(.ex-open,.ex-worry,.ex-wobble),
+.mood-low :is(.ex-open,.ex-worry,.ex-frown,.ex-sweat),
+.mood-over :is(.ex-wide,.ex-raise,.ex-o,.ex-tear){opacity:1}
+.av-body{fill:var(--av-body);transition:fill .5s ease}
+.av-board{fill:#101820}
+.av-board-txt{fill:#FFB52E;font-family:var(--f-num);font-weight:600;letter-spacing:.03em}
+.av-glass{fill:#EAF5FA}
+.av-plate{fill:#F4F8FA}
+.pupils circle{fill:#13212B}
+.pupils .glint{fill:#FFFFFF}
+.av-white{fill:#FFFFFF;stroke:#13212B;stroke-width:1.6}
+.av-line{fill:none;stroke:#13212B;stroke-width:3.3;stroke-linecap:round;stroke-linejoin:round}
+.av-line.thin{stroke-width:2.6}
+.av-fill{fill:#13212B}
+.av-light{fill:#FFF1BF;stroke:rgb(0 0 0 / .15);stroke-width:1}
+.av-blush{fill:#FF7A9A;opacity:.6}
+.av-drop{fill:#6EC6FF}
+.av-bumper{fill:color-mix(in srgb,var(--av-body) 65%,#000)}
+.av-rail{stroke:var(--muted);stroke-width:2.5;stroke-linecap:round;opacity:.45;fill:none}
+.av-sparkles path{fill:var(--signal)}
+.av-sparkles{opacity:0;transition:opacity .4s}
+.mood-great .av-sparkles{opacity:1;animation:twinkle 2.4s ease-in-out infinite}
+.av-bob{animation:bob 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.mood-tight .av-bob,.mood-low .av-bob{animation-duration:1.4s}
+.mood-over .av-bob{animation:shiver .35s ease-in-out infinite}
+.av-blink{animation:blink 5s infinite;transform-box:fill-box;transform-origin:center}
+.pupils{transition:transform .12s ease-out}
+.avatar.react .av-bob{animation:hop .65s cubic-bezier(.3,1.6,.5,1)}
+@keyframes bob{50%{transform:translateY(-2.5px)}}
+@keyframes shiver{25%{transform:translateX(-.8px)}75%{transform:translateX(.8px)}}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+@keyframes twinkle{50%{opacity:.35}}
+@keyframes hop{30%{transform:translateY(-11px) scale(1.04,.96)}62%{transform:translateY(0) scale(.97,1.03)}}
+.avatar.mini .av-board-txt,.avatar.mini .av-rail,.avatar.mini .av-sparkles{display:none}
+.mood-row{display:flex;gap:14px;align-items:center;margin-top:2px}
+.avatar-btn{background:none;border:0;padding:0;cursor:pointer;width:118px;flex:none;border-radius:16px;transition:transform .15s}
+.avatar-btn:hover{transform:rotate(-3deg)}
+.avatar-btn .avatar{width:100%;height:auto}
+.bubble{position:relative;margin:0;background:var(--sunk);border-radius:16px;padding:10px 13px;font-size:14px;line-height:1.45;min-width:0;flex:1}
+.bubble::before{content:"";position:absolute;left:-7px;top:50%;margin-top:-8px;border:8px solid transparent;border-right-color:var(--sunk);border-left:0}
+.bubble.fade{animation:enter .3s ease-out}
+.figs{display:flex;gap:6px 16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin-top:12px}
+.figs-side{text-align:right}
+.mm{display:flex;align-items:center;gap:10px}
+.mm-txt{min-width:0;flex:1}
+.mm-face{width:30px;height:31px;flex:none}
+.mm-face .avatar{width:100%;height:100%}
+.buddy-sm{width:46px;height:48px;flex:none}
+.buddy-sm .avatar{width:100%;height:100%}
+
 /* Phone portrait: compact header, four equal tabs, 16px form text (no iOS zoom on focus), finger-sized targets, chip strips that scroll sideways. */
 @media (max-width:520px){
   .board-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;padding-block:10px 4px}
@@ -555,8 +608,6 @@ body{background:
   .toast{bottom:calc(78px + env(safe-area-inset-bottom,0px))}
   .hero{padding:18px 16px 26px}
   .hero h1{font-size:38px}
-  .ring{width:96px;height:96px}
-  .ring-row{gap:14px}
   .car-btn{display:none}
   .carousel{grid-auto-columns:80%;margin-inline:-14px;padding-inline:14px;scroll-padding-inline:14px}
   .dcats{flex-wrap:nowrap;overflow-x:auto;margin-inline:-14px;padding:2px 14px 6px;scrollbar-width:none}
@@ -586,6 +637,11 @@ body{background:
   .sky{width:38px;height:38px}
   .place h2{font-size:32px}
   .opt-row{padding:12px 8px}
+}
+@media (max-width:520px){
+  .avatar-btn{width:96px}
+  .figs-side{text-align:left}
+  .bubble{font-size:13.5px}
 }
 </style>
 
@@ -1510,7 +1566,7 @@ function renderBudget() {
   const older = {}; S.expenses.forEach(e => { const k = (e.date || '').slice(0, 7); if (k && k !== mk) older[k] = (older[k] || 0) + expTotal(e); });
   const setVal = (id, v) => { const el = $(id); if (document.activeElement !== el) el.value = v; };
   setVal('#bMonth', S.monthly); setVal('#bTrip', S.tripBudget); if (!$('#eDate').value) $('#eDate').value = todayISO();
-  $('#monthPanel').innerHTML = `<div class="sec-head"><div><p class="eyebrow">${esc(monthName(mk))}</p><h3>${budget ? (left >= 0 ? `${inr(left)} left to spend` : `${inr(-left)} over budget`) : 'Set a monthly budget'}</h3></div>${budget && left > 0 ? `<span class="pill info">${inr(left / daysLeft)} a day for ${daysLeft} days</span>` : ''}</div>
+  $('#monthPanel').innerHTML = `<div class="sec-head"><div class="row" style="gap:12px;flex-wrap:nowrap;min-width:0"><span class="buddy-sm">${avatarSVG(budgetMood().mood, '', 'mini')}</span><div><p class="eyebrow">${esc(monthName(mk))}</p><h3>${budget ? (left >= 0 ? `${inr(left)} left to spend` : `${inr(-left)} over budget`) : 'Set a monthly budget'}</h3></div></div>${budget && left > 0 ? `<span class="pill info">${inr(left / daysLeft)} a day for ${daysLeft} days</span>` : ''}</div>
     <div class="row" style="justify-content:space-between;font-size:13px;margin:8px 0 5px"><span class="muted">Spent so far</span><span class="num">${inr(m.spent)}${budget ? ` of ${inr(budget)}` : ''}</span></div>
     <div class="meter${budget && m.spent > budget ? ' over' : pct > 85 ? ' warn' : ''}" role="img" aria-label="${budget ? Math.round(m.spent / budget * 100) + '% of monthly budget used' : 'No monthly budget set'}"><i style="width:${pct}%"></i></div>
     <div class="cat-bars">${Object.entries(m.parts).map(([k, v]) => `<div class="cb"><span>${CAT_LABEL[k]}</span><span class="track"><i style="width:${v / maxPart * 100}%"></i></span><span>${inr(v)}</span></div>`).join('')}</div>
@@ -1761,6 +1817,80 @@ document.addEventListener('click', e => {
   else toggleVisited(b.dataset.been);
 });
 
+/* ------------------------------------------------------------------ budget buddy */
+// A little metro train whose face follows the monthly budget: how much is left, and whether
+// spending is running ahead of the month.
+const MOOD_NAME = { none: 'waiting for a budget', great: 'delighted', good: 'happy', tight: 'worried', low: 'anxious', over: 'shocked' };
+function budgetMood() {
+  const now = new Date(), m = monthStats(todayISO().slice(0, 7)), b = +S.monthly || 0;
+  const dim = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(), daysLeft = dim - now.getDate() + 1;
+  if (!b) return { mood: 'none', b, m, left: 0, daysLeft, perDay: 0, fast: false };
+  const left = b - m.spent, frac = left / b;
+  const elapsed = Math.min(1, (now.getDate() - 1 + now.getHours() / 24) / dim), ahead = m.spent / b - elapsed;
+  let mood = left < 0 ? 'over' : frac < 0.15 ? 'low' : frac < 0.3 ? 'tight' : frac < 0.6 ? 'good' : 'great';
+  const fast = (mood === 'great' || mood === 'good') && ahead > 0.15;
+  if (fast) mood = 'tight';
+  return { mood, b, m, left, daysLeft, perDay: Math.max(0, left) / daysLeft, fast };
+}
+function moodLines(st) {
+  const L = inr(Math.abs(st.left)), pd = inr(st.perDay);
+  const free = discoverPool('free').slice(0, 2).map(x => x.p.n.replace(/ &.*$/, ''));
+  const freeTxt = free.length ? free.join(' or ') : 'a walk in Lodhi Garden';
+  return {
+    none: ['Set a monthly budget and I’ll keep an eye on it for you.', 'Give me a budget under Budget, and I’ll cheer or worry for you.'],
+    great: [`${L} left. Plenty of room this month, so treat yourself!`, `Feeling rich! ${pd} a day to play with.`, `${L} left. Fancy a food walk in Old Delhi?`],
+    good: [`Doing fine. ${pd} a day keeps us on track.`, `${L} left for ${st.daysLeft} days. Steady as a Yellow Line train.`],
+    tight: st.fast
+      ? [`We’re spending faster than the month is passing. Keep it under ${pd} a day.`, 'Whoa, slow down! Metro over cabs for a few days?']
+      : [`Getting tight: ${L} left. Metro over cabs for a while?`, `${pd} a day from here. How about a free day out at ${freeTxt}?`],
+    low: [`Only ${L} left. Free sights to the rescue: ${freeTxt}.`, `Running on reserve! ${pd} a day until the 1st.`],
+    over: [`Uh oh, we’re ${L} over budget. Walk and take the metro till the 1st?`, `Over by ${L}. Let’s skip the cabs for now.`],
+  }[st.mood];
+}
+function avatarSVG(mood, board = '', cls = '') {
+  const fs = board.length > 11 ? 7 : 8.5;
+  return `<svg class="avatar mood-${mood} ${cls}" viewBox="0 0 120 124" role="img" aria-label="Budget buddy, ${MOOD_NAME[mood]}">
+  <g class="av-sparkles"><path d="M10 24l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><path d="M108 10l1.6 3.8 3.8 1.6-3.8 1.6-1.6 3.8-1.6-3.8-3.8-1.6 3.8-1.6z"/></g>
+  <g class="av-bob">
+    <rect class="av-body" x="14" y="14" width="92" height="94" rx="28"/>
+    <rect class="av-board" x="29" y="21" width="62" height="15" rx="4"/>
+    <text class="av-board-txt" x="60" y="31.5" text-anchor="middle" style="font-size:${fs}px">${esc(board)}</text>
+    <rect class="av-glass" x="24" y="41" width="72" height="37" rx="13"/>
+    <g class="ex ex-open"><g class="av-blink"><g class="pupils"><circle cx="46" cy="60" r="5.4"/><circle cx="74" cy="60" r="5.4"/><circle class="glint" cx="47.9" cy="58.1" r="1.7"/><circle class="glint" cx="75.9" cy="58.1" r="1.7"/></g></g></g>
+    <g class="ex ex-happy"><path class="av-line" d="M39 63 Q46 53 53 63"/><path class="av-line" d="M67 63 Q74 53 81 63"/></g>
+    <g class="ex ex-wide"><circle class="av-white" cx="46" cy="60" r="8.5"/><circle class="av-white" cx="74" cy="60" r="8.5"/><g class="pupils"><circle cx="46" cy="60" r="3.2"/><circle cx="74" cy="60" r="3.2"/></g></g>
+    <g class="ex ex-worry"><path class="av-line thin" d="M38 51 L52 47"/><path class="av-line thin" d="M68 47 L82 51"/></g>
+    <g class="ex ex-raise"><path class="av-line thin" d="M37 47 Q45 41 54 45"/><path class="av-line thin" d="M66 45 Q75 41 83 47"/></g>
+    <circle class="av-light" cx="29" cy="92" r="6.5"/><circle class="av-light" cx="91" cy="92" r="6.5"/>
+    <g class="ex ex-blush"><ellipse class="av-blush" cx="31" cy="81" rx="5.5" ry="3.2"/><ellipse class="av-blush" cx="89" cy="81" rx="5.5" ry="3.2"/></g>
+    <rect class="av-plate" x="39" y="82" width="42" height="21" rx="10.5"/>
+    <path class="ex ex-grin av-fill" d="M46 86.5 Q60 104 74 86.5 Z"/>
+    <path class="ex ex-smile av-line" d="M48 89 Q60 98 72 89"/>
+    <path class="ex ex-flat av-line" d="M50 92.5 L70 92.5"/>
+    <path class="ex ex-wobble av-line" d="M48 94 Q54 89.5 60 94 Q66 98.5 72 94"/>
+    <path class="ex ex-frown av-line" d="M48 97 Q60 87 72 97"/>
+    <ellipse class="ex ex-o av-fill" cx="60" cy="92.5" rx="5.5" ry="6.8"/>
+    <path class="ex ex-sweat av-drop" d="M100 34 q5.5 7.5 0 11 q-5.5 -3.5 0 -11z"/>
+    <path class="ex ex-tear av-drop" d="M40 70 q4.5 6.5 0 9.5 q-4.5 -3 0 -9.5z"/>
+    <rect class="av-bumper" x="40" y="105" width="40" height="7" rx="3.5"/>
+  </g>
+  <path class="av-rail" d="M6 119 H114"/>
+</svg>`;
+}
+// Eyes follow the pointer on the big buddy.
+let eyeFrame = 0, eyePt = null;
+window.addEventListener('pointermove', e => { eyePt = [e.clientX, e.clientY]; if (!eyeFrame) eyeFrame = requestAnimationFrame(trackEyes); }, { passive: true });
+function trackEyes() {
+  eyeFrame = 0; if (!eyePt) return;
+  document.querySelectorAll('.avatar:not(.mini)').forEach(svg => {
+    const r = svg.getBoundingClientRect(); if (!r.width) return;
+    const dx = eyePt[0] - (r.left + r.width / 2), dy = eyePt[1] - (r.top + r.height * 0.48), d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 220) * 2.6;
+    svg.querySelectorAll('.pupils').forEach(p => { p.style.transform = `translate(${(dx / d * k).toFixed(2)}px, ${(dy / d * k).toFixed(2)}px)`; });
+  });
+}
+function bounce(svg) { if (!svg) return; svg.classList.remove('react'); svg.getBoundingClientRect(); svg.classList.add('react'); setTimeout(() => svg.classList.remove('react'), 700); }
+let moodLineIdx = Math.floor(Math.random() * 3), homeMood = null;
+
 /* ------------------------------------------------------------------ home dashboard */
 const CAT_COLOR = { Monument: '--c-monument', Museum: '--c-museum', Faith: '--c-faith', Garden: '--c-garden', Market: '--c-market', Landmark: '--c-landmark', Food: '--c-food', Other: '--c-landmark' };
 const CAT_SHORT = { Monument: 'Monuments', Garden: 'Gardens', Faith: 'Faith', Museum: 'Museums', Market: 'Markets', Landmark: 'Landmarks' };
@@ -1836,18 +1966,17 @@ function renderHome(animate) {
   $('#commuteChip').hidden = !(ca && cz);
   if (ca && cz) $('#commuteChip').textContent = `${ca.name.replace(' metro', '')} → ${cz.name.replace(' metro', '')}`;
 
-  // Budget: ring + numbers + quick add
-  const pct = b ? Math.min(1, m.spent / b) : 0, C = 2 * Math.PI * 52, off = C * (1 - pct);
+  // Budget: the buddy reacts to what's left, then the numbers and a quick way to log spending
+  const st = budgetMood(), lines = moodLines(st), pct = b ? Math.min(100, m.spent / b * 100) : 0;
   const top = Object.entries(m.parts).sort((x, y) => y[1] - x[1])[0], qcat = S.home.qcat || 'commute';
+  const boardTxt = b ? (left >= 0 ? `${inr(left)} LEFT` : `${inr(-left)} OVER`) : 'NO BUDGET';
   const budgetHTML = `<article class="panel hcard">
     <div class="sec-head"><h3>${esc(monthName(mk))}</h3><button class="btn link" type="button" data-tab-go="budget">Details</button></div>
-    <div class="ring-row">
-      <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="${b ? Math.round(pct * 100) + '% of the monthly budget used' : 'No monthly budget set'}"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--accent-2)"/><stop offset="1" style="stop-color:var(--good)"/></linearGradient></defs><circle cx="60" cy="60" r="52" class="ring-bg"/><circle cx="60" cy="60" r="52" class="ring-fg${left < 0 ? ' over' : pct > .85 ? ' warn' : ''}" stroke-dasharray="${C}" stroke-dashoffset="${animate ? C : off}" data-off="${off}" transform="rotate(-90 60 60)"/></svg>
-      <div style="min-width:0"><p class="eyebrow">${b ? (left >= 0 ? 'Left to spend' : 'Over budget by') : 'Spent this month'}</p><p class="big" id="leftNum">${inr(b ? Math.abs(left) : m.spent)}</p>
-        <p class="muted small">${b ? `Spent ${inr(m.spent)} of ${inr(b)}` : 'Set a monthly budget under Budget'}</p>
-        ${b && left > 0 ? `<p class="small">${inr(left / daysLeft)} a day for ${daysLeft} day${daysLeft > 1 ? 's' : ''}</p>` : ''}
-        ${top && top[1] > 0 ? `<p class="muted small">Most on ${CAT_LABEL[top[0]].toLowerCase()}: ${inr(top[1])}</p>` : ''}</div>
-    </div>
+    <div class="mood-row"><button class="avatar-btn" type="button" id="buddy" aria-label="Budget buddy. Tap for another tip.">${avatarSVG(st.mood, boardTxt)}</button>
+      <p class="bubble" id="bubble" aria-live="polite">${esc(lines[moodLineIdx % lines.length])}</p></div>
+    <div class="figs"><div><p class="eyebrow">${b ? (left >= 0 ? 'Left to spend' : 'Over budget by') : 'Spent this month'}</p><p class="big" id="leftNum">${inr(b ? Math.abs(left) : m.spent)}</p></div>
+      <div class="figs-side"><p class="muted small">${b ? `Spent ${inr(m.spent)} of ${inr(b)}` : 'Set a monthly budget under Budget'}</p>${b && left > 0 ? `<p class="small">${inr(left / daysLeft)} a day for ${daysLeft} day${daysLeft > 1 ? 's' : ''}</p>` : ''}${top && top[1] > 0 ? `<p class="muted small">Most on ${CAT_LABEL[top[0]].toLowerCase()}: ${inr(top[1])}</p>` : ''}</div></div>
+    ${b ? `<div class="meter${st.mood === 'over' ? ' over' : st.mood === 'tight' || st.mood === 'low' ? ' warn' : ''}" style="margin-top:10px"><i style="width:${pct}%"></i></div>` : ''}
     <form class="quick" id="quickAdd"><label class="sr" for="qAmt">Amount to log</label><input class="inp money" id="qAmt" type="number" min="1" step="1" inputmode="numeric" placeholder="₹ spent" required>
       <div class="seg" role="group" aria-label="Category">${['commute', 'food', 'tickets', 'other'].map(k => `<button type="button" data-qcat="${k}" aria-pressed="${qcat === k}">${CAT_LABEL[k]}</button>`).join('')}</div>
       <button class="btn primary" type="submit">Log</button></form>
@@ -1912,14 +2041,13 @@ function renderHome(animate) {
     <p class="tip-text" id="tipText" aria-live="polite">${esc(TIPS[tipIdx])}</p><p class="muted small" id="tipCount">${tipIdx + 1} of ${TIPS.length}</p></article>`;
 
   el.innerHTML = `<div class="home-grid">${budgetHTML}${planHTML}</div>${discoverHTML}<div class="home-grid">${exploredHTML}${tipHTML}</div>`;
-  if (animate) {
-    const ring = el.querySelector('.ring-fg');
-    requestAnimationFrame(() => requestAnimationFrame(() => { if (ring) ring.style.strokeDashoffset = ring.dataset.off; }));
-    countUp($('#leftNum'), b ? Math.abs(left) : m.spent, v => inr(v));
-  }
+  if (animate) countUp($('#leftNum'), b ? Math.abs(left) : m.spent, v => inr(v));
+  if (homeMood && homeMood !== st.mood) bounce(el.querySelector('#buddy .avatar'));
+  homeMood = st.mood;
 }
 $('#homeBody').addEventListener('click', e => {
   const t = e.target;
+  if (t.closest('#buddy')) { const ls = moodLines(budgetMood()); moodLineIdx++; const p = $('#bubble'); p.textContent = ls[moodLineIdx % ls.length]; p.classList.remove('fade'); void p.offsetWidth; p.classList.add('fade'); bounce($('#buddy .avatar')); return; }
   const pl = t.closest('[data-plan]'); if (pl) { loadPlan(+pl.dataset.plan); return; }
   const dc = t.closest('[data-dcat]'); if (dc) { S.home.cat = dc.dataset.dcat; persist(); renderHome(); return; }
   if (t.closest('#shuffle')) { S.home.seed = Math.floor(Math.random() * 1e9); persist(); renderHome(); return; }
@@ -1943,7 +2071,7 @@ $('#homeBody').addEventListener('submit', e => {
 function renderHeader() {
   const mk = todayISO().slice(0, 7), m = monthStats(mk), b = +S.monthly || 0, el = $('#mm');
   el.classList.toggle('over', b > 0 && m.spent > b);
-  el.innerHTML = `<span>${esc(new Date().toLocaleString('en-IN', { month: 'long' }))} budget</span> <strong>${inr(m.spent)}${b ? ` / ${inr(b)}` : ''}</strong><span class="bar"><i style="width:${b ? Math.min(100, m.spent / b * 100) : 0}%"></i></span>`;
+  el.innerHTML = `<span class="mm-face">${avatarSVG(budgetMood().mood, '', 'mini')}</span><span class="mm-txt"><span>${esc(new Date().toLocaleString('en-IN', { month: 'long' }))} budget</span> <strong>${inr(m.spent)}${b ? ` / ${inr(b)}` : ''}</strong><span class="bar"><i style="width:${b ? Math.min(100, m.spent / b * 100) : 0}%"></i></span></span>`;
 }
 function renderSide() {
   const c = computeTrip(), T = S.trip, b = +S.tripBudget || 0, mk = todayISO().slice(0, 7), m = monthStats(mk), mb = +S.monthly || 0;
