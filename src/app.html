@@ -1,0 +1,1532 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Raahi Delhi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=Hind:wght@400;600&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a metro station-board header over a two-column planner (routes left, trip and budget meters right); one column on phones. */
+:root{
+  --paper:#F2F5F4; --surface:#FFFFFF; --sunk:#E8EEEC; --ink:#13212B; --muted:#56656F; --rule:#D3DCDB;
+  --accent:#0A5B78; --accent-ink:#FFFFFF; --accent-soft:#DDEEF3;
+  --board:#0F3049; --board-ink:#F1F7FA; --board-muted:#A7C0CF; --board-rule:#26506F; --signal:#F5B700;
+  --good:#1B7A45; --good-soft:#E0F1E7; --warn:#935A00; --warn-soft:#FAEFD8; --bad:#B42318; --bad-soft:#FBE3DF;
+  --m-metro:#0A5B78; --m-ae:#C2620A; --m-bus:#2D7A4C; --m-auto:#776500; --m-cab:#46525C; --m-bike:#7E3B95; --m-erick:#1F7480; --m-walk:#6A5D45;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --f-hi:"Hind","Noto Sans Devanagari","Kohinoor Devanagari",sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C141A; --surface:#131D25; --sunk:#1A2731; --ink:#E4ECF0; --muted:#94A4AF; --rule:#25343F;
+    --accent:#5DB3D2; --accent-ink:#04202B; --accent-soft:#14394A;
+    --board:#081D2D; --board-ink:#EAF3F8; --board-muted:#8EA9BA; --board-rule:#1E3D55; --signal:#F5B700;
+    --good:#5BC489; --good-soft:#12301F; --warn:#E4A94B; --warn-soft:#352610; --bad:#F27D6E; --bad-soft:#3A1713;
+    --m-metro:#5DB3D2; --m-ae:#F09A4A; --m-bus:#6CC48F; --m-auto:#D9C14A; --m-cab:#AFBBC5; --m-bike:#C995DA; --m-erick:#6FC2CD; --m-walk:#C9B793;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C141A; --surface:#131D25; --sunk:#1A2731; --ink:#E4ECF0; --muted:#94A4AF; --rule:#25343F;
+  --accent:#5DB3D2; --accent-ink:#04202B; --accent-soft:#14394A;
+  --board:#081D2D; --board-ink:#EAF3F8; --board-muted:#8EA9BA; --board-rule:#1E3D55; --signal:#F5B700;
+  --good:#5BC489; --good-soft:#12301F; --warn:#E4A94B; --warn-soft:#352610; --bad:#F27D6E; --bad-soft:#3A1713;
+  --m-metro:#5DB3D2; --m-ae:#F09A4A; --m-bus:#6CC48F; --m-auto:#D9C14A; --m-cab:#AFBBC5; --m-bike:#C995DA; --m-erick:#6FC2CD; --m-walk:#C9B793;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font:15px/1.5 var(--f-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--board)}
+.wrap{max-width:1160px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{text-wrap:balance;margin:0}
+p{margin:0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.muted{color:var(--muted)}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Station board */
+.board{background:var(--board);color:var(--board-ink)}
+.board-top{display:flex;align-items:center;gap:12px 18px;flex-wrap:wrap;padding-block:14px 6px}
+.brand{display:flex;align-items:baseline;gap:10px;margin-right:auto}
+.brand b{font:800 27px/1 var(--f-display);font-stretch:78%;letter-spacing:.02em;text-transform:uppercase}
+.brand span{font:600 19px/1 var(--f-hi);color:var(--signal)}
+.city{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--board-muted)}
+.city select{background:transparent;border:1px solid var(--board-rule);border-radius:6px;padding:5px 8px;color:var(--board-ink)}
+.city select option{color:var(--ink);background:var(--surface)}
+.mm{min-width:190px;font-size:12px;color:var(--board-muted);background:none;border:0;padding:0;text-align:left;cursor:pointer}
+.mm strong{color:var(--board-ink);font:600 13px var(--f-num)}
+.mm .bar{display:block;height:5px;background:var(--board-rule);border-radius:3px;overflow:hidden;margin-top:5px}
+.mm .bar i{display:block;height:100%;background:var(--signal)}
+.mm.over .bar i{background:#F27D6E}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs button{background:none;border:0;color:var(--board-muted);font:600 14px var(--f-body);padding:10px 14px 11px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+.tabs button:hover{color:var(--board-ink)}
+.tabs button[aria-selected="true"]{color:var(--board-ink);border-bottom-color:var(--signal)}
+.tabs .count{display:inline-block;min-width:18px;padding:1px 5px;margin-left:6px;border-radius:9px;background:var(--board-rule);color:var(--board-ink);font:600 11px/16px var(--f-num)}
+
+/* Page */
+main{padding-block:18px 96px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+.col{display:grid;gap:16px;min-width:0}
+.side{display:grid;gap:16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 14px);min-width:0}
+@media (max-width:920px){.layout{grid-template-columns:minmax(0,1fr)}.side{position:static}}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:18px;min-width:0}
+.eyebrow{font:600 11px/1.2 var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.sec-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.sec-head h3{font:700 20px/1.15 var(--f-display);font-stretch:85%}
+.sec-head p{font-size:13px}
+
+/* Search */
+.search{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:end}
+@media (max-width:640px){.search{grid-template-columns:minmax(0,1fr)}.swap{justify-self:end;margin-block:-4px -8px}}
+.field label,.lbl{display:block;font:600 12px var(--f-body);color:var(--muted);margin-bottom:5px}
+.combo{position:relative}
+.combo input{width:100%;font:500 16px var(--f-body);padding:11px 12px 11px 36px;border:1px solid var(--rule);border-radius:8px;background:var(--paper)}
+.combo input:focus{outline:2px solid var(--accent);outline-offset:0;background:var(--surface)}
+.combo .dot{position:absolute;left:13px;top:50%;width:12px;height:12px;border-radius:50%;transform:translateY(-50%);border:3px solid var(--accent);pointer-events:none}
+.combo.to .dot{border-radius:3px;background:var(--accent)}
+.combo.small input{font-size:15px;padding:8px 10px 8px 32px}
+.combo.small .dot{left:11px;width:10px;height:10px}
+.list{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 4px);background:var(--surface);border:1px solid var(--rule);border-radius:8px;box-shadow:0 12px 32px rgb(0 0 0 / .16);max-height:min(360px,60vh);overflow:auto;padding:4px;margin:0;list-style:none}
+.list li{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:6px;cursor:pointer}
+.list li:hover{background:var(--sunk)}
+.list li.on{background:var(--accent-soft)}
+.list li .nm{min-width:0}
+.list li .nm b{font-weight:500;display:block}
+.list li small{display:block;color:var(--muted);font-size:12px}
+.list .k{font:600 10px var(--f-body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.list li.ask{border-top:1px solid var(--rule);border-radius:0 0 6px 6px;color:var(--accent);font-weight:600}
+.list li.none{cursor:default;color:var(--muted)}
+.swap{width:42px;height:42px;border-radius:50%;border:1px solid var(--rule);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--accent)}
+.swap svg{width:20px;height:20px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;align-items:center}
+.chips .lbl{margin:0 4px 0 0}
+.chip{border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:4px 11px;font:500 13px var(--f-body);cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--rule);background:var(--surface);border-radius:8px;padding:9px 14px;font:600 14px var(--f-body);cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.small{padding:5px 10px;font-size:13px}
+.btn.link{background:none;border-color:transparent;color:var(--accent);padding-inline:4px}
+.btn.danger{color:var(--bad)}
+.btn[disabled]{opacity:.55;cursor:default}
+.icon-btn{width:32px;height:32px;border-radius:7px;border:1px solid var(--rule);background:var(--surface);display:inline-grid;place-items:center;cursor:pointer;color:var(--muted)}
+.icon-btn:hover{color:var(--accent);border-color:var(--accent)}
+.icon-btn svg{width:16px;height:16px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+a{color:var(--accent)}
+
+/* Place card */
+.place-head{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.place-head > div{min-width:0}
+.place h2{font:800 36px/1 var(--f-display);font-stretch:76%;letter-spacing:-.005em}
+.hi{font:600 18px/1.35 var(--f-hi);color:var(--muted);margin-top:4px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px 18px;margin:16px 0 0}
+.facts dt{font:600 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:3px 0 0;font-weight:500}
+.facts dd small{display:block;color:var(--muted);font-weight:400;font-size:12.5px}
+.tip{margin-top:14px;padding:10px 12px;background:var(--sunk);border-radius:8px;font-size:14px}
+.links{margin-top:12px;font-size:14px;display:flex;gap:16px;flex-wrap:wrap}
+.pill{display:inline-block;font:600 11px/1 var(--f-body);letter-spacing:.05em;text-transform:uppercase;padding:5px 8px;border-radius:5px;vertical-align:3px}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.good{background:var(--good-soft);color:var(--good)}
+.pill.info{background:var(--accent-soft);color:var(--accent)}
+
+/* Options */
+.opts{list-style:none;margin:0;padding:0}
+.opts > li{border-top:1px solid var(--rule)}
+.opts > li:first-child{border-top:0}
+.opt-row{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0}
+details > summary.opt-row{list-style:none;cursor:pointer}
+details > summary.opt-row::-webkit-details-marker{display:none}
+.mi{width:42px;height:42px;border-radius:9px;display:grid;place-items:center;color:var(--mc);background:color-mix(in srgb,var(--mc) 15%,var(--surface))}
+.mi svg{width:24px;height:24px}
+.mi.sm{width:30px;height:30px;border-radius:7px}
+.mi.sm svg{width:18px;height:18px}
+.opt-name{display:block;font-weight:600}
+.opt-note{display:block;color:var(--muted);font-size:13px;margin-top:1px}
+.opt-note .ln{margin-top:3px}
+.opt-fig{text-align:right;font-family:var(--f-num);font-variant-numeric:tabular-nums;white-space:nowrap}
+.opt-fig .t{font-size:17px;font-weight:600;display:block}
+.opt-fig .c{font-size:13px;color:var(--muted)}
+.more{font:500 12.5px var(--f-body);color:var(--accent)}
+details[open] .more{display:none}
+.badge{display:inline-block;font:600 10px/1 var(--f-body);letter-spacing:.07em;text-transform:uppercase;padding:4px 6px;border-radius:4px;margin-left:6px;vertical-align:2px}
+.badge.cheap{background:var(--good-soft);color:var(--good)}
+.badge.fast{background:var(--accent-soft);color:var(--accent)}
+.steps{list-style:none;margin:0 0 14px 20px;padding:0;border-left:2px solid var(--rule)}
+.steps li{position:relative;padding:3px 0 10px 22px;font-size:14px}
+.steps li::before{content:"";position:absolute;left:-7px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--muted)}
+.steps li.ride::before{border-color:var(--lc);background:var(--lc)}
+.steps small{display:block;color:var(--muted);font-size:12.5px}
+.steps .fare{margin-top:2px;font-size:13px}
+.steps .stepnote{display:block;font-size:12.5px;margin-top:5px;color:var(--ink);line-height:1.45}
+.steps .stepnote.warn{background:var(--warn-soft);padding:7px 9px;border-radius:7px}
+.steps .stepnote .pill{margin-right:4px}
+.badge.branch{background:var(--warn-soft);color:var(--warn)}
+.ln{display:inline-block;font:600 11.5px/1 var(--f-body);padding:4px 7px;border-radius:4px;background:var(--lc);color:var(--lt);margin-right:5px;vertical-align:1px;white-space:nowrap}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.seg button{background:var(--surface);border:0;padding:6px 10px;font:500 13px var(--f-body);color:var(--muted);cursor:pointer}
+.seg button + button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.notes{margin-top:10px;font-size:12.5px;color:var(--muted);display:grid;gap:3px}
+
+/* Nearby */
+.near{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.near li{border:1px solid var(--rule);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.near .nm{background:none;border:0;padding:0;text-align:left;font-weight:600;cursor:pointer;color:var(--ink)}
+.near .nm:hover{color:var(--accent);text-decoration:underline}
+.near .meta{font-size:12.5px;color:var(--muted)}
+.near .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:4px;gap:8px}
+.near .tk{font:600 13px var(--f-num)}
+
+/* Meters + figures */
+.meter{height:10px;border-radius:5px;background:var(--sunk);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--good);border-radius:5px;transition:width .3s}
+.meter.warn i{background:var(--warn)}
+.meter.over i{background:var(--bad)}
+.big{font:600 28px/1.1 var(--f-num);font-variant-numeric:tabular-nums}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;font-size:14px;margin:0}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;text-align:right;font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.kv .tot{font-weight:600;color:var(--ink);border-top:1px solid var(--rule);padding-top:8px}
+.mini h3{font:700 17px/1.2 var(--f-display);font-stretch:85%}
+.mini .row{justify-content:space-between}
+.mini-list{list-style:none;padding:0;margin:8px 0 0;font-size:13.5px;display:grid;gap:4px;counter-reset:s}
+.mini-list li{display:flex;gap:8px;min-width:0}
+.mini-list li::before{counter-increment:s;content:counter(s);font:600 11px/18px var(--f-num);min-width:18px;height:18px;text-align:center;border-radius:50%;background:var(--sunk);color:var(--muted)}
+.empty{padding:18px;border:1px dashed var(--rule);border-radius:8px;color:var(--muted);font-size:14px;text-align:center}
+
+/* Forms */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.inp{width:100%;font:500 15px var(--f-body);padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--paper)}
+.inp:focus{outline:2px solid var(--accent);outline-offset:0;background:var(--surface)}
+.inp.money{font-family:var(--f-num)}
+.check{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.check input{width:17px;height:17px;accent-color:var(--accent)}
+.trip-name{width:100%;font:800 28px/1.1 var(--f-display);font-stretch:80%;border:0;border-bottom:2px solid transparent;background:none;padding:2px 0}
+.trip-name:focus{outline:none;border-bottom-color:var(--accent)}
+.banner{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:10px 12px;border-radius:8px;background:var(--accent-soft);color:var(--ink);font-size:14px;margin-bottom:14px}
+
+/* Trip timeline */
+.tl{list-style:none;margin:0;padding:0}
+.tl-stop{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:12px;padding:10px 0;align-items:start}
+.tl-stop time{font:600 15px/1.5 var(--f-num);font-variant-numeric:tabular-nums}
+.tl-stop .nm{font-weight:600}
+.tl-stop .sub{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;margin-top:2px}
+.tl-stop .sub select{font-size:13px;padding:2px 4px;border:1px solid var(--rule);border-radius:5px;background:var(--paper)}
+.tl-stop .warn-line{font-size:13px;margin-top:5px;display:flex;gap:6px;align-items:baseline}
+.tl-stop .warn-line.bad{color:var(--bad)}
+.tl-stop .warn-line.warn{color:var(--warn)}
+.tl-stop .acts{display:flex;gap:4px}
+.tl-leg{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px;align-items:center}
+.tl-leg .rail{justify-self:center;width:2px;align-self:stretch;min-height:44px;background:repeating-linear-gradient(var(--rule) 0 6px,transparent 6px 10px)}
+.tl-leg .leg{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 0;font-size:13.5px;min-width:0}
+.tl-leg select{flex:1 1 140px;min-width:0;font-size:13.5px;padding:5px 6px;border:1px solid var(--rule);border-radius:6px;background:var(--surface);max-width:100%}
+.tl-end time,.tl-start time{color:var(--muted)}
+.tips{display:grid;gap:8px;margin-top:12px;font-size:13.5px}
+.tips p{padding:8px 10px;border-radius:7px;background:var(--sunk)}
+.tips p.warn{background:var(--warn-soft);color:var(--ink)}
+
+/* Budget */
+.cat-bars{display:grid;gap:8px;margin-top:14px}
+.cat-bars .cb{display:grid;grid-template-columns:76px minmax(0,1fr) 84px;gap:10px;align-items:center;font-size:13.5px}
+.cat-bars .cb span:last-child{text-align:right;font-family:var(--f-num)}
+.cat-bars .track{height:8px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.cat-bars .track i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.exp{list-style:none;padding:0;margin:0}
+.exp li{display:grid;grid-template-columns:62px minmax(0,1fr) auto 32px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--rule);font-size:14px}
+.exp li:first-child{border-top:0}
+.exp .d{font:500 12.5px var(--f-num);color:var(--muted)}
+.exp .lb{min-width:0}
+.exp .lb small{display:block;color:var(--muted);font-size:12px}
+.exp .am{font:600 14px var(--f-num)}
+.tbl-wrap{overflow-x:auto;margin-top:12px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:440px}
+.tbl th{font:600 11px var(--f-body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule)}
+.tbl td{padding:8px;border-bottom:1px solid var(--rule);vertical-align:middle}
+.tbl td.n{font-family:var(--f-num);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.tbl th.n{text-align:right}
+.tbl .modecell{display:flex;gap:8px;align-items:center}
+
+footer{border-top:1px solid var(--rule);padding-block:18px 28px;font-size:12.5px;color:var(--muted)}
+footer p + p{margin-top:6px}
+.sync{display:inline-flex;gap:6px;align-items:center}
+.sync i{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block}
+.sync.cloud i{background:var(--good)}
+
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:9px;font-size:14px;display:flex;gap:12px;align-items:center;z-index:50;max-width:calc(100% - 32px);box-shadow:0 8px 24px rgb(0 0 0 / .2)}
+.toast button{background:none;border:0;color:var(--signal);font-weight:600;cursor:pointer}
+.ask-box{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+/* Shops & food */
+.needs{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.glist{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.glist > .empty{grid-column:1 / -1;background:var(--surface)}
+.gcard{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.gtop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.gcard h4{font:700 19px/1.15 var(--f-display);font-stretch:85%}
+.gcard h4 .nm{background:none;border:0;padding:0;font:inherit;color:var(--ink);cursor:pointer;text-align:left}
+.gcard h4 .nm:hover{color:var(--accent);text-decoration:underline}
+.gcard .meta{font-size:12.5px;color:var(--muted)}
+.gcard .buy{font-size:14px}
+.gcard .gtip{font-size:13px;background:var(--sunk);border-radius:6px;padding:6px 8px}
+.gcard .foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto;padding-top:6px;flex-wrap:wrap}
+
+/* Assistant */
+body:not(.has-ai) .ai-only{display:none!important}
+.ai-fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:45;display:inline-flex;gap:8px;align-items:center;padding:12px 18px;border-radius:999px;border:0;background:var(--board);color:var(--board-ink);font:600 14px var(--f-body);box-shadow:0 8px 24px rgb(0 0 0 / .25);cursor:pointer}
+.ai-fab svg{width:20px;height:20px;color:var(--signal)}
+.ai{position:fixed;z-index:46;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(410px,calc(100vw - 32px));height:min(640px,calc(100vh - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)));background:var(--surface);border:1px solid var(--rule);border-radius:14px;box-shadow:0 18px 48px rgb(0 0 0 / .28);display:flex;flex-direction:column;overflow:hidden}
+.ai-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;background:var(--board);color:var(--board-ink)}
+.ai-head b{font:700 17px/1.2 var(--f-display);font-stretch:85%}
+.ai-head small{display:block;color:var(--board-muted);font-size:12px}
+.ai-head .icon-btn{background:transparent;border-color:var(--board-rule);color:var(--board-ink)}
+.ai-log{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:90%;padding:9px 12px;border-radius:12px;font-size:14px;line-height:1.45;overflow-wrap:anywhere}
+.msg p + p{margin-top:6px}
+.msg.user{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
+.msg.assistant{align-self:flex-start;background:var(--sunk);border-bottom-left-radius:4px}
+.msg ul{margin:4px 0;padding-left:18px}
+.msg .err{color:var(--bad)}
+.ai-status{font-size:12.5px;color:var(--muted);align-self:flex-start}
+.ai-quick{display:flex;flex-wrap:wrap;gap:6px}
+.ai-form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--rule);align-items:flex-end;padding-bottom:max(10px,env(safe-area-inset-bottom,0px))}
+.ai-form textarea{flex:1;min-width:0;resize:none;font:15px/1.4 var(--f-body);padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);max-height:120px}
+@media (max-width:520px){.ai{right:0;bottom:0;width:100%;height:100%;border-radius:0;border:0;padding-top:env(safe-area-inset-top,0px)}.ai-fab span{display:none}.ai-fab{padding:14px}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:520px){
+  .place h2{font-size:30px}
+  .opt-row{grid-template-columns:36px minmax(0,1fr);align-items:start;gap:4px 12px}
+  .mi{width:36px;height:36px}
+  .opt-fig{grid-column:2;text-align:left;display:flex;gap:10px;align-items:baseline}
+  .opt-fig .t{display:inline;font-size:15px}
+  .steps{margin-left:16px}
+  .tl-stop{grid-template-columns:48px minmax(0,1fr)}
+  .tl-stop .acts{grid-column:2}
+  .tl-leg{grid-template-columns:48px minmax(0,1fr)}
+  .exp li{grid-template-columns:52px minmax(0,1fr) auto 32px;gap:8px}
+}
+.tabs .tab-short{display:none}
+/* Phone portrait: compact header, four equal tabs, 16px form text (no iOS zoom on focus), finger-sized targets, chip strips that scroll sideways. */
+@media (max-width:520px){
+  .board-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;padding-block:10px 4px}
+  .brand{margin:0}
+  .brand b{font-size:24px}
+  .city span{display:none}
+  .mm{grid-column:1 / -1;min-width:0;width:100%}
+  .tabs{gap:0}
+  .tabs button{flex:1 1 0;padding:10px 2px 11px;text-align:center;font-size:14px}
+  .tabs .tab-long{display:none}
+  .tabs .tab-short{display:inline}
+  .tabs .count{margin-left:4px}
+  main{padding-block:12px 96px}
+  .panel{padding:14px}
+  .layout,.col,.side{gap:12px}
+  .inp,.combo input,.combo.small input,.tl-leg select,.tl-stop .sub select,.ai-form textarea,.city select{font-size:16px}
+  .chip{padding:8px 12px;font-size:14px}
+  .btn{min-height:42px}
+  .btn.small{min-height:38px;padding:7px 12px;font-size:14px}
+  .icon-btn{width:40px;height:40px}
+  .seg button{padding:8px 12px}
+  .tl-leg select,.tl-stop .sub select{min-height:38px}
+  .check{min-height:40px}
+  .check input{width:20px;height:20px}
+  .needs,#popular{flex-wrap:nowrap;overflow-x:auto;margin-inline:-14px;padding:2px 14px 6px;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .needs::-webkit-scrollbar,#popular::-webkit-scrollbar{display:none}
+  .needs .chip,#popular .chip,#popular .lbl{flex:none;scroll-snap-align:start}
+  .glist{grid-template-columns:minmax(0,1fr)}
+  .toast{left:max(16px,env(safe-area-inset-left,0px));right:calc(80px + env(safe-area-inset-right,0px));transform:none;max-width:none}
+  .ai-quick .chip{text-align:left}
+}
+</style>
+
+<header class="board">
+  <div class="wrap">
+    <div class="board-top">
+      <div class="brand"><b>Raahi</b><span lang="hi">राही</span></div>
+      <label class="city"><span>City</span>
+        <select id="city" aria-label="City">
+          <option selected>New Delhi</option>
+          <option disabled>Mumbai (coming soon)</option>
+          <option disabled>Bengaluru (coming soon)</option>
+          <option disabled>Jaipur (coming soon)</option>
+        </select>
+      </label>
+      <button class="mm" id="mm" type="button" aria-label="This month's budget"></button>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" id="tab-explore" aria-controls="explore" data-tab="explore"><span class="tab-long">Explore &amp; routes</span><span class="tab-short">Routes</span></button>
+      <button role="tab" id="tab-guide" aria-controls="guide" data-tab="guide"><span class="tab-long">Shops &amp; food</span><span class="tab-short">Shops</span></button>
+      <button role="tab" id="tab-trip" aria-controls="trip" data-tab="trip"><span class="tab-long">My trip</span><span class="tab-short">Trip</span><span class="count" id="tripCount">0</span></button>
+      <button role="tab" id="tab-budget" aria-controls="budget" data-tab="budget">Budget</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="askStatus" hidden></div>
+  <!-- EXPLORE -->
+  <section id="explore" role="tabpanel" aria-labelledby="tab-explore">
+    <div class="panel">
+      <div class="search">
+        <div class="field">
+          <label for="fromInput">From</label>
+          <div class="combo from" id="fromCombo"><span class="dot"></span><input id="fromInput" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" placeholder="Station, area or landmark"><ul class="list" role="listbox" hidden></ul></div>
+        </div>
+        <button class="swap" id="swap" type="button" aria-label="Swap start and destination"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v14M3 14l4 4 4-4M17 20V6M13 10l4-4 4 4"/></svg></button>
+        <div class="field">
+          <label for="toInput">Where to?</label>
+          <div class="combo to" id="toCombo"><span class="dot"></span><input id="toInput" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" placeholder="Search a place in Delhi"><ul class="list" role="listbox" hidden></ul></div>
+        </div>
+      </div>
+      <div class="chips" id="popular"><span class="lbl">Popular</span></div>
+    </div>
+    <div class="layout" style="margin-top:16px">
+      <div class="col" id="exploreMain"></div>
+      <aside class="side" id="exploreSide"></aside>
+    </div>
+  </section>
+
+  <!-- SHOPS & FOOD -->
+  <section id="guide" role="tabpanel" aria-labelledby="tab-guide" hidden>
+    <div class="panel">
+      <div class="sec-head"><div><h3>What do you need?</h3><p class="muted" id="guideUpdated">Markets, shops and eateries picked for what you need</p></div><button class="btn small ai-only" type="button" id="guideAsk">Ask the assistant</button></div>
+      <div class="needs" id="needs" role="group" aria-label="What you need"></div>
+      <div class="form-grid" style="margin-top:14px">
+        <div class="field"><label for="gq">Search this list</label><input class="inp" id="gq" type="search" placeholder="Arduino, kebabs, lehenga…" autocomplete="off"></div>
+        <div class="field" style="min-width:0"><label for="gNearInput">Distances from</label><div class="combo small from" id="gNearCombo"><span class="dot"></span><input id="gNearInput" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list"><ul class="list" role="listbox" hidden></ul></div></div>
+        <div class="field" style="align-self:end"><label class="check"><input id="gOpen" type="checkbox"> Open now only</label></div>
+      </div>
+    </div>
+    <ul class="glist" id="guideList"></ul>
+  </section>
+
+  <!-- TRIP -->
+  <section id="trip" role="tabpanel" aria-labelledby="tab-trip" hidden>
+    <div class="layout">
+      <div class="col">
+        <div class="panel">
+          <div id="tripBanner"></div>
+          <label class="sr" for="tripName">Trip name</label>
+          <input class="trip-name" id="tripName" type="text" maxlength="60">
+          <div class="form-grid" style="margin-top:14px">
+            <div class="field"><label for="tDate">Date</label><input class="inp" id="tDate" type="date"></div>
+            <div class="field"><label for="tStart">Start at</label><input class="inp" id="tStart" type="time"></div>
+            <div class="field" style="grid-column:1 / -1;min-width:0"><label for="tFromInput">Starting from</label>
+              <div class="combo small from" id="tFromCombo"><span class="dot"></span><input id="tFromInput" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list"><ul class="list" role="listbox" hidden></ul></div></div>
+            <div class="field"><label for="tAdults">Adults</label><input class="inp" id="tAdults" type="number" min="1" max="20"></div>
+            <div class="field"><label for="tKids">Children under 15</label><input class="inp" id="tKids" type="number" min="0" max="20"></div>
+            <div class="field"><label for="tWho">Ticket type</label><select class="inp" id="tWho"><option value="in">Indian visitors</option><option value="fr">Foreign visitors</option></select></div>
+            <div class="field"><label for="tPref">Getting around</label><select class="inp" id="tPref"><option value="cheap">Cheapest</option><option value="mix">Best mix</option><option value="fast">Fastest</option><option value="comfort">Cab comfort</option></select></div>
+            <div class="field"><label for="tFood">Food, per person</label><select class="inp" id="tFood"><option value="0">Not counted</option><option value="250">Street food · ₹250</option><option value="600">Casual meals · ₹600</option><option value="1500">Restaurants · ₹1,500</option></select></div>
+            <div class="field" style="align-self:end"><label class="check"><input id="tBack" type="checkbox"> Return to start</label></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="sec-head"><h3>Plan for the day</h3><div class="row"><button class="btn small" id="optimize" type="button">Best order</button><button class="btn small" id="addStop" type="button">Add a place</button></div></div>
+          <ol class="tl" id="timeline"></ol>
+        </div>
+      </div>
+      <aside class="side">
+        <div class="panel" id="tripTotals"></div>
+        <div class="panel" id="savedTrips"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- BUDGET -->
+  <section id="budget" role="tabpanel" aria-labelledby="tab-budget" hidden>
+    <div class="layout">
+      <div class="col">
+        <div class="panel" id="monthPanel"></div>
+        <div class="panel" id="commutePanel">
+          <div class="sec-head"><div><h3>Regular commute</h3><p class="muted">What a route you take often costs over a month.</p></div></div>
+          <div class="form-grid">
+            <div class="field" style="min-width:0"><label for="cFromInput">From</label><div class="combo small from" id="cFromCombo"><span class="dot"></span><input id="cFromInput" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list"><ul class="list" role="listbox" hidden></ul></div></div>
+            <div class="field" style="min-width:0"><label for="cToInput">To</label><div class="combo small to" id="cToCombo"><span class="dot"></span><input id="cToInput" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list"><ul class="list" role="listbox" hidden></ul></div></div>
+            <div class="field"><label for="cTrips">One-way trips a week</label><input class="inp" id="cTrips" type="number" min="1" max="42"></div>
+          </div>
+          <div id="commuteTable"></div>
+        </div>
+      </div>
+      <aside class="side">
+        <div class="panel">
+          <div class="sec-head"><h3>Your budgets</h3></div>
+          <div class="form-grid" style="grid-template-columns:1fr 1fr">
+            <div class="field"><label for="bMonth">Monthly budget</label><input class="inp money" id="bMonth" type="number" min="0" step="100" inputmode="numeric"></div>
+            <div class="field"><label for="bTrip">Per trip budget</label><input class="inp money" id="bTrip" type="number" min="0" step="50" inputmode="numeric"></div>
+          </div>
+          <p class="muted" style="font-size:12.5px;margin-top:8px">The monthly budget covers everything you log: rides, tickets, food and other outings.</p>
+        </div>
+        <form class="panel" id="expForm">
+          <div class="sec-head"><h3>Log spending</h3></div>
+          <div class="form-grid" style="grid-template-columns:1fr 1fr">
+            <div class="field" style="grid-column:1 / -1"><label for="eLabel">What for</label><input class="inp" id="eLabel" type="text" maxlength="60" placeholder="Metro to office" required></div>
+            <div class="field"><label for="eAmt">Amount (₹)</label><input class="inp money" id="eAmt" type="number" min="1" step="1" inputmode="numeric" required></div>
+            <div class="field"><label for="eCat">Category</label><select class="inp" id="eCat"><option value="commute">Commute</option><option value="tickets">Tickets</option><option value="food">Food</option><option value="other">Other</option></select></div>
+            <div class="field" style="grid-column:1 / -1"><label for="eDate">Date</label><input class="inp" id="eDate" type="date" required></div>
+          </div>
+          <button class="btn primary" style="margin-top:12px;width:100%" type="submit">Add to this month</button>
+        </form>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p><span class="sync" id="sync"><i></i><span>Saved in this browser</span></span></p>
+  <p>Prices are estimates. Metro fares follow the DMRC slabs revised on 25 Aug 2025 (Airport Express fares approximated). Monument tickets follow ASI rates; auto fares use the Delhi meter tariff of ₹30 for 1.5 km plus ₹11 a km. Cab and bike-taxi figures are typical app prices and change with demand. Check official sites before you travel.</p>
+  <p>Metro network and gates © OpenStreetMap contributors (ODbL). Platform numbers from Wikipedia station layouts (CC BY-SA). Travel times assume normal daytime traffic.</p>
+</footer>
+<div class="toast" id="toast" role="status" hidden></div>
+<button class="ai-fab ai-only" id="aiFab" type="button" aria-controls="ai" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg><span>Ask AI</span></button>
+<section class="ai" id="ai" role="dialog" aria-label="Raahi assistant" hidden>
+  <div class="ai-head"><div><b>Raahi assistant</b><small>Routes, shops, food and budget</small></div><button class="icon-btn" id="aiClose" type="button" aria-label="Close assistant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="ai-log" id="aiLog" aria-live="polite"></div>
+  <form class="ai-form" id="aiForm"><label class="sr" for="aiInput">Message</label><textarea id="aiInput" rows="2" placeholder="Ask about routes, shops, food or your budget"></textarea><button class="btn primary" id="aiSend" type="submit">Send</button><button class="btn" id="aiStop" type="button" hidden>Stop</button></form>
+</section>
+
+<script>
+"use strict";
+/* ------------------------------------------------------------------ data */
+const METRO = /*METRO_JSON*/null;
+
+const ASI_A = [35, 550, 0], ASI_B = [25, 300, 0], FREE = [0, 0, 0];
+const P = (id, n, hi, cat, area, lat, lng, t, open, close, closed, mins, tip, more = {}) =>
+  ({ id, n, hi, cat, area, lat, lng, t, open, close, closed, mins, tip, ...more });
+const PLACES = [
+  P('red-fort','Red Fort','लाल क़िला','Monument','Old Delhi',28.65608,77.2408,ASI_A,'09:30','16:30',[1],120,'Enter by Lahori Gate. A sound-and-light show runs in the evening.',{aka:'lal qila lal quila',tNote:'₹5 more if you pay cash at the counter'}),
+  P('jama-masjid','Jama Masjid','जामा मस्जिद','Faith','Old Delhi',28.65068,77.23296,FREE,'07:00','18:30',[],45,'Closed to visitors during prayers. Dress modestly; robes are lent at the gate.',{tNote:'Camera fee ₹300; minaret climb extra'}),
+  P('chandni-chowk','Chandni Chowk','चाँदनी चौक','Market','Old Delhi',28.65598,77.23219,FREE,'10:00','20:00',[],120,'Paranthe Wali Gali and Kinari Bazaar are a short walk in. Many shops close on Sunday.',{aka:'old delhi paranthe wali gali'}),
+  P('khari-baoli','Khari Baoli spice market','खारी बावली','Market','Old Delhi',28.65714,77.22099,FREE,'10:00','19:00',[0],60,'Asia’s biggest spice market. Go before noon, when the lanes are calmer.',{aka:'spice market'}),
+  P('raj-ghat','Raj Ghat','राजघाट','Landmark','Daryaganj',28.64415,77.24984,FREE,'06:00','18:00',[],45,'Gandhi’s memorial. Shoes come off before the black marble platform.'),
+  P('feroz-kotla','Feroz Shah Kotla','फ़िरोज़ शाह कोटला','Monument','Daryaganj',28.6355,77.2450,ASI_B,'07:00','17:30',[],45,'Ruins of a 14th-century citadel with an Ashokan pillar on top.',{aka:'firoz shah kotla'}),
+  P('india-gate','India Gate & Kartavya Path','इंडिया गेट','Landmark','Central Vista',28.61293,77.22949,FREE,'00:00','23:59',[],60,'Best at dusk when it lights up. Food carts line the lawns in the evening.',{aka:'kartavya path rajpath'}),
+  P('war-memorial','National War Memorial','राष्ट्रीय समर स्मारक','Landmark','Central Vista',28.61276,77.23304,FREE,'09:00','19:30',[],45,'A short retreat ceremony is held at sunset. Open till 22:00 in summer.'),
+  P('rashtrapati','Rashtrapati Bhavan tour','राष्ट्रपति भवन','Landmark','Raisina Hill',28.61436,77.19959,[50,50,0],'09:30','16:30',[1],90,'Book a slot online in advance and carry the photo ID you booked with. Change of Guard is on Saturdays.',{aka:'president house',tNote:'Online booking required'}),
+  P('national-museum','National Museum','राष्ट्रीय संग्रहालय','Museum','Janpath',28.61192,77.21964,[20,650,0],'10:00','18:00',[1],120,'Five thousand years of Indian art. Audio guides are available at the entrance.'),
+  P('pm-sangrahalaya','Pradhanmantri Sangrahalaya','प्रधानमंत्री संग्रहालय','Museum','Teen Murti',28.60278,77.19876,[110,750,55],'10:00','18:00',[1],120,'The museum of India’s prime ministers, in Teen Murti Bhavan. Book online to skip the queue.',{aka:'pm museum teen murti'}),
+  P('bangla-sahib','Gurudwara Bangla Sahib','गुरुद्वारा बंगला साहिब','Faith','Connaught Place',28.62523,77.20942,FREE,'00:00','23:59',[],60,'Cover your head; scarves are provided. The langar serves free meals all day.'),
+  P('jantar-mantar','Jantar Mantar','जंतर मंतर','Monument','Connaught Place',28.62718,77.21662,ASI_B,'06:00','18:00',[],40,'An 18th-century observatory. Go on a sunny morning to watch the sundials work.'),
+  P('agrasen','Agrasen ki Baoli','अग्रसेन की बावली','Monument','Connaught Place',28.62602,77.22501,FREE,'07:00','18:00',[],30,'A 14th-century stepwell hidden behind Hailey Road.',{aka:'ugrasen stepwell'}),
+  P('cp','Connaught Place','कनॉट प्लेस','Market','Central Delhi',28.63177,77.21938,FREE,'11:00','21:00',[],120,'Inner and Outer Circles link through underpasses. Palika Bazaar sits under the central park.',{aka:'cp rajiv chowk'}),
+  P('janpath','Janpath Market','जनपथ मार्केट','Market','Connaught Place',28.62906,77.2189,FREE,'10:30','20:00',[],60,'Street stalls for clothes and handicrafts. Bargaining is expected.'),
+  P('purana-qila','Purana Qila','पुराना क़िला','Monument','Pragati Maidan',28.6092,77.24411,ASI_B,'07:00','17:00',[],75,'The Old Fort, with boating on the moat lake when it is open.',{aka:'old fort'}),
+  P('zoo','National Zoological Park','राष्ट्रीय प्राणी उद्यान','Garden','Mathura Road',28.60269,77.24718,[80,400,40],'09:00','16:30',[5],150,'Closed on Fridays. Battery-car rides inside cost extra.',{aka:'delhi zoo chidiya ghar'}),
+  P('humayun','Humayun’s Tomb','हुमायूँ का मक़बरा','Monument','Nizamuddin',28.59329,77.25065,ASI_A,'07:00','18:00',[],90,'A UNESCO site. Pair it with Sunder Nursery right next door.',{aka:'humayun tomb humayuns'}),
+  P('sunder-nursery','Sunder Nursery','सुंदर नर्सरी','Garden','Nizamuddin',28.59691,77.24702,[50,200,20],'07:00','19:00',[],90,'Mughal-era gardens with restored tombs and a lily pond. Weekday tickets are cheaper.'),
+  P('nizamuddin','Hazrat Nizamuddin Dargah','निज़ामुद्दीन दरगाह','Faith','Nizamuddin West',28.59138,77.24198,FREE,'05:00','22:30',[],60,'Qawwali after sunset prayers, best on Thursdays. Cover your head.'),
+  P('lodhi-garden','Lodhi Garden','लोधी गार्डन','Garden','Lodhi Road',28.5963,77.22155,FREE,'06:00','19:30',[],60,'Fifteenth-century tombs inside a 90-acre park. Lovely for an early walk.',{aka:'lodi garden'}),
+  P('khan-market','Khan Market','ख़ान मार्केट','Market','Lodhi Road',28.59955,77.22595,FREE,'10:30','22:00',[],60,'Bookshops, cafés and boutiques in a compact two-level market.'),
+  P('safdarjung','Safdarjung’s Tomb','सफ़दरजंग का मक़बरा','Monument','Lodhi Road',28.58929,77.21316,ASI_B,'07:00','17:00',[],45,'The last great Mughal garden tomb, and rarely crowded.',{aka:'safdarjung tomb'}),
+  P('gandhi-smriti','Gandhi Smriti','गांधी स्मृति','Museum','Tees January Marg',28.60185,77.21439,FREE,'10:00','17:00',[1],60,'The house where Gandhi spent his last days. Free and quiet.'),
+  P('indira-museum','Indira Gandhi Memorial Museum','इंदिरा गांधी स्मारक','Museum','Safdarjung Road',28.59997,77.20615,FREE,'09:30','16:45',[1],60,'Indira Gandhi’s former home, kept as she left it.'),
+  P('rail-museum','National Rail Museum','राष्ट्रीय रेल संग्रहालय','Museum','Chanakyapuri',28.58511,77.18101,[100,100,20],'10:00','17:30',[1],120,'Vintage locomotives and a toy train ride. A favourite with children.',{tNote:'Weekend price; about half on weekdays'}),
+  P('dilli-haat','Dilli Haat INA','दिल्ली हाट','Market','INA',28.57416,77.20933,[30,100,10],'10:30','22:00',[],90,'Crafts and food stalls from every state. Try the Naga and Bihari stalls.',{aka:'delhi haat'}),
+  P('sarojini','Sarojini Nagar Market','सरोजिनी नगर मार्केट','Market','Sarojini Nagar',28.57692,77.19626,FREE,'10:30','21:00',[1],120,'Bargain fashion. Monday is the weekly off.'),
+  P('lodhi-art','Lodhi Art District','लोधी आर्ट डिस्ट्रिक्ट','Landmark','Lodhi Colony',28.57975,77.21687,FREE,'07:00','19:00',[],60,'Giant murals on the colony walls. Start near Khanna Market.',{aka:'street art murals lodi colony'}),
+  P('lajpat','Lajpat Nagar Central Market','लाजपत नगर','Market','Lajpat Nagar',28.56899,77.24083,FREE,'10:30','21:00',[1],90,'Fabrics, mehendi artists and street food. Monday is the weekly off.'),
+  P('hauz-khas','Hauz Khas Village & Fort','हौज़ ख़ास','Monument','Hauz Khas',28.55336,77.19484,FREE,'10:30','19:00',[],120,'Fort ruins and a lake by day, cafés and bars by night.',{aka:'hkv deer park'}),
+  P('lotus','Lotus Temple','लोटस टेम्पल','Faith','Kalkaji',28.55336,77.25861,FREE,'09:00','17:30',[1],60,'Silence is kept in the prayer hall. Shoes are left at the counter outside.',{aka:'bahai temple kamal mandir'}),
+  P('iskcon','ISKCON Temple','इस्कॉन मंदिर','Faith','East of Kailash',28.55645,77.25361,FREE,'04:30','21:00',[],60,'Closed for a midday break, roughly 13:00 to 16:00.'),
+  P('kalkaji','Kalkaji Mandir','कालकाजी मंदिर','Faith','Kalkaji',28.54978,77.26067,FREE,'04:00','23:00',[],45,'A busy Kali temple. Crowds peak during Navratri.'),
+  P('akshardham','Swaminarayan Akshardham','अक्षरधाम','Faith','East Delhi',28.61252,77.27732,FREE,'10:00','18:30',[1],180,'Phones, cameras and bags are not allowed inside; use the free cloakroom.',{tNote:'Temple entry is free',extra:{label:'Exhibitions',t:[250,250,150]}}),
+  P('waste-wonder','Waste to Wonder Park','वेस्ट टू वंडर पार्क','Garden','Sarai Kale Khan',28.5862,77.2566,[50,50,25],'11:00','23:00',[],75,'World wonders rebuilt from scrap. Best after dark when it is lit.'),
+  P('qutub','Qutub Minar','क़ुतुब मीनार','Monument','Mehrauli',28.52441,77.18545,ASI_A,'07:00','17:00',[],90,'Mehrauli Archaeological Park next door is free and much quieter.',{aka:'qutb minar kutub qutab'}),
+  P('mehrauli','Mehrauli Archaeological Park','महरौली पुरातत्व उद्यान','Monument','Mehrauli',28.52124,77.18586,FREE,'06:00','18:00',[],75,'More than 100 monuments scattered through woods. Good shoes help.'),
+  P('chhatarpur','Chhatarpur Temple','छतरपुर मंदिर','Faith','Chhatarpur',28.50331,77.17876,FREE,'06:00','22:00',[],60,'A sprawling marble temple complex, at its best during Navratri.'),
+  P('five-senses','Garden of Five Senses','गार्डन ऑफ़ फ़ाइव सेंसेज़','Garden','Saidulajab',28.51377,77.19834,[35,35,15],'09:00','19:00',[],60,'Landscaped gardens with sculptures and food courts.'),
+  P('select-citywalk','Select Citywalk','सिलेक्ट सिटीवॉक','Market','Saket',28.52934,77.21832,FREE,'10:00','22:00',[],120,'Delhi’s best-known mall, with food courts and cinemas.',{aka:'saket mall'}),
+  P('tughlaqabad','Tughlaqabad Fort','तुग़लक़ाबाद क़िला','Monument','Tughlakabad',28.51122,77.2623,ASI_B,'07:00','17:00',[],75,'Huge, crumbling and seldom crowded. Wear sturdy shoes.'),
+  P('majnu','Majnu ka Tilla','मजनू का टीला','Market','North Delhi',28.70434,77.22449,FREE,'09:00','21:00',[],90,'Delhi’s Tibetan colony: laphing, momos and butter tea.',{aka:'tibetan colony'}),
+  P('bharat-mandapam','Bharat Mandapam','भारत मंडपम','Landmark','Pragati Maidan',28.61724,77.24346,FREE,'10:00','19:00',[],60,'The convention centre that hosts the India International Trade Fair each November (ticketed).',{aka:'pragati maidan trade fair'}),
+];
+const HUBS = [
+  { id:'t3', n:'IGI Airport T2 / T3', sub:'Airport · Airport Express', lat:28.55795, lng:77.08349, aka:'airport terminal 3 t3 t2 international indira gandhi del' },
+  { id:'t1', n:'IGI Airport T1', sub:'Airport · Magenta Line', lat:28.5650, lng:77.1210, aka:'airport terminal 1 domestic del' },
+  { id:'ndls', n:'New Delhi Railway Station', sub:'Railway station · NDLS', lat:28.64028, lng:77.22041, aka:'ndls ajmeri gate paharganj side' },
+  { id:'dli', n:'Old Delhi Railway Station', sub:'Railway station · DLI', lat:28.66093, lng:77.22765, aka:'delhi junction dli' },
+  { id:'nzm', n:'Hazrat Nizamuddin Railway Station', sub:'Railway station · NZM', lat:28.58641, lng:77.25298, aka:'nzm' },
+  { id:'anvt', n:'Anand Vihar Terminal', sub:'Railway station · ANVT', lat:28.64885, lng:77.3155, aka:'anvt' },
+  { id:'isbt-kg', n:'Kashmere Gate ISBT', sub:'Interstate bus terminal', lat:28.6687, lng:77.23042, aka:'isbt bus stand' },
+  { id:'isbt-skk', n:'Sarai Kale Khan ISBT', sub:'Interstate bus terminal', lat:28.58504, lng:77.25876, aka:'isbt bus stand' },
+  { id:'isbt-av', n:'Anand Vihar ISBT', sub:'Interstate bus terminal', lat:28.6467, lng:77.3158, aka:'isbt bus stand' },
+  { id:'paharganj', n:'Paharganj', sub:'Neighbourhood · budget hotels', lat:28.64149, lng:77.21406, aka:'main bazaar' },
+  { id:'aerocity', n:'Aerocity', sub:'Neighbourhood · airport hotels', st:'Delhi Aerocity', aka:'hotels' },
+];
+const POPULAR = ['india-gate','red-fort','qutub','humayun','akshardham','lotus','chandni-chowk','hauz-khas','lodhi-garden','dilli-haat'];
+const CATS = { Monument:'Monument', Museum:'Museum', Faith:'Place of worship', Garden:'Garden & park', Market:'Market', Landmark:'Landmark', Food:'Food', Other:'Place' };
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DAYS_LONG = ['Sundays','Mondays','Tuesdays','Wednesdays','Thursdays','Fridays','Saturdays'];
+
+/* ------------------------------------------------------------------ helpers */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
+const rng = ([lo, hi]) => Math.round(lo) === Math.round(hi) ? inr(lo) : `${inr(lo)}–${Math.round(hi).toLocaleString('en-IN')}`;
+const mid = c => (c[0] + c[1]) / 2;
+const dur = m => { m = Math.max(1, Math.round(m)); if (m < 60) return m + ' min'; const h = Math.floor(m / 60), r = m % 60; return r ? `${h} h ${r} min` : `${h} h`; };
+const hhmm = m => { m = Math.round(m); const h = Math.floor(m / 60) % 24, mm = ((m % 60) + 60) % 60; return String(h).padStart(2, '0') + ':' + String(mm).padStart(2, '0'); };
+const toMin = s => { const [h, m] = String(s || '0:0').split(':').map(Number); return (h || 0) * 60 + (m || 0); };
+const r5 = n => Math.max(5, Math.round(n / 5) * 5), r10 = n => Math.max(10, Math.round(n / 10) * 10);
+const fmtKm = km => km < 1 ? `${Math.max(50, Math.round(km * 20) * 50)} m` : `${km.toFixed(1)} km`;
+const todayISO = () => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); };
+const dayOf = iso => new Date(iso + 'T12:00:00').getDay();
+const monthName = key => new Date(key + '-15T12:00:00').toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+const norm = s => String(s || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/['’.]/g, '').replace(/[^a-z0-9\u0900-\u097f]+/g, ' ').trim();
+function hav(a, b) { const R = 6371, k = Math.PI / 180, dLat = (b.lat - a.lat) * k, dLng = (b.lng - a.lng) * k;
+  const x = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * k) * Math.cos(b.lat * k) * Math.sin(dLng / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(x)); }
+function inkFor(hex) { const n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? '#13212B' : '#FFFFFF'; }
+
+const ICONS = {
+  metro: '<rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 10.5h14M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9" cy="13.5" r=".9" fill="currentColor"/><circle cx="15" cy="13.5" r=".9" fill="currentColor"/>',
+  plane: '<path d="M10.5 3.6a1.5 1.5 0 0 1 3 0V9l7 4v2l-7-2v5l2 1.6V21L12 20l-3.5 1v-1.4l2-1.6v-5l-7 2v-2l7-4z"/>',
+  bus: '<rect x="4" y="3" width="16" height="14.5" rx="2.5"/><path d="M4 10h16M7.5 21v-3.5M16.5 21v-3.5"/><circle cx="8" cy="14" r=".9" fill="currentColor"/><circle cx="16" cy="14" r=".9" fill="currentColor"/>',
+  auto: '<path d="M4 16.5V10a5 5 0 0 1 5-5h5l5 6v5.5z"/><path d="M14 5v6h5"/><circle cx="7.5" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',
+  cab: '<path d="M5 12.5 6.6 8.3A2 2 0 0 1 8.5 7h7a2 2 0 0 1 1.9 1.3l1.6 4.2"/><rect x="3" y="12.5" width="18" height="4.5" rx="1.5"/><circle cx="7.5" cy="19" r="1.6"/><circle cx="16.5" cy="19" r="1.6"/>',
+  bike: '<circle cx="6" cy="16" r="3"/><circle cx="18" cy="16" r="3"/><path d="M6 16l4-6h5l3 6M10 10 9 7H7M15 10l1.2-3H19"/>',
+  erick: '<path d="M5 16.5V8h10l3.5 4v4.5"/><path d="M4 8h12M5 8l1.5-3h7"/><circle cx="7.5" cy="18" r="2"/><circle cx="16" cy="18" r="2"/>',
+  walk: '<circle cx="13" cy="4.5" r="1.8"/><path d="M11 21l2-6-2.5-2.5L12 8l3 3h3M9.5 10 7 13.5M13 15l3 6"/>',
+};
+const icon = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]}</svg>`;
+const MODES = {
+  metro: { name:'Metro', icon:'metro', mc:'--m-metro' },
+  ae:    { name:'Airport Express + Metro', icon:'plane', mc:'--m-ae' },
+  bus:   { name:'DTC / cluster bus', icon:'bus', mc:'--m-bus' },
+  auto:  { name:'Auto-rickshaw', icon:'auto', mc:'--m-auto', veh:true, seats:3 },
+  cab:   { name:'Cab (Uber, Ola, Rapido)', icon:'cab', mc:'--m-cab', veh:true, seats:4 },
+  bike:  { name:'Bike taxi', icon:'bike', mc:'--m-bike', veh:true, seats:1 },
+  erick: { name:'Shared e-rickshaw', icon:'erick', mc:'--m-erick' },
+  walk:  { name:'Walk', icon:'walk', mc:'--m-walk' },
+};
+const mi = (k, sm) => `<span class="mi${sm ? ' sm' : ''}" style="--mc:var(${MODES[k].mc})">${icon(MODES[k].icon)}</span>`;
+
+/* ------------------------------------------------------------------ fares */
+const SLABS = [2, 5, 12, 21, 32], WEEK = [11, 21, 32, 43, 54, 64], SUN = [11, 11, 21, 32, 43, 54];
+const metroFare = (km, sunday) => { let i = SLABS.findIndex(s => km <= s); if (i < 0) i = 5; return (sunday ? SUN : WEEK)[i]; };
+const aeFare = km => km <= 3 ? 11 : km <= 12 ? 32 : km <= 17 ? 54 : 64;
+const busFare = km => [km <= 4 ? 5 : km <= 10 ? 10 : 15, km <= 4 ? 10 : km <= 10 ? 15 : km <= 14 ? 20 : 25];
+const autoFare = km => { const m = 30 + Math.max(0, km - 1.5) * 11; return [r5(m), r10(m * 1.3)]; };
+const cabFare = (km, min) => { const f = 50 + 14 * km + 1.2 * min; return [r10(f), r10(f * 1.4)]; };
+const bikeFare = (km, min) => { const f = 25 + 7 * km + 0.5 * min; return [r5(f), r10(f * 1.3)]; };
+const erickFare = km => km <= 2 ? [10, 20] : km <= 3 ? [20, 30] : km <= 4 ? [20, 40] : [30, 50];
+
+/* ------------------------------------------------------------------ metro graph */
+// Stations carry their numbered gates (from OpenStreetMap); lines are through-running services,
+// so a Vaishali train runs on to Dwarka and only a real change of train shows as a change.
+const ST = METRO.stations.map(([n, lat, lng, code], i) => ({ i, n, lat, lng, code, lines: [], gates: (METRO.gates[i] || []).map(([ref, glat, glng]) => ({ ref, lat: glat, lng: glng })) }));
+const LN = METRO.lines;
+const LINE_WAIT = { Yellow: 2.5, Blue: 2.5, Red: 3, Violet: 3.5, Pink: 3.5, Magenta: 3.5, Green: 5, Grey: 5, 'Airport Express': 5 };
+// Platform-to-platform walking time at interchanges, in minutes, before waiting for the next train.
+const XFER = { 'Rajiv Chowk': 4, 'Kashmere Gate': 6, 'Central Secretariat': 4, 'Mandi House': 4, 'Hauz Khas': 7, 'Kalkaji Mandir': 5, 'Botanical Garden': 5,
+  'Janakpuri West': 6, 'Netaji Subhash Place': 6, 'Rajouri Garden': 7, 'Azadpur': 8, 'Lajpat Nagar': 5, 'Dilli Haat - INA': 5, 'Mayur Vihar - I': 6, 'Anand Vihar': 6,
+  'Karkarduma': 6, 'Welcome': 6, 'New Delhi': 8, 'Kirti Nagar': 4, 'Inderlok': 6, 'Yamuna Bank': 3, 'Ashok Park Main': 3, 'Dwarka Sector 21': 6, 'Dwarka - Kakrola': 5,
+  'Punjabi Bagh West': 8, 'Majlis Park': 6, 'Maujpur-Babarpur': 5, 'Haiderpur Badli Mor': 6, 'Madhuban Chowk': 6 };
+LN.forEach((l, li) => {
+  l.lc = l.c; l.lt = inkFor(l.c); l.short = l.g; l.name = l.ae ? 'Airport Express Line' : l.g + ' Line'; l.wait = LINE_WAIT[l.g] ?? 4;
+  l.s.forEach(s => { if (!ST[s].lines.includes(li)) ST[s].lines.push(li); });
+});
+const ST_BY_NAME = Object.fromEntries(ST.map(s => [s.n, s]));
+const NK = 16, key = (s, li) => s * NK + li, stOf = k => Math.floor(k / NK), lnOf = k => k % NK;
+const ADJ = new Map(), SADJ = ST.map(() => []);
+const addE = (a, b, t, km, kind) => { if (!ADJ.has(a)) ADJ.set(a, []); ADJ.get(a).push([b, t, km, kind]); };
+LN.forEach((l, li) => {
+  const speed = l.ae ? 80 : 40, dwell = l.ae ? 0.75 : 0.5;
+  for (let j = 0; j < l.s.length - 1; j++) {
+    const a = l.s[j], b = l.s[j + 1], km = hav(ST[a], ST[b]) * 1.08, t = km / speed * 60 + dwell;
+    addE(key(a, li), key(b, li), t, km, 'ride'); addE(key(b, li), key(a, li), t, km, 'ride');
+    if (!l.ae) { SADJ[a].push([b, km]); SADJ[b].push([a, km]); }
+  }
+});
+ST.forEach(s => s.lines.forEach(x => s.lines.forEach(y => {
+  if (x === y) return;
+  const walk = LN[x].g === LN[y].g ? 3 : (XFER[s.n] ?? 5);
+  addE(key(s.i, x), key(s.i, y), walk + LN[y].wait, 0, 'xfer');
+})));
+[['Dhaula Kuan', 'Durgabai Deshmukh South Campus', 10]].forEach(([a, b, t]) => {
+  const A = ST_BY_NAME[a], B = ST_BY_NAME[b]; if (!A || !B) return;
+  A.lines.forEach(x => B.lines.forEach(y => { addE(key(A.i, x), key(B.i, y), t + LN[y].wait, 0, 'walk'); addE(key(B.i, y), key(A.i, x), t + LN[x].wait, 0, 'walk'); }));
+});
+
+class Heap { constructor() { this.a = []; } get size() { return this.a.length; }
+  push(p, v) { const a = this.a; a.push([p, v]); let i = a.length - 1; while (i) { const j = (i - 1) >> 1; if (a[j][0] <= a[i][0]) break; [a[i], a[j]] = [a[j], a[i]]; i = j; } }
+  pop() { const a = this.a, top = a[0], last = a.pop(); if (a.length) { a[0] = last; let i = 0; for (;;) { const l = 2 * i + 1, r = l + 1; let m = i;
+    if (l < a.length && a[l][0] < a[m][0]) m = l; if (r < a.length && a[r][0] < a[m][0]) m = r; if (m === i) break; [a[i], a[m]] = [a[m], a[i]]; i = m; } } return top; } }
+
+const DCACHE = new Map();
+function dijkstra(src, noAE) {
+  const ck = src + '|' + noAE; if (DCACHE.has(ck)) return DCACHE.get(ck);
+  const dist = new Map(), prev = new Map(), h = new Heap();
+  for (const li of ST[src].lines) { if (noAE && LN[li].ae) continue; const k = key(src, li), w = LN[li].wait; dist.set(k, w); prev.set(k, null); h.push(w, k); }
+  while (h.size) {
+    const [d, k] = h.pop(); if (d > dist.get(k)) continue;
+    for (const [k2, t, km, kind] of ADJ.get(k) || []) {
+      if (noAE && LN[lnOf(k2)].ae) continue;
+      const nd = d + t; if (nd < (dist.get(k2) ?? Infinity)) { dist.set(k2, nd); prev.set(k2, [k, kind, km, t]); h.push(nd, k2); }
+    }
+  }
+  const res = { dist, prev }; DCACHE.set(ck, res); return res;
+}
+const KCACHE = new Map();
+function shortKm(a, b) {
+  if (a === b) return 0;
+  if (!KCACHE.has(a)) { const dist = new Array(ST.length).fill(Infinity), h = new Heap(); dist[a] = 0; h.push(0, a);
+    while (h.size) { const [d, s] = h.pop(); if (d > dist[s]) continue; for (const [s2, km] of SADJ[s]) { if (d + km < dist[s2]) { dist[s2] = d + km; h.push(d + km, s2); } } }
+    KCACHE.set(a, dist); }
+  return KCACHE.get(a)[b];
+}
+function bestEnd(res, s) { let best = null; for (const li of ST[s].lines) { const k = key(s, li), d = res.dist.get(k); if (d != null && (!best || d < best.t)) best = { t: d, k }; } return best; }
+function segmentsOf(res, endKey) {
+  const chain = []; let k = endKey;
+  for (;;) { const p = res.prev.get(k); if (!p) break; chain.unshift({ k, from: p[0], kind: p[1], km: p[2], t: p[3] }); k = p[0]; }
+  const segs = []; let cur = null;
+  for (const c of chain) {
+    if (c.kind === 'ride') {
+      if (cur && cur.li === lnOf(c.k)) { cur.to = stOf(c.k); cur.stops++; cur.km += c.km; cur.t += c.t; }
+      else { cur = { type: 'ride', li: lnOf(c.k), from: stOf(c.from), to: stOf(c.k), stops: 1, km: c.km, t: c.t }; segs.push(cur); }
+    } else { cur = null; segs.push({ type: c.kind, at: stOf(c.from), to: stOf(c.k), fromLi: lnOf(c.from), toLi: lnOf(c.k), t: c.t }); }
+  }
+  return segs;
+}
+function pathFare(segs, sunday) {
+  let total = 0, start = null, end = null, isAE = false, aeKm = 0;
+  const flush = () => { if (start == null) return; total += isAE ? aeFare(aeKm) : metroFare(shortKm(start, end), sunday); start = null; aeKm = 0; };
+  for (const s of segs) {
+    if (s.type === 'ride') { const ae = !!LN[s.li].ae; if (start != null && ae !== isAE) flush(); if (start == null) { start = s.from; isAE = ae; } end = s.to; if (ae) aeKm += s.km; }
+    else if (s.type === 'walk') flush();
+  }
+  flush(); return total;
+}
+// Where a ride sits on a service: the index of its first stop and the direction of travel.
+function segDir(L, from, to, stops) {
+  for (let i = 0; i < L.s.length; i++) {
+    if (L.s[i] !== from) continue;
+    if (L.s[i + stops] === to) return { i, dir: 1 };
+    if (i - stops >= 0 && L.s[i - stops] === to) return { i, dir: -1 };
+  }
+  return null;
+}
+// Platform numbers (from Wikipedia station layouts) keyed by station, as [platform, next station].
+const PLAT = Object.fromEntries(Object.entries(METRO.platforms || {}).map(([k, v]) => [+k, v]));
+const platformsTo = (at, next) => (PLAT[at] || []).filter(([, nx]) => nx === next).map(([r]) => r);
+// What to look for on the platform: the platform number, the destinations on the train front that are
+// right for this ride, and trains that share the platform but branch away before the rider's stop.
+function boardInfo(seg) {
+  const L0 = LN[seg.li], d0 = segDir(L0, seg.from, seg.to, seg.stops);
+  if (!d0) return { plat: [], ends: [], avoid: [], next: ST[seg.to].n };
+  const next = L0.s[d0.i + d0.dir], plat = platformsTo(seg.from, next);
+  if (L0.ring) return { plat, via: ST[next].n, ends: [], avoid: [], next: ST[next].n };
+  const ends = [], avoid = [];
+  LN.forEach(L => {
+    if (L.g !== L0.g || L.ring) return;
+    let dir = 0, i0 = -1;
+    L.s.forEach((x, i) => { if (x !== seg.from) return; if (L.s[i + 1] === next) { dir = 1; i0 = i; } else if (i > 0 && L.s[i - 1] === next) { dir = -1; i0 = i; } });
+    if (!dir) return;
+    const term = ST[dir > 0 ? L.s[L.s.length - 1] : L.s[0]].n;
+    if (segDir(L, seg.from, seg.to, seg.stops)?.dir === dir) { if (!ends.includes(term)) ends.push(term); return; }
+    let k = 0; while (k < seg.stops && L.s[i0 + dir * (k + 1)] === L0.s[d0.i + d0.dir * (k + 1)]) k++;
+    const split = L.s[i0 + dir * k], onward = L0.s[d0.i + d0.dir * (k + 1)];
+    if (!avoid.some(a => a.term === term)) avoid.push({ term, split: ST[split].n, fix: onward != null ? platformsTo(split, onward) : [] });
+  });
+  return { plat, ends, avoid, next: ST[next].n };
+}
+function gateNear(s, p) { let best = null; for (const g of s.gates) { const km = hav(g, p); if (!best || km < best.km) best = { ref: g.ref, km }; } return best; }
+const reach = (s, p) => gateNear(s, p) || { ref: null, km: hav(s, p) };
+function nearStations(p, n = 4, maxKm = 4) { return ST.map(s => [s, reach(s, p)]).filter(x => x[1].km <= maxKm).sort((a, b) => a[1].km - b[1].km).slice(0, n); }
+function accessLeg(r) {
+  const road = r.km * 1.3, base = { gate: r.ref };
+  if (r.here) return { ...base, m: 'none', t: 1, c: [0, 0], km: 0 };
+  if (road <= 1.1) return { ...base, m: 'walk', t: road / 4.5 * 60 + 2, c: [0, 0], km: road };
+  return { ...base, m: 'erick', t: road / 13 * 60 + 8, c: [erickFare(road)[0], Math.max(erickFare(road)[1], autoFare(road)[0])], km: road };
+}
+function metroOptions(o, d, sunday) {
+  const A = o.st ? [[o.st, { ref: null, km: 0, here: true }]] : nearStations(o);
+  const B = d.st ? [[d.st, { ref: null, km: 0, here: true }]] : nearStations(d);
+  if (!A.length || !B.length) return [];
+  const best = {};
+  for (const noAE of [false, true]) {
+    let b = null;
+    for (const [sa, ra] of A) { const res = dijkstra(sa.i, noAE);
+      for (const [sb, rb] of B) { if (sa.i === sb.i) continue; const end = bestEnd(res, sb.i); if (!end) continue;
+        const acc = accessLeg(ra), egr = accessLeg(rb), total = acc.t + end.t + egr.t, score = total + (acc.c[0] + egr.c[0]) / 5;
+        if (!b || score < b.score) b = { total, score, sa, sb, acc, egr, res, end }; } }
+    best[noAE] = b;
+  }
+  const build = b => {
+    const segs = segmentsOf(b.res, b.end.k), fare = pathFare(segs, sunday), usesAE = segs.some(s => s.type === 'ride' && LN[s.li].ae);
+    const label = usesAE ? (segs.every(s => s.type !== 'ride' || LN[s.li].ae) ? 'Airport Express line' : 'Airport Express + Metro') : 'Metro';
+    // Airport Express halls have their own unnumbered entrances, so the metro gate numbers don't apply there.
+    const rides = segs.filter(s => s.type === 'ride'), acc = { ...b.acc }, egr = { ...b.egr };
+    if (rides.length && LN[rides[0].li].ae) acc.gate = null;
+    if (rides.length && LN[rides[rides.length - 1].li].ae) egr.gate = null;
+    return { k: usesAE ? 'ae' : 'metro', label, t: b.total, c: [fare + acc.c[0] + egr.c[0], fare + acc.c[1] + egr.c[1]], fare, segs, acc, egr, sa: b.sa, sb: b.sb, toStation: !!d.st };
+  };
+  const out = [];
+  if (best[false]) { const x = build(best[false]); out.push(x);
+    if (x.k === 'ae' && best[true]) { const y = build(best[true]); if (mid(y.c) <= mid(x.c) - 15 && y.t <= x.t * 1.8 && (y.acc.m !== 'erick' || x.acc.m === 'erick')) out.push(y); } }
+  else if (best[true]) out.push(build(best[true]));
+  return out.filter(x => x.segs.length);
+}
+function planRoute(o, d, sunday) {
+  const straight = hav(o, d); if (straight < 0.05) return [];
+  const road = Math.max(0.3, straight * 1.3), opts = [];
+  if (road >= 2.5 || (o.st && d.st)) opts.push(...metroOptions(o, d, sunday));
+  if (road > 1.5) { const t = road / 14 * 60 + 12, f = busFare(road);
+    opts.push({ k: 'bus', t, c: f, note: `Non-AC ${inr(f[0])}, AC ${inr(f[1])} · women ride free with a pink ticket` }); }
+  const at = road / 19 * 60 + 4, af = autoFare(road);
+  opts.push({ k: 'auto', t: at, c: af, note: `Meter fare ${inr(af[0])} for ${fmtKm(road)} · 25% extra 11 pm–5 am` });
+  const ct = road / 22 * 60 + 7;
+  opts.push({ k: 'cab', t: ct, c: cabFare(road, ct), note: 'Typical app price · higher at rush hour and in rain' });
+  if (road <= 25) { const bt = road / 26 * 60 + 5; opts.push({ k: 'bike', t: bt, c: bikeFare(road, bt), note: 'Rapido or Uber Moto · one rider, helmet given' }); }
+  if (road <= 4) opts.push({ k: 'erick', t: road / 12 * 60 + 4, c: erickFare(road), note: 'Per seat · ₹50–100 to hire the whole rickshaw' });
+  if (road <= 2.5) opts.push({ k: 'walk', t: road / 4.5 * 60, c: [0, 0], note: `${fmtKm(road)} on foot` });
+  return opts;
+}
+const groupCost = (o, people) => { const m = MODES[o.k]; return m.veh ? Math.ceil(people / m.seats) * mid(o.c) : mid(o.c) * people; };
+const scoreMix = (o, people) => groupCost(o, people) / people + 2 * o.t;
+function rank(opts, how, people = 1) {
+  const f = how === 'cheap' ? (o => groupCost(o, people) * 1000 + o.t) : how === 'fast' ? (o => o.t * 1000 + groupCost(o, people)) : (o => scoreMix(o, people));
+  return [...opts].sort((a, b) => f(a) - f(b));
+}
+function pickOpt(opts, pref, people, override) {
+  if (!opts.length) return null;
+  if (override) { const o = opts.find(x => x.k === override); if (o) return o; }
+  if (pref === 'comfort') { const w = opts.find(x => x.k === 'walk' && x.t <= 12); return w || opts.find(x => x.k === 'cab') || rank(opts, 'mix', people)[0]; }
+  return rank(opts, pref === 'cheap' ? 'cheap' : pref === 'fast' ? 'fast' : 'mix', people)[0];
+}
+
+/* ------------------------------------------------------------------ state */
+const LS_KEY = 'raahi.delhi.v1';
+const DEFAULTS = () => ({
+  v: 1, updatedAt: 0, monthly: 6000, tripBudget: 2000,
+  explore: { from: 'st:Rajiv Chowk', to: 'pl:qutub', sort: 'mix' },
+  trip: { example: true, name: 'Example: a day in central Delhi', date: todayISO(), start: '09:00', from: 'hub:ndls', back: true,
+    adults: 2, kids: 0, who: 'in', pref: 'mix', food: 600,
+    stops: [{ ref: 'pl:humayun' }, { ref: 'pl:sunder-nursery' }, { ref: 'pl:india-gate' }, { ref: 'pl:bangla-sahib' }] },
+  saved: [], expenses: [], custom: [],
+  commute: { from: 'st:Dwarka Sector 21', to: 'st:Rajiv Chowk', perWeek: 10 },
+  guide: { need: 'electronics_components', q: '', near: null, open: false },
+});
+function hydrate(x) { const d = DEFAULTS(); if (!x || typeof x !== 'object') return d;
+  const arr = v => Array.isArray(v) ? v : [];
+  return { ...d, ...x, explore: { ...d.explore, ...(x.explore || {}) }, trip: { ...d.trip, ...(x.trip || {}), stops: arr(x.trip?.stops ?? d.trip.stops) },
+    commute: { ...d.commute, ...(x.commute || {}) }, guide: { ...d.guide, ...(x.guide || {}) }, saved: arr(x.saved), expenses: arr(x.expenses), custom: arr(x.custom) }; }
+function loadLocal() { try { const s = localStorage.getItem(LS_KEY); return s ? JSON.parse(s) : null; } catch { return null; } }
+let S = hydrate(loadLocal());
+let cloud = null, saveTimer = null, writing = Promise.resolve();
+function persist() {
+  S.updatedAt = Date.now();
+  try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch {}
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { if (!cloud) return; const body = JSON.parse(JSON.stringify(S));
+    writing = writing.then(() => cloud.set(body)).then(() => setSync(true), e => { if (e && e.code === 'invalid_argument') { cloud = null; setSync(false); } }); }, 1200);
+}
+function setSync(on) { const el = $('#sync'); el.classList.toggle('cloud', on); el.lastElementChild.textContent = on ? 'Saved to your account, on every device' : 'Saved in this browser'; }
+async function initCloud() {
+  try {
+    if (!window.claude?.use) { loadBundledGuide(); return; }
+    const [db, user] = await Promise.all([claude.use('db'), claude.use('user')]);
+    if (!db) { loadBundledGuide(); return; }
+    subscribeGuide(db);
+    if (!user) return;
+    const id = await user.id(); if (!id) return;
+    const ref = db.doc('data/users/' + id + '/planner'), snap = await ref.get();
+    if (snap.exists) { const d = snap.data(); if (d && (d.updatedAt || 0) > (S.updatedAt || 0)) { S = hydrate(JSON.parse(JSON.stringify(d))); INDEX = null; try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch {} renderAll(); } }
+    cloud = ref; setSync(true);
+    if (!snap.exists && S.updatedAt) persist();
+  } catch {}
+}
+let SAMPLE = null;
+const GUIDE = { state: 'loading', items: [], updated: null };
+
+/* ------------------------------------------------------------------ places + search */
+const PLACE_BY_ID = Object.fromEntries(PLACES.map(p => [p.id, p]));
+const HUB_BY_ID = Object.fromEntries(HUBS.map(h => { if (h.st && ST_BY_NAME[h.st]) { h.lat = ST_BY_NAME[h.st].lat; h.lng = ST_BY_NAME[h.st].lng; } return [h.id, h]; }));
+const linesOf = s => [...new Set(s.lines.map(li => LN[li].short))].join(' · ');
+function resolve(ref) {
+  if (!ref) return null; const i = ref.indexOf(':'), t = ref.slice(0, i), id = ref.slice(i + 1);
+  if (t === 'pl' || t === 'cu' || t === 'gd') { const p = t === 'pl' ? PLACE_BY_ID[id] : t === 'cu' ? S.custom.find(x => x.id === id) : GUIDE.items.find(x => x.id === id);
+    return p ? { ref, kind: 'place', name: p.n, lat: p.lat, lng: p.lng, place: p, custom: t === 'cu' } : null; }
+  if (t === 'hub') { const h = HUB_BY_ID[id]; return h ? { ref, kind: 'hub', name: h.n, lat: h.lat, lng: h.lng, sub: h.sub } : null; }
+  if (t === 'st') { const s = ST_BY_NAME[id]; return s ? { ref, kind: 'station', name: s.n + ' metro', lat: s.lat, lng: s.lng, sub: 'Metro · ' + linesOf(s), st: s } : null; }
+  return null;
+}
+let INDEX = null;
+function index() {
+  if (INDEX) return INDEX;
+  INDEX = [
+    ...PLACES.map(p => ({ ref: 'pl:' + p.id, name: p.n, sub: `${CATS[p.cat]} · ${p.area}`, k: 'Place', w: 8, hay: norm(p.n + ' ' + (p.aka || '') + ' ' + p.area), hi: p.hi })),
+    ...S.custom.map(p => ({ ref: 'cu:' + p.id, name: p.n, sub: `${CATS[p.cat] || 'Place'} · ${p.area || 'Delhi'}`, k: 'Saved', w: 7, hay: norm(p.n + ' ' + (p.area || '')), hi: p.hi })),
+    ...GUIDE.items.map(p => ({ ref: 'gd:' + p.id, name: p.n, sub: `${(p.guide.cats || []).slice(0, 2).map(c => NEED_LABEL[c] || c).join(', ')} · ${p.area}`, k: p.cat === 'Food' ? 'Food' : 'Shop', w: 7, hay: norm([p.n, p.area, p.guide.buy, ...(p.guide.cats || []).map(c => NEED_LABEL[c])].join(' ')) })),
+    ...HUBS.map(h => ({ ref: 'hub:' + h.id, name: h.n, sub: h.sub, k: 'Hub', w: 6, hay: norm(h.n + ' ' + h.aka) })),
+    ...ST.map(s => ({ ref: 'st:' + s.n, name: s.n, sub: 'Metro · ' + linesOf(s), k: 'Metro', w: 0, hay: norm(s.n + ' metro station') })),
+  ];
+  return INDEX;
+}
+function searchIndex(q) {
+  const nq = norm(q); if (!nq) return [];
+  const out = [];
+  for (const it of index()) { const n = norm(it.name); let sc = 0;
+    if (n === nq) sc = 120; else if (n.startsWith(nq)) sc = 100; else if ((' ' + n).includes(' ' + nq)) sc = 80; else if (n.includes(nq)) sc = 62; else if (it.hay.includes(nq)) sc = 50; else if (it.hi && it.hi.includes(q.trim())) sc = 55;
+    if (sc) out.push([sc + it.w, it]); }
+  return out.sort((a, b) => b[0] - a[0] || a[1].name.localeCompare(b[1].name)).slice(0, 8).map(x => x[1]);
+}
+const sugg = refs => refs.map(r => index().find(it => it.ref === r)).filter(Boolean);
+const DEF_TO = () => sugg(POPULAR.slice(0, 7).map(id => 'pl:' + id));
+const DEF_FROM = () => sugg(['hub:t3', 'hub:t1', 'hub:ndls', 'hub:paharganj', 'st:Rajiv Chowk', 'st:Kashmere Gate', 'st:Hauz Khas']);
+
+function makeCombo(box, { get, set, defaults }) {
+  const input = box.querySelector('input'), list = box.querySelector('ul');
+  list.id = input.id + '-list'; input.setAttribute('aria-controls', list.id);
+  let items = [], active = -1, askQ = null, open = false;
+  const label = () => { const r = resolve(get()); input.value = r ? r.name : ''; };
+  const draw = () => {
+    let html = items.map((it, i) => `<li role="option" id="${list.id}-${i}" data-i="${i}" class="${i === active ? 'on' : ''}" aria-selected="${i === active}"><span class="nm"><b>${esc(it.name)}</b><small>${esc(it.sub)}</small></span><span class="k">${esc(it.k)}</span></li>`).join('');
+    if (!items.length && !askQ) html = `<li class="none">No match in our Delhi list yet.</li>`;
+    if (askQ) html += `<li role="option" class="ask${active === items.length ? ' on' : ''}" id="${list.id}-ask" data-i="${items.length}">Look up “${esc(askQ)}” with AI</li>`;
+    list.innerHTML = html; list.hidden = false; open = true; input.setAttribute('aria-expanded', 'true');
+    input.setAttribute('aria-activedescendant', active >= 0 ? (active === items.length ? list.id + '-ask' : `${list.id}-${active}`) : '');
+    list.querySelector('.on')?.scrollIntoView({ block: 'nearest' });
+  };
+  const show = q => { items = q.trim() ? searchIndex(q) : defaults(); askQ = (q.trim().length >= 3 && SAMPLE && !items.some(it => norm(it.name) === norm(q))) ? q.trim() : null; draw(); };
+  const close = () => { list.hidden = true; open = false; active = -1; input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); };
+  const pick = i => { if (askQ && i === items.length) { const q = askQ; close(); input.blur(); lookUpPlace(q, set); return; }
+    const it = items[i]; if (!it) return; close(); set(it.ref); label(); input.blur(); };
+  input.addEventListener('focus', () => { input.select(); show(''); });
+  input.addEventListener('input', () => { active = -1; show(input.value); });
+  input.addEventListener('keydown', e => { const n = items.length + (askQ ? 1 : 0);
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (!open) show(input.value); if (n) { active = (active + 1) % n; draw(); } }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); if (n) { active = (active - 1 + n) % n; draw(); } }
+    else if (e.key === 'Enter') { e.preventDefault(); if (n) pick(active < 0 ? 0 : active); }
+    else if (e.key === 'Escape') { close(); label(); input.blur(); } });
+  input.addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== input) { close(); label(); } }, 120));
+  list.addEventListener('mousedown', e => { const li = e.target.closest('li[data-i]'); if (!li) return; e.preventDefault(); pick(+li.dataset.i); });
+  return { label };
+}
+
+/* ------------------------------------------------------------------ AI lookup for unlisted places */
+let askCtl = null;
+function askStatus(html) { const el = $('#askStatus'); if (!html) { el.hidden = true; el.innerHTML = ''; return; } el.hidden = false; el.innerHTML = `<div class="panel ask-box" style="margin-top:12px">${html}</div>`; }
+async function lookUpPlace(q, set) {
+  if (!SAMPLE) return;
+  askCtl?.abort(); askCtl = new AbortController(); const ctl = askCtl;
+  askStatus(`<span>Looking up “${esc(q)}”…</span><button class="btn small" type="button" id="askStop">Stop</button>`);
+  $('#askStop').onclick = () => ctl.abort();
+  const prompt = `You help a Delhi trip-planning app. The user searched for this place in Delhi NCR, India: "${q}".
+Reply with only one JSON object in this shape:
+{"found":true,"name":"Official English name","hindi":"Name in Devanagari","area":"Neighbourhood","category":"Monument|Museum|Faith|Garden|Market|Landmark|Food|Other","lat":28.6129,"lng":77.2295,"ticketIndian":0,"ticketForeign":0,"ticketChild":0,"open":"09:00","close":"18:00","closedDays":[1],"visitMinutes":60,"tip":"One short practical sentence for visitors."}
+Rules: tickets are entry prices in rupees (0 if free). Use "00:00" and "23:59" for places that never close. closedDays uses 0 for Sunday through 6 for Saturday. Give coordinates to 4 decimals. If you do not know a real place by that name in Delhi NCR, reply {"found":false}.`;
+  try {
+    const r = await SAMPLE.json(prompt, { signal: ctl.signal, modelTier: 'default' });
+    if (!r || !r.found) { askStatus(`<span>Couldn’t find “${esc(q)}” in Delhi. Try the official name or a nearby landmark.</span><button class="btn small" type="button" onclick="askStatus('')">Dismiss</button>`); return; }
+    const lat = Number(r.lat), lng = Number(r.lng);
+    if (!(lat > 28.3 && lat < 28.95 && lng > 76.8 && lng < 77.6)) { askStatus(`<span>The result for “${esc(q)}” wasn’t inside Delhi NCR, so it wasn’t added.</span><button class="btn small" type="button" onclick="askStatus('')">Dismiss</button>`); return; }
+    const num = v => Math.max(0, Math.round(Number(v) || 0));
+    const cat = CATS[r.category] ? r.category : 'Other';
+    const p = { id: 'c' + Date.now().toString(36), n: String(r.name || q).slice(0, 70), hi: String(r.hindi || '').slice(0, 70), cat, area: String(r.area || 'Delhi').slice(0, 40), lat, lng,
+      t: [num(r.ticketIndian), num(r.ticketForeign), num(r.ticketChild)], open: /^\d\d:\d\d$/.test(r.open) ? r.open : '09:00', close: /^\d\d:\d\d$/.test(r.close) ? r.close : '18:00',
+      closed: Array.isArray(r.closedDays) ? r.closedDays.map(Number).filter(n => n >= 0 && n <= 6) : [], mins: Math.min(300, Math.max(20, num(r.visitMinutes) || 60)), tip: String(r.tip || '').slice(0, 200), fromAI: true };
+    S.custom = [p, ...S.custom].slice(0, 30); INDEX = null; askStatus('');
+    set('cu:' + p.id); persist();
+  } catch (e) {
+    if (e?.code === 'cancelled') { askStatus(''); return; }
+    const msg = { not_granted: 'AI lookups are turned off for this page.', sampling_disabled: 'AI lookups aren’t available on this account.', rate_limited: 'Too many lookups just now. Try again in a minute.', invalid_json: 'The answer couldn’t be read. Try again.' }[e?.code] || 'The lookup failed. Try again.';
+    if (['not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed'].includes(e?.code)) SAMPLE = null;
+    askStatus(`<span>${esc(msg)}</span><button class="btn small" type="button" onclick="askStatus('')">Dismiss</button>`);
+  }
+}
+
+/* ------------------------------------------------------------------ shared bits */
+function ticketText(p) {
+  const [a, f, c] = p.t; let s;
+  if (!a && !f) s = 'Free entry';
+  else { s = a === f ? `${inr(a)} per person` : `Indian ${inr(a)} · Foreigner ${inr(f)}`; s += c ? ` · Child ${inr(c)}` : (p.t === ASI_A || p.t === ASI_B) ? ' · Under 15 free' : ''; }
+  return s;
+}
+function hoursText(p) { if (p.hoursKnown === false) return 'Hours not published'; if (p.open === '00:00' && p.close >= '23:59') return 'Open 24 hours'; return `${p.open}–${p.close}`; }
+function closedText(p) { return p.closed.length ? 'Closed ' + p.closed.map(d => DAYS[d]).join(', ') : p.guide ? 'No weekly off listed' : 'Open every day'; }
+function openState(p, at = new Date()) {
+  const day = at.getDay(), now = at.getHours() * 60 + at.getMinutes();
+  if (p.closed.includes(day)) return { open: false, text: 'Closed today' };
+  if (p.hoursKnown === false) return { open: null, text: 'Check hours' };
+  if (p.open === '00:00' && p.close >= '23:59') return { open: true, text: 'Open now' };
+  const o = toMin(p.open), c = toMin(p.close), inside = c > o ? now >= o && now < c : now >= o || now < c;
+  return inside ? { open: true, text: `Open till ${p.close}` } : { open: false, text: now < o ? `Opens ${p.open}` : 'Closed now' };
+}
+function placeTickets(p, adults, kids, who, withExtra) {
+  const idx = who === 'fr' ? 1 : 0; let t = adults * p.t[idx] + kids * p.t[2];
+  if (withExtra && p.extra) t += adults * p.extra.t[idx] + kids * p.extra.t[2];
+  return t;
+}
+const gmapsDir = (o, d) => `https://www.google.com/maps/dir/?api=1&origin=${o.lat},${o.lng}&destination=${d.lat},${d.lng}&travelmode=transit`;
+const gmapsPlace = r => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ', ' + (r.place?.area || '') + ', Delhi')}`;
+const lineChip = L => `<span class="ln" style="--lc:${L.lc};--lt:${L.lt}">${esc(L.short)}</span>`;
+function metroSummary(o) { const seen = []; o.segs.forEach(s => { if (s.type === 'ride' && !seen.includes(LN[s.li].g)) seen.push(LN[s.li].g); }); return seen.map(g => lineChip(LN.find(L => L.g === g))).join(''); }
+const findStation = name => { const n = norm(name).replace(/ metro( station)?$/, ''); return ST.find(s => norm(s.n) === n) || ST.find(s => norm(s.n).startsWith(n) || n.startsWith(norm(s.n))) || null; };
+const allPlaces = () => [...PLACES.map(p => ({ ref: 'pl:' + p.id, p })), ...S.custom.map(p => ({ ref: 'cu:' + p.id, p })), ...GUIDE.items.map(p => ({ ref: 'gd:' + p.id, p }))];
+
+// Turn by turn: each step is plain text plus an optional line colour, so it can be drawn or read out to the assistant.
+function routeSteps(op, dName) {
+  const st = [];
+  const ride = (m, km, to) => m === 'walk' ? `Walk ${fmtKm(km)} ${to}` : `E-rickshaw or auto, ${fmtKm(km)}, ${to}`;
+  if (op.acc.m !== 'none') st.push({ main: `${ride(op.acc.m, op.acc.km, `to ${op.sa.n} metro`)}${op.acc.gate ? `, Gate ${op.acc.gate}` : ''}`,
+    sub: `${dur(op.acc.t)} incl. getting to the platform${op.acc.m === 'erick' ? ` · ${rng(op.acc.c)}, shared seat to whole auto` : ''}` });
+  op.segs.forEach((s, i) => {
+    if (s.type === 'ride') {
+      const L = LN[s.li], b = boardInfo(s), pl = b.plat.length ? `Platform ${b.plat.join(' or ')}` : 'Platform no. not on record';
+      const step = { L, plat: b.plat, main: `${ST[s.from].n} → ${ST[s.to].n}`,
+        sub: `${pl}, ${b.via ? `trains via ${b.via}` : `towards ${b.ends.join(' / ')}`} (next stop ${b.next}) · ${s.stops} stop${s.stops > 1 ? 's' : ''} · ${dur(s.t + (i === 0 ? L.wait : 0))}${i === 0 ? ' incl. wait' : ''}` };
+      if (b.avoid.length) {
+        const a = b.avoid[0];
+        step.note = `Get on only a train showing “${b.ends.join('” or “')}” on its front and on the platform screen. Trains to ${b.avoid.map(x => x.term).join(' and ')} stop at this platform too but branch off after ${a.split}. If you board one by mistake, get off at ${a.split} and change${a.fix.length ? ` to Platform ${a.fix.join(' or ')}` : ''}.`;
+      } else if (b.ends.length > 1) step.tip = `Trains to ${b.ends.join(' and ')} both stop at ${ST[s.to].n}, so take whichever comes first.`;
+      st.push(step);
+    } else if (s.type === 'xfer') {
+      const A = LN[s.fromLi], B = LN[s.toLi], nx = op.segs[i + 1], nb = nx && nx.type === 'ride' ? boardInfo(nx) : null;
+      const where = nb && nb.plat.length ? `Platform ${nb.plat.join(' or ')}` : '';
+      if (A.g === B.g) st.push({ warn: true, main: `Change trains at ${ST[s.at].n}`, sub: `The ${B.name} splits here. Cross to ${where || 'the other platform'} for trains towards ${nb ? nb.ends.join(' / ') : 'your branch'} · about ${dur(s.t)} incl. wait` });
+      else st.push({ X: B, main: `Change at ${ST[s.at].n} to the ${B.name}`, sub: `Follow the “${B.name}” signs${where ? ` to ${where}` : ''} · about ${dur(s.t)} incl. wait${B.ae ? ' · buy a separate Airport Express ticket' : ''}` });
+    } else if (s.type === 'walk') st.push({ main: `Walk the skywalk from ${ST[s.at].n} to ${ST[s.to].n}`, sub: `${dur(s.t)} incl. wait · you need a new ticket` });
+  });
+  if (!op.toStation) {
+    st.push({ main: op.egr.gate ? `Leave ${op.sb.n} by Gate ${op.egr.gate}` : `Leave ${op.sb.n} station`,
+      sub: op.egr.gate ? `The gate closest to ${dName}` : `No gate number on record for this exit; follow the signs for ${dName}` });
+    st.push({ main: ride(op.egr.m === 'none' ? 'walk' : op.egr.m, op.egr.km, `to ${dName}`), sub: `${dur(op.egr.t)}${op.egr.m === 'erick' ? ` · ${rng(op.egr.c)}, shared seat to whole auto` : ''}` });
+  }
+  return st;
+}
+const stepsHTML = steps => `<ol class="steps">${steps.map(s => `<li${s.L ? ` class="ride" style="--lc:${s.L.lc}"` : ''}>${s.L ? lineChip(s.L) : s.X ? lineChip(s.X) : ''}${s.warn ? '<span class="pill warn">Line splits</span> ' : ''}<b>${esc(s.main)}</b><small>${esc(s.sub)}</small>${s.note ? `<span class="stepnote warn"><span class="pill warn">Check the train</span> ${esc(s.note)}</span>` : ''}${s.tip ? `<span class="stepnote">${esc(s.tip)}</span>` : ''}</li>`).join('')}</ol>`;
+const stepText = s => `${s.L ? s.L.name + ': ' : ''}${s.main} (${s.sub})${s.note ? ' IMPORTANT: ' + s.note : ''}${s.tip ? ' ' + s.tip : ''}`;
+
+/* ------------------------------------------------------------------ explore */
+const fromCombo = makeCombo($('#fromCombo'), { get: () => S.explore.from, set: r => { S.explore.from = r; persist(); renderExplore(); }, defaults: DEF_FROM });
+const toCombo = makeCombo($('#toCombo'), { get: () => S.explore.to, set: r => { S.explore.to = r; persist(); renderExplore(); }, defaults: DEF_TO });
+$('#swap').onclick = () => { [S.explore.from, S.explore.to] = [S.explore.to, S.explore.from]; persist(); renderExplore(); };
+$('#popular').insertAdjacentHTML('beforeend', POPULAR.map(id => `<button class="chip" type="button" data-to="pl:${id}">${esc(PLACE_BY_ID[id].n.replace(' & Kartavya Path', '').replace(' Village & Fort', ''))}</button>`).join(''));
+$('#popular').addEventListener('click', e => { const b = e.target.closest('[data-to]'); if (!b) return; S.explore.to = b.dataset.to; persist(); renderExplore(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+function inTrip(ref) { return S.trip.stops.some(s => s.ref === ref); }
+function addToTrip(ref, quiet) {
+  if (inTrip(ref)) { if (!quiet) showTab('trip'); return; }
+  if (S.trip.example) clearExample();
+  S.trip.stops.push({ ref }); persist(); renderAll();
+  const r = resolve(ref); if (!quiet) toast(`${r ? r.name : 'Place'} added to your trip`, 'View trip', () => showTab('trip'));
+}
+function clearExample() { S.trip.example = false; S.trip.stops = []; S.trip.name = 'My Delhi day'; }
+const priceTag = n => '₹'.repeat(Math.min(3, Math.max(1, +n || 1)));
+function guideMetro(p) {
+  const g = p.guide || {}, st = g.metro ? findStation(g.metro) : null; if (!st) return null;
+  const near = gateNear(st, p), gate = g.gate || near?.ref || null, km = near ? near.km : hav(st, p);
+  return { st, gate, walk: g.walk || Math.max(1, Math.round(km * 1.3 / 4.5 * 60)) };
+}
+
+function renderExplore() {
+  fromCombo.label(); toCombo.label();
+  const o = resolve(S.explore.from), d = resolve(S.explore.to), main = $('#exploreMain');
+  if (!o || !d) { main.innerHTML = `<div class="panel"><div class="empty">Pick where you’re starting and where you want to go. Every way to get there appears here, with time and cost.</div></div>`; renderSide(); return; }
+  const today = todayISO(), sunday = dayOf(today) === 0;
+  const opts = planRoute(o, d, sunday);
+  let html = '';
+  const addBtn = inTrip(d.ref) ? `<button class="btn" type="button" data-act="viewtrip">In your trip ✓</button>` : `<button class="btn primary" type="button" data-add="${esc(d.ref)}">Add to trip</button>`;
+  const askBtn = `<button class="btn ai-only" type="button" data-ask="${esc(`What should I know before going to ${d.name}${d.place ? ' in ' + d.place.area : ''}, Delhi? Best time, what to do there and good food nearby.`)}">Ask AI</button>`;
+  if (d.kind === 'place' && d.place.guide) {
+    const p = d.place, g = p.guide, os = openState(p), gm = guideMetro(p);
+    html += `<article class="panel place">
+      <div class="place-head"><div><p class="eyebrow">${esc((g.cats || []).map(c => NEED_LABEL[c] || c).join(' · '))} · ${esc(p.area)}</p><h2>${esc(p.n)}</h2>${g.addr ? `<p class="muted" style="margin-top:4px">${esc(g.addr)}</p>` : ''}</div>
+      <div class="row">${askBtn}${addBtn}</div></div>
+      <dl class="facts">
+        <div><dt>Good for</dt><dd>${esc(g.buy || '')}</dd></div>
+        <div><dt>Hours</dt><dd>${esc(hoursText(p))} <span class="pill ${os.open ? 'good' : os.open === false ? 'bad' : 'info'}">${esc(os.text)}</span><small>${esc(closedText(p))}</small></dd></div>
+        <div><dt>Spend</dt><dd>${priceTag(g.price)}${g.spend ? `<small>${esc(g.spend)}</small>` : ''}</dd></div>
+        ${gm ? `<div><dt>Metro</dt><dd>${esc(gm.st.n)}${gm.gate ? `, Gate ${esc(gm.gate)}` : ''}<small>About ${gm.walk} min walk</small></dd></div>` : ''}
+      </dl>
+      ${p.tip ? `<p class="tip">${esc(p.tip)}</p>` : ''}
+      <p class="links"><a href="${gmapsPlace(d)}" target="_blank" rel="noopener">See on Google Maps</a><a href="${gmapsDir(o, d)}" target="_blank" rel="noopener">Live transit directions</a>${(g.sources || []).slice(0, 1).map(u => `<a href="${esc(u)}" target="_blank" rel="noopener">Source</a>`).join('')}</p>
+    </article>`;
+  } else if (d.kind === 'place') {
+    const p = d.place, closedToday = p.closed.includes(dayOf(today));
+    html += `<article class="panel place">
+      <div class="place-head"><div><p class="eyebrow">${esc(CATS[p.cat] || 'Place')} · ${esc(p.area)}</p><h2>${esc(p.n)}</h2>${p.hi ? `<p class="hi" lang="hi">${esc(p.hi)}</p>` : ''}</div>
+      <div class="row">${askBtn}${addBtn}</div></div>
+      <dl class="facts">
+        <div><dt>Entry</dt><dd>${esc(ticketText(p))}${p.tNote ? `<small>${esc(p.tNote)}</small>` : ''}${p.extra ? `<small>${esc(p.extra.label)}: ${inr(p.extra.t[0])} adult, ${inr(p.extra.t[2])} child</small>` : ''}</dd></div>
+        <div><dt>Hours</dt><dd>${esc(hoursText(p))}<small>${esc(closedText(p))}</small></dd></div>
+        <div><dt>Plan for</dt><dd>${dur(p.mins)}${closedToday ? ` <span class="pill bad">Closed today</span>` : ''}</dd></div>
+      </dl>
+      ${p.tip ? `<p class="tip">${esc(p.tip)}</p>` : ''}
+      ${d.custom ? `<p class="tip">Details for this place came from an AI lookup. Check timings and prices before you go.</p>` : ''}
+      <p class="links"><a href="${gmapsPlace(d)}" target="_blank" rel="noopener">See on Google Maps</a><a href="${gmapsDir(o, d)}" target="_blank" rel="noopener">Live transit directions</a></p>
+    </article>`;
+  } else {
+    html += `<article class="panel place"><div class="place-head"><div><p class="eyebrow">${esc(d.sub)}</p><h2>${esc(d.name)}</h2></div><div class="row">${askBtn}</div></div>
+      ${d.st && d.st.gates.length ? `<p class="muted" style="margin-top:8px;font-size:14px">Gates: ${d.st.gates.map(g => g.ref).join(', ')}</p>` : ''}
+      <p class="links"><a href="${gmapsDir(o, d)}" target="_blank" rel="noopener">Live transit directions</a></p></article>`;
+  }
+  const sort = S.explore.sort, ranked = rank(opts, sort);
+  const cheapest = rank(opts, 'cheap')[0], fastest = rank(opts, 'fast')[0];
+  html += `<section class="panel"><div class="sec-head"><div><h3>Ways to get there</h3><p class="muted">From ${esc(o.name)} · ${fmtKm(hav(o, d))} as the crow flies · ${sunday ? 'Sunday metro fares' : 'weekday metro fares'}</p></div>
+    <div class="seg" role="group" aria-label="Sort options">${[['mix', 'Best mix'], ['cheap', 'Cheapest'], ['fast', 'Fastest']].map(([k, l]) => `<button type="button" data-sort="${k}" aria-pressed="${sort === k}">${l}</button>`).join('')}</div></div>`;
+  if (!ranked.length) html += `<div class="empty">You’re already there.</div>`;
+  html += `<ul class="opts">${ranked.map(op => {
+    const M = MODES[op.k], badges = (op === cheapest ? `<span class="badge cheap">Cheapest</span>` : '') + (op === fastest ? `<span class="badge fast">Fastest</span>` : '');
+    const per = M.veh ? 'per ride' : (op.k === 'walk' ? '' : 'per person');
+    const fig = `<span class="opt-fig"><span class="t">${dur(op.t)}</span><span class="c">${op.k === 'walk' ? 'Free' : rng(op.c)} ${per}</span></span>`;
+    if (op.segs) {
+      const card = Math.round(op.fare * 0.9), changes = op.segs.filter(s => s.type !== 'ride').length, steps = routeSteps(op, d.name);
+      const firstPlat = steps.find(x => x.L)?.plat || [], branch = steps.some(x => x.note || x.warn);
+      return `<li><details${op === ranked[0] ? ' open' : ''}><summary class="opt-row">${mi(op.k)}<span><span class="opt-name">${op.label}${badges}${branch ? '<span class="badge branch">Branch line</span>' : ''}</span><span class="opt-note">${metroSummary(op)} ${esc(op.sa.n)}${firstPlat.length ? ` (Platform ${esc(firstPlat.join(' or '))})` : ''} to ${esc(op.sb.n)}${op.egr.gate && !op.toStation ? `, exit Gate ${esc(op.egr.gate)}` : ''} · ${changes ? changes + ' change' + (changes > 1 ? 's' : '') : 'no change'} <span class="more">· Steps</span></span></span>${fig}</summary>
+        ${stepsHTML(steps)}<p class="notes" style="margin:-6px 0 14px 20px"><span>Metro fare ${inr(op.fare)} by token or QR ticket, ${inr(card)} with a smart card${op.k === 'ae' ? ' (Airport Express fare approximate)' : ''}. Platform numbers come from Wikipedia station layouts; the screens at the station have the final word. Trains run about 05:30–23:30.</span></p></details></li>`;
+    }
+    return `<li><div class="opt-row">${mi(op.k)}<span><span class="opt-name">${M.name}${badges}</span><span class="opt-note">${esc(op.note || '')}</span></span>${fig}</div></li>`;
+  }).join('')}</ul>
+  <div class="notes"><span>Bus route numbers change often. Check live buses in the One Delhi or Chalo app, or with “Live transit directions” above.</span></div></section>`;
+  const near = allPlaces().filter(x => x.ref !== d.ref).map(x => ({ ...x, km: hav(d, x.p) })).filter(x => x.km <= 3.5).sort((a, b) => a.km - b.km).slice(0, 9);
+  html += `<section class="panel"><div class="sec-head"><div><h3>Nearby</h3><p class="muted">Sights, markets and food within 3.5 km of ${esc(d.name)}</p></div></div>`;
+  html += near.length ? `<ul class="near">${near.map(x => { const road = x.km * 1.3, how = road <= 1.5 ? `${dur(road / 4.5 * 60)} walk` : `${dur(road / 19 * 60 + 4)} by auto, about ${inr(autoFare(road)[0])}`;
+    const kind = x.p.guide ? (x.p.guide.cats || []).slice(0, 2).map(c => NEED_LABEL[c] || c).join(', ') : (CATS[x.p.cat] || 'Place');
+    const price = x.p.guide ? priceTag(x.p.guide.price) : (x.p.t[0] || x.p.t[1] ? inr(x.p.t[0]) + ' entry' : 'Free');
+    return `<li><button class="nm" type="button" data-to="${esc(x.ref)}">${esc(x.p.n)}</button><span class="meta">${esc(kind)} · ${fmtKm(x.km)} · ${how}</span><span class="foot"><span class="tk">${price}</span>${inTrip(x.ref) ? `<span class="pill good">In trip</span>` : `<button class="btn small" type="button" data-add="${esc(x.ref)}">Add</button>`}</span></li>`; }).join('')}</ul>`
+    : `<div class="empty">Nothing listed within 3.5 km. Search for something specific above.</div>`;
+  html += `</section>`;
+  main.innerHTML = html;
+  renderSide();
+}
+$('#exploreMain').addEventListener('click', e => {
+  const s = e.target.closest('[data-sort]'); if (s) { S.explore.sort = s.dataset.sort; persist(); renderExplore(); return; }
+  const a = e.target.closest('[data-add]'); if (a) { addToTrip(a.dataset.add); return; }
+  const t = e.target.closest('[data-to]'); if (t) { S.explore.to = t.dataset.to; persist(); renderExplore(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  if (e.target.closest('[data-act="viewtrip"]')) showTab('trip');
+});
+
+/* ------------------------------------------------------------------ trip */
+function computeTrip() {
+  const T = S.trip, people = Math.max(1, (+T.adults || 0) + (+T.kids || 0)), day = dayOf(T.date || todayISO()), sunday = day === 0;
+  const start = resolve(T.from);
+  let clock = toMin(T.start || '09:00'), prev = start, tickets = 0, travel = 0, metroRides = 0, metroFares = 0, cheapTravel = 0;
+  const rows = [];
+  const legFor = (a, b, override) => { if (!a || !b) return null; const opts = planRoute(a, b, sunday); if (!opts.length) return { none: true, t: 0, cost: 0, opts };
+    const opt = pickOpt(opts, T.pref, people, override), cheap = pickOpt(opts, 'cheap', people);
+    return { opt, opts, t: opt.t, cost: groupCost(opt, people), cheap: groupCost(cheap, people) }; };
+  T.stops.forEach((s, i) => {
+    const r = resolve(s.ref); if (!r) return;
+    const leg = legFor(prev, r, s.mode);
+    if (leg && !leg.none) { clock += leg.t; travel += leg.cost; cheapTravel += leg.cheap; if (leg.opt.k === 'metro' || leg.opt.k === 'ae') { metroRides++; metroFares += leg.opt.fare; } }
+    const p = r.place, arrive = clock, warns = [];
+    let begin = arrive, mins = s.mins || (p ? p.mins : 30), cost = 0;
+    if (p) {
+      cost = placeTickets(p, +T.adults || 0, +T.kids || 0, T.who, s.extra); tickets += cost;
+      const open = toMin(p.open), close = toMin(p.close), allDay = (p.open === '00:00' && p.close >= '23:59') || p.hoursKnown === false;
+      if (p.closed.includes(day)) warns.push(['bad', `Closed on ${DAYS_LONG[day]}. Pick another date or remove it.`]);
+      else if (!allDay) {
+        if (arrive < open) { begin = open; warns.push(['warn', `Opens at ${p.open}; about ${dur(open - arrive)} to wait.`]); }
+        if (begin >= close) warns.push(['bad', `Closes at ${p.close}, before you get there.`]);
+        else if (begin + mins > close) warns.push(['warn', `Closes at ${p.close}; you’ll have ${dur(close - begin)}.`]);
+      }
+    }
+    clock = begin + mins;
+    rows.push({ i, s, r, p, leg, arrive, begin, mins, cost, warns });
+    prev = r;
+  });
+  let back = null;
+  if (T.back && start && prev && prev !== start) { back = legFor(prev, start, T.backMode); if (back && !back.none) { clock += back.t; travel += back.cost; cheapTravel += back.cheap; if (back.opt.k === 'metro' || back.opt.k === 'ae') { metroRides++; metroFares += back.opt.fare; } } }
+  const food = (+T.food || 0) * people;
+  return { people, day, sunday, start, rows, back, end: clock, tickets, travel, food, total: tickets + travel + food, metroRides, metroFares, cheapTravel };
+}
+function legHTML(leg, idx) {
+  if (!leg) return '';
+  if (leg.none) return `<li class="tl-leg"><span class="rail"></span><div class="leg muted">Right here, no travel needed</div></li>`;
+  const opts = rank(leg.opts, 'fast'), people = Math.max(1, (+S.trip.adults || 0) + (+S.trip.kids || 0));
+  const sel = `<select data-leg="${idx}" aria-label="How to travel">${opts.map(o => `<option value="${o.k}"${o === leg.opt ? ' selected' : ''}>${o.label || MODES[o.k].name} · ${dur(o.t)} · ${o.k === 'walk' ? 'free' : inr(groupCost(o, people))}</option>`).join('')}</select>`;
+  const extra = (leg.opt.k === 'metro' || leg.opt.k === 'ae') ? `<span class="muted">${metroSummary(leg.opt)} ${esc(leg.opt.sa.n)} → ${esc(leg.opt.sb.n)}</span>` : '';
+  return `<li class="tl-leg"><span class="rail"></span><div class="leg">${mi(leg.opt.k, true)}${sel}${extra}</div></li>`;
+}
+const VISIT_CHOICES = [20, 30, 45, 60, 75, 90, 120, 150, 180, 240];
+function renderTrip() {
+  const T = S.trip, c = computeTrip();
+  $('#tripCount').textContent = T.stops.length;
+  $('#tripBanner').innerHTML = T.example ? `<div class="banner"><span>This is an example trip so you can see how planning works. Change anything, or start fresh.</span><button class="btn small" type="button" id="startFresh">Start my own trip</button></div>` : '';
+  const setVal = (id, v) => { const el = $(id); if (document.activeElement !== el) el.value = v; };
+  setVal('#tripName', T.name); setVal('#tDate', T.date); setVal('#tStart', T.start); setVal('#tAdults', T.adults); setVal('#tKids', T.kids);
+  $('#tWho').value = T.who; $('#tPref').value = T.pref; $('#tFood').value = String(T.food); $('#tBack').checked = !!T.back;
+  tFromCombo.label();
+  let html = `<li class="tl-stop tl-start"><time>${hhmm(toMin(T.start))}</time><div><span class="nm">Start</span><div class="sub">${esc(c.start ? c.start.name : 'Pick a starting point')}</div></div></li>`;
+  if (!c.rows.length) html += `<li><div class="empty">No places yet. Search in Explore and tap “Add to trip”, or use “Add a place”.</div></li>`;
+  c.rows.forEach((row, n) => {
+    html += legHTML(row.leg, row.i);
+    const p = row.p;
+    const visitSel = `<select data-visit="${row.i}" aria-label="Time to spend">${[...new Set([...VISIT_CHOICES, row.mins])].sort((a, b) => a - b).map(m => `<option value="${m}"${m === row.mins ? ' selected' : ''}>${dur(m)}</option>`).join('')}</select>`;
+    html += `<li class="tl-stop"><time>${hhmm(row.begin)}</time><div style="min-width:0"><span class="nm">${esc(row.r.name)}</span>
+      <div class="sub"><span>Stay ${visitSel}</span>${p ? `<span>${row.cost ? inr(row.cost) + ' tickets' : 'Free entry'}</span>` : ''}${p && p.extra ? `<label class="check" style="font-size:13px"><input type="checkbox" data-extra="${row.i}"${row.s.extra ? ' checked' : ''}> ${esc(p.extra.label)} +${inr(placeTickets({ t: p.extra.t }, +T.adults || 0, +T.kids || 0, T.who))}</label>` : ''}<span>Leave ${hhmm(row.begin + row.mins)}</span></div>
+      ${row.warns.map(([lvl, m]) => `<div class="warn-line ${lvl}"><span class="pill ${lvl}">${lvl === 'bad' ? 'Problem' : 'Heads up'}</span>${esc(m)}</div>`).join('')}</div>
+      <div class="acts"><button class="icon-btn" type="button" data-move="${row.i}:-1" aria-label="Move ${esc(row.r.name)} earlier"${n === 0 ? ' disabled' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 15l6-6 6 6"/></svg></button><button class="icon-btn" type="button" data-move="${row.i}:1" aria-label="Move ${esc(row.r.name)} later"${n === c.rows.length - 1 ? ' disabled' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button><button class="icon-btn" type="button" data-remove="${row.i}" aria-label="Remove ${esc(row.r.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></li>`;
+  });
+  if (c.back) { html += legHTML(c.back, 'back'); html += `<li class="tl-stop tl-end"><time>${hhmm(c.end)}</time><div><span class="nm">Back at start</span><div class="sub">${esc(c.start.name)}</div></div></li>`; }
+  else if (c.rows.length) html += `<li class="tl-stop tl-end"><time>${hhmm(c.end)}</time><div><span class="nm">Day ends</span></div></li>`;
+  $('#timeline').innerHTML = html;
+
+  const budget = +S.tripBudget || 0, pct = budget ? Math.min(100, c.total / budget * 100) : 0, over = budget && c.total > budget;
+  const tips = [];
+  if (over) tips.push(`<p class="warn">Over your trip budget by ${inr(c.total - budget)}.${c.cheapTravel < c.travel - 20 ? ` Taking the cheapest way on every leg brings travel down to ${inr(c.cheapTravel)}.` : ''}</p>`);
+  if (c.metroRides >= 3 && c.metroFares >= 150) tips.push(`<p>A one-day metro Tourist Card costs ₹200 (₹50 of it is a refundable deposit) for unlimited rides. Your ${c.metroRides} metro rides cost ${inr(c.metroFares)} each person, so the card pays off.</p>`);
+  else if (c.metroRides >= 2) tips.push(`<p>A metro smart card saves 10% on every ride, plus another 10% off-peak.</p>`);
+  if (c.sunday) tips.push(`<p>Sunday: metro fares are lower and many Old Delhi shops are shut.</p>`);
+  if (S.trip.kids > 0) tips.push(`<p>Children under 15 enter ASI monuments free.</p>`);
+  $('#tripTotals').innerHTML = `<div class="sec-head"><h3>Trip estimate</h3><span class="muted" style="font-size:13px">${c.people} ${c.people === 1 ? 'person' : 'people'}</span></div>
+    <p class="big">${inr(c.total)}</p><p class="muted" style="font-size:13px;margin-bottom:12px">${c.rows.length ? `${hhmm(toMin(S.trip.start))} to ${hhmm(c.end)} · ${dur(c.end - toMin(S.trip.start))} in all` : 'Add places to see the day'}</p>
+    <dl class="kv"><dt>Tickets</dt><dd>${inr(c.tickets)}</dd><dt>Travel</dt><dd>${inr(c.travel)}</dd><dt>Food</dt><dd>${inr(c.food)}</dd><dt class="tot">Total</dt><dd class="tot">${inr(c.total)}</dd></dl>
+    <div style="margin-top:14px"><div class="row" style="justify-content:space-between;font-size:13px;margin-bottom:5px"><span class="muted">Trip budget</span><span class="num">${budget ? `${inr(c.total)} of ${inr(budget)}` : 'Not set'}</span></div>
+    <div class="meter${over ? ' over' : pct > 85 ? ' warn' : ''}" role="img" aria-label="${budget ? Math.round(c.total / budget * 100) + '% of trip budget' : 'No trip budget'}"><i style="width:${pct}%"></i></div></div>
+    ${tips.length ? `<div class="tips">${tips.join('')}</div>` : ''}
+    <div class="row" style="margin-top:14px"><button class="btn primary" type="button" id="saveTrip"${c.rows.length ? '' : ' disabled'}>Save trip &amp; log spending</button><button class="btn small danger" type="button" id="clearTrip"${T.stops.length ? '' : ' disabled'}>Clear</button><button class="btn small ai-only" type="button" data-ask="My day plan is over budget or close to it. How can I cut the cost without dropping the main sights?">Ask AI to trim costs</button></div>`;
+  renderSaved();
+}
+function renderSaved() {
+  const el = $('#savedTrips');
+  el.innerHTML = `<div class="sec-head"><h3>Saved trips</h3></div>` + (S.saved.length
+    ? `<ul class="exp">${S.saved.slice(0, 8).map(t => `<li><span class="d">${esc(t.date.slice(8))} ${esc(new Date(t.date + 'T12:00:00').toLocaleString('en-IN', { month: 'short' }))}</span><span class="lb">${esc(t.name)}<small>${t.stops.length} places · ${t.people} ${t.people === 1 ? 'person' : 'people'}</small></span><span class="am">${inr(t.total)}</span><button class="icon-btn" type="button" data-load="${esc(t.id)}" aria-label="Open ${esc(t.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button></li>`).join('')}</ul>`
+    : `<div class="empty">Trips you save show up here, and their cost is logged to your monthly budget.</div>`);
+}
+const tFromCombo = makeCombo($('#tFromCombo'), { get: () => S.trip.from, set: r => { S.trip.from = r; persist(); renderTrip(); renderSide(); }, defaults: DEF_FROM });
+const bindTrip = (id, key, num, ev = 'change') => $(id).addEventListener(ev, e => { let v = e.target.value; if (num) v = Math.max(+e.target.min || 0, Math.min(+e.target.max || 99, Math.round(+v || 0))); S.trip[key] = v; persist(); renderTrip(); renderSide(); });
+bindTrip('#tDate', 'date'); bindTrip('#tStart', 'start'); bindTrip('#tAdults', 'adults', true); bindTrip('#tKids', 'kids', true);
+bindTrip('#tWho', 'who'); bindTrip('#tPref', 'pref');
+$('#tFood').addEventListener('change', e => { S.trip.food = +e.target.value || 0; persist(); renderTrip(); renderSide(); });
+$('#tPref').addEventListener('change', () => { S.trip.stops.forEach(s => delete s.mode); delete S.trip.backMode; persist(); renderTrip(); });
+$('#tBack').addEventListener('change', e => { S.trip.back = e.target.checked; persist(); renderTrip(); renderSide(); });
+$('#tripName').addEventListener('input', e => { S.trip.name = e.target.value; persist(); });
+$('#tripName').addEventListener('change', () => renderSide());
+$('#trip').addEventListener('change', e => {
+  const l = e.target.closest('[data-leg]'); if (l) { const i = l.dataset.leg; if (i === 'back') S.trip.backMode = l.value; else S.trip.stops[+i].mode = l.value; persist(); renderTrip(); renderSide(); return; }
+  const v = e.target.closest('[data-visit]'); if (v) { S.trip.stops[+v.dataset.visit].mins = +v.value; persist(); renderTrip(); return; }
+  const x = e.target.closest('[data-extra]'); if (x) { S.trip.stops[+x.dataset.extra].extra = x.checked; persist(); renderTrip(); renderSide(); }
+});
+let clearArmed = false;
+$('#trip').addEventListener('click', e => {
+  const m = e.target.closest('[data-move]'); if (m) { const [i, d] = m.dataset.move.split(':').map(Number), j = i + d, st = S.trip.stops; if (j < 0 || j >= st.length) return; [st[i], st[j]] = [st[j], st[i]]; st[i].mode = st[j].mode = undefined; persist(); renderTrip(); renderSide(); return; }
+  const r = e.target.closest('[data-remove]'); if (r) { S.trip.stops.splice(+r.dataset.remove, 1); if (S.trip.stops[+r.dataset.remove]) delete S.trip.stops[+r.dataset.remove].mode; persist(); renderAll(); return; }
+  const ld = e.target.closest('[data-load]'); if (ld) { const t = S.saved.find(x => x.id === ld.dataset.load); if (t && t.trip) { S.trip = { ...JSON.parse(JSON.stringify(t.trip)), example: false }; persist(); renderAll(); toast(`Opened “${t.name}”`); } return; }
+  if (e.target.id === 'startFresh') { clearExample(); persist(); renderAll(); return; }
+  if (e.target.id === 'saveTrip') { saveTrip(); return; }
+  if (e.target.id === 'clearTrip') {
+    if (!clearArmed) { clearArmed = true; e.target.textContent = 'Tap again to clear'; setTimeout(() => { clearArmed = false; const b = $('#clearTrip'); if (b) b.textContent = 'Clear'; }, 3000); return; }
+    clearArmed = false; S.trip.stops = []; S.trip.example = false; persist(); renderAll(); return;
+  }
+});
+$('#addStop').onclick = () => { showTab('explore'); setTimeout(() => $('#toInput').focus(), 50); };
+$('#optimize').onclick = () => {
+  const st = S.trip.stops.map(s => ({ s, r: resolve(s.ref) })).filter(x => x.r); if (st.length < 3) { toast('Add at least three places to reorder them.'); return; }
+  const start = resolve(S.trip.from) || st[0].r, left = [...st], order = []; let cur = start;
+  while (left.length) { let bi = 0, bd = Infinity; left.forEach((x, i) => { const d = hav(cur, x.r); if (d < bd) { bd = d; bi = i; } }); const [x] = left.splice(bi, 1); order.push(x.s); cur = x.r; }
+  order.forEach(s => delete s.mode); S.trip.stops = order; persist(); renderTrip(); renderSide(); toast('Reordered to cut travel time');
+};
+function saveTrip() {
+  const c = computeTrip(), T = S.trip; if (!c.rows.length) return;
+  const id = 't' + Date.now().toString(36), name = (T.name || '').replace(/^Example:\s*/i, '').trim() || 'Delhi trip';
+  const tripCopy = JSON.parse(JSON.stringify({ ...T, example: false }));
+  S.saved.unshift({ id, name, date: T.date, people: c.people, stops: c.rows.map(r => r.r.name), total: Math.round(c.total), trip: tripCopy });
+  S.saved = S.saved.slice(0, 40);
+  S.expenses.unshift({ id: 'e' + id, date: T.date, label: name, trip: id, parts: { commute: Math.round(c.travel), tickets: Math.round(c.tickets), food: Math.round(c.food), other: 0 } });
+  T.example = false; persist(); renderAll();
+  toast(`Saved. ${inr(c.total)} logged for ${monthName(T.date.slice(0, 7))}.`, 'See budget', () => showTab('budget'));
+}
+
+/* ------------------------------------------------------------------ budget */
+const CAT_LABEL = { commute: 'Commute', tickets: 'Tickets', food: 'Food', other: 'Other' };
+const expTotal = e => Object.values(e.parts || {}).reduce((a, b) => a + (+b || 0), 0);
+function monthStats(mk = todayISO().slice(0, 7)) {
+  const list = S.expenses.filter(e => (e.date || '').slice(0, 7) === mk), parts = { commute: 0, tickets: 0, food: 0, other: 0 };
+  list.forEach(e => Object.keys(parts).forEach(k => parts[k] += +(e.parts?.[k]) || 0));
+  return { list, parts, spent: Object.values(parts).reduce((a, b) => a + b, 0) };
+}
+function renderBudget() {
+  const mk = todayISO().slice(0, 7), m = monthStats(mk), budget = +S.monthly || 0, left = budget - m.spent;
+  const now = new Date(), last = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(), daysLeft = last - now.getDate() + 1;
+  const pct = budget ? Math.min(100, m.spent / budget * 100) : 0, maxPart = Math.max(1, ...Object.values(m.parts));
+  const older = {}; S.expenses.forEach(e => { const k = (e.date || '').slice(0, 7); if (k && k !== mk) older[k] = (older[k] || 0) + expTotal(e); });
+  const setVal = (id, v) => { const el = $(id); if (document.activeElement !== el) el.value = v; };
+  setVal('#bMonth', S.monthly); setVal('#bTrip', S.tripBudget); if (!$('#eDate').value) $('#eDate').value = todayISO();
+  $('#monthPanel').innerHTML = `<div class="sec-head"><div><p class="eyebrow">${esc(monthName(mk))}</p><h3>${budget ? (left >= 0 ? `${inr(left)} left to spend` : `${inr(-left)} over budget`) : 'Set a monthly budget'}</h3></div>${budget && left > 0 ? `<span class="pill info">${inr(left / daysLeft)} a day for ${daysLeft} days</span>` : ''}</div>
+    <div class="row" style="justify-content:space-between;font-size:13px;margin:8px 0 5px"><span class="muted">Spent so far</span><span class="num">${inr(m.spent)}${budget ? ` of ${inr(budget)}` : ''}</span></div>
+    <div class="meter${budget && m.spent > budget ? ' over' : pct > 85 ? ' warn' : ''}" role="img" aria-label="${budget ? Math.round(m.spent / budget * 100) + '% of monthly budget used' : 'No monthly budget set'}"><i style="width:${pct}%"></i></div>
+    <div class="cat-bars">${Object.entries(m.parts).map(([k, v]) => `<div class="cb"><span>${CAT_LABEL[k]}</span><span class="track"><i style="width:${v / maxPart * 100}%"></i></span><span>${inr(v)}</span></div>`).join('')}</div>
+    <div class="sec-head" style="margin-top:20px"><h3 style="font-size:17px">This month’s entries</h3></div>
+    ${m.list.length ? `<ul class="exp">${m.list.map(e => { const parts = Object.entries(e.parts || {}).filter(([, v]) => v > 0); return `<li><span class="d">${esc((e.date || '').slice(8))} ${esc(new Date((e.date || mk + '-01') + 'T12:00:00').toLocaleString('en-IN', { month: 'short' }))}</span><span class="lb">${esc(e.label)}<small>${parts.map(([k, v]) => `${CAT_LABEL[k]} ${inr(v)}`).join(' · ')}</small></span><span class="am">${inr(expTotal(e))}</span><button class="icon-btn" type="button" data-del="${esc(e.id)}" aria-label="Delete ${esc(e.label)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></li>`; }).join('')}</ul>`
+      : `<div class="empty">Nothing logged in ${esc(monthName(mk))} yet. Save a trip, log a ride with the form, or add your regular commute below.</div>`}
+    ${Object.keys(older).length ? `<p class="muted" style="font-size:13px;margin-top:14px">Earlier: ${Object.entries(older).sort((a, b) => b[0].localeCompare(a[0])).slice(0, 6).map(([k, v]) => `${esc(monthName(k))} ${inr(v)}`).join(' · ')}</p>` : ''}`;
+  renderCommute(); renderHeader();
+}
+$('#monthPanel').addEventListener('click', e => { const b = e.target.closest('[data-del]'); if (!b) return; const i = S.expenses.findIndex(x => x.id === b.dataset.del); if (i < 0) return;
+  const [gone] = S.expenses.splice(i, 1); persist(); renderBudget(); renderSide(); toast(`Deleted “${gone.label}”`, 'Undo', () => { S.expenses.splice(i, 0, gone); persist(); renderBudget(); renderSide(); }); });
+$('#bMonth').addEventListener('input', e => { S.monthly = Math.max(0, Math.round(+e.target.value || 0)); persist(); renderBudget(); renderSide(); });
+$('#bTrip').addEventListener('input', e => { S.tripBudget = Math.max(0, Math.round(+e.target.value || 0)); persist(); renderTrip(); renderSide(); });
+$('#expForm').addEventListener('submit', e => { e.preventDefault(); const amt = Math.round(+$('#eAmt').value || 0), label = $('#eLabel').value.trim(), cat = $('#eCat').value, date = $('#eDate').value || todayISO(); if (!amt || !label) return;
+  const parts = { commute: 0, tickets: 0, food: 0, other: 0 }; parts[cat] = amt;
+  S.expenses.unshift({ id: 'e' + Date.now().toString(36), date, label, parts }); S.expenses.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  $('#eAmt').value = ''; $('#eLabel').value = ''; persist(); renderBudget(); renderSide(); toast(`${inr(amt)} added`); });
+const cFromCombo = makeCombo($('#cFromCombo'), { get: () => S.commute.from, set: r => { S.commute.from = r; persist(); renderCommute(); }, defaults: DEF_FROM });
+const cToCombo = makeCombo($('#cToCombo'), { get: () => S.commute.to, set: r => { S.commute.to = r; persist(); renderCommute(); }, defaults: DEF_FROM });
+$('#cTrips').addEventListener('input', e => { S.commute.perWeek = Math.max(1, Math.min(42, Math.round(+e.target.value || 1))); persist(); renderCommute(); });
+let commuteRows = [];
+function renderCommute() {
+  cFromCombo.label(); cToCombo.label(); const el = $('#cTrips'); if (document.activeElement !== el) el.value = S.commute.perWeek;
+  const a = resolve(S.commute.from), b = resolve(S.commute.to), box = $('#commuteTable');
+  if (!a || !b) { box.innerHTML = `<div class="empty" style="margin-top:12px">Pick both ends of your commute.</div>`; return; }
+  const per = S.commute.perWeek * 52 / 12;
+  commuteRows = planRoute(a, b, false).map(o => { const each = (o.k === 'metro' || o.k === 'ae') ? (o.fare * 0.9 + mid([o.acc.c[0] + o.egr.c[0], o.acc.c[1] + o.egr.c[1]])) : mid(o.c); return { o, each, month: each * per }; }).sort((x, y) => x.month - y.month);
+  if (!commuteRows.length) { box.innerHTML = `<div class="empty" style="margin-top:12px">Those are the same place.</div>`; return; }
+  box.innerHTML = `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Way</th><th class="n">Time</th><th class="n">Each trip</th><th class="n">Per month</th><th><span class="sr">Log</span></th></tr></thead><tbody>${commuteRows.map((r, i) => `<tr><td><span class="modecell">${mi(r.o.k, true)}<span>${r.o.label || MODES[r.o.k].name}${r.o.k === 'metro' || r.o.k === 'ae' ? '<br><small class="muted">smart card price</small>' : ''}</span></span></td><td class="n">${dur(r.o.t)}</td><td class="n">${r.each ? inr(r.each) : 'Free'}</td><td class="n">${r.month ? inr(r.month) : '₹0'}</td><td>${r.month ? `<button class="btn small" type="button" data-commute="${i}">Log month</button>` : ''}</td></tr>`).join('')}</tbody></table></div>
+  <p class="muted" style="font-size:12.5px;margin-top:8px">${Math.round(per)} one-way trips a month. Women ride DTC and cluster buses free. Cab and auto costs are for the whole vehicle.</p>`;
+}
+$('#commuteTable').addEventListener('click', e => { const b = e.target.closest('[data-commute]'); if (!b) return; const r = commuteRows[+b.dataset.commute]; if (!r) return;
+  const a = resolve(S.commute.from), z = resolve(S.commute.to), label = `Commute: ${a.name.replace(' metro', '')} → ${z.name.replace(' metro', '')} (${r.o.label || MODES[r.o.k].name})`;
+  S.expenses.unshift({ id: 'e' + Date.now().toString(36), date: todayISO(), label, parts: { commute: Math.round(r.month), tickets: 0, food: 0, other: 0 } });
+  persist(); renderBudget(); renderSide(); toast(`${inr(r.month)} commute logged for this month`); });
+
+/* ------------------------------------------------------------------ shops & food guide */
+// The list lives in this page's shared store (catalog/guide), so it can be refreshed without a new version of the page.
+const NEEDS = [['clothing', 'Clothes'], ['ethnic', 'Ethnic & wedding'], ['wholesale', 'Wholesale'], ['electronics_components', 'Electronic components'],
+  ['audio', 'Speakers & audio'], ['mobiles', 'Mobiles'], ['computers', 'Laptops & PC parts'], ['electrical', 'Electrical & lights'], ['cameras', 'Cameras'],
+  ['music_instruments', 'Music instruments'], ['books', 'Books'], ['jewellery', 'Jewellery'], ['furniture_home', 'Home & furniture'], ['spices_dryfruits', 'Spices & dry fruits'],
+  ['street_food', 'Street food'], ['non_veg', 'Non-veg'], ['veg_food', 'Veg food'], ['sweets', 'Sweets']];
+const NEED_LABEL = Object.fromEntries(NEEDS);
+const FOOD_NEEDS = new Set(['street_food', 'non_veg', 'veg_food', 'sweets']);
+function guidePlace(g) {
+  const food = (g.cats || []).some(c => FOOD_NEEDS.has(c));
+  return { id: g.id, n: g.name, hi: '', cat: food ? 'Food' : 'Market', area: g.area || 'Delhi', lat: g.lat, lng: g.lng, t: FREE,
+    hoursKnown: /^\d\d:\d\d$/.test(g.open) && /^\d\d:\d\d$/.test(g.close),
+    open: /^\d\d:\d\d$/.test(g.open) ? g.open : '10:00', close: /^\d\d:\d\d$/.test(g.close) ? g.close : '20:00',
+    closed: Array.isArray(g.closed) ? g.closed.filter(n => n >= 0 && n <= 6) : [], mins: food ? 60 : 90, tip: g.tip || '', guide: g };
+}
+function applyGuide(d) {
+  GUIDE.items = (Array.isArray(d?.items) ? d.items : []).filter(g => g && g.id && g.name && Number.isFinite(g.lat) && Number.isFinite(g.lng)).map(guidePlace);
+  GUIDE.updated = d?.updated || null; GUIDE.state = 'ready'; INDEX = null;
+  renderGuide();
+  if ([S.explore.from, S.explore.to].some(r => String(r).startsWith('gd:'))) renderExplore();
+  if (S.trip.stops.some(s => s.ref.startsWith('gd:'))) { renderTrip(); renderSide(); }
+}
+// Live store when the host provides one; otherwise the copy shipped next to the page.
+function subscribeGuide(db) {
+  db.doc('catalog/guide').onSnapshot(snap => { if (snap.exists) applyGuide(JSON.parse(JSON.stringify(snap.data()))); else loadBundledGuide(); }, () => loadBundledGuide());
+}
+async function loadBundledGuide() {
+  try { const r = await fetch('data/guide.json', { cache: 'no-cache' }); if (!r.ok) throw new Error(r.status); applyGuide(await r.json()); }
+  catch { GUIDE.state = 'none'; renderGuide(); }
+}
+function guideMatches(need, from) {
+  const q = norm(need), key = NEEDS.find(([k, l]) => k === need || norm(l) === q || norm(l).includes(q) || q.includes(norm(l)))?.[0];
+  return GUIDE.items.filter(p => key ? (p.guide.cats || []).includes(key) : norm([p.n, p.area, p.guide.buy, ...(p.guide.cats || []).map(c => NEED_LABEL[c])].join(' ')).includes(q))
+    .map(p => ({ p, km: from ? hav(from, p) : 0 })).sort((a, b) => a.km - b.km);
+}
+const gNearCombo = makeCombo($('#gNearCombo'), { get: () => S.guide.near || S.explore.from, set: r => { S.guide.near = r; persist(); renderGuide(); }, defaults: DEF_FROM });
+$('#needs').innerHTML = `<button class="chip" type="button" data-need="all">Everything</button>` + NEEDS.map(([k, l]) => `<button class="chip" type="button" data-need="${k}">${esc(l)}</button>`).join('');
+$('#needs').addEventListener('click', e => { const b = e.target.closest('[data-need]'); if (!b) return; S.guide.need = b.dataset.need; persist(); renderGuide(); b.scrollIntoView({ block: 'nearest', inline: 'nearest' }); });
+$('#gq').addEventListener('input', e => { S.guide.q = e.target.value; renderGuide(); });
+$('#gOpen').addEventListener('change', e => { S.guide.open = e.target.checked; persist(); renderGuide(); });
+$('#guideAsk').addEventListener('click', () => { const near = resolve(S.guide.near || S.explore.from), need = S.guide.need;
+  openAI(need === 'all' ? `What are the best markets in Delhi near ${near?.name || 'me'}?` : `Where should I go in Delhi for ${NEED_LABEL[need].toLowerCase()}? I'm starting from ${near?.name || 'central Delhi'}.`); });
+function renderGuide() {
+  const box = $('#guideList'), g = S.guide; if (!box) return;
+  gNearCombo.label();
+  document.querySelectorAll('#needs [data-need]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.need === g.need)));
+  const qEl = $('#gq'); if (document.activeElement !== qEl) qEl.value = g.q || ''; $('#gOpen').checked = !!g.open;
+  $('#guideUpdated').textContent = GUIDE.state === 'ready' ? `${GUIDE.items.length} places${GUIDE.updated ? ` · list checked ${new Date(GUIDE.updated + 'T12:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}` : ''}` : 'Markets, shops and eateries picked for what you need';
+  if (GUIDE.state === 'loading') { box.innerHTML = `<li class="empty">Loading the latest list…</li>`; return; }
+  if (GUIDE.state !== 'ready') { box.innerHTML = `<li class="empty">The shop and food list couldn’t load. If you opened the file directly, serve the folder instead (see the README).${SAMPLE ? ' You can still ask the assistant.' : ''}</li>`; return; }
+  const near = resolve(g.near || S.explore.from), sunday = dayOf(todayISO()) === 0;
+  let list = GUIDE.items.map(p => ({ p, km: near ? hav(near, p) : 0 }));
+  if (g.need && g.need !== 'all') list = list.filter(x => (x.p.guide.cats || []).includes(g.need));
+  if (g.q && g.q.trim()) { const q = norm(g.q); list = list.filter(x => norm([x.p.n, x.p.area, x.p.guide.buy, x.p.guide.addr, ...(x.p.guide.cats || []).map(c => NEED_LABEL[c])].join(' ')).includes(q)); }
+  if (g.open) list = list.filter(x => openState(x.p).open !== false);
+  list.sort((a, b) => a.km - b.km);
+  if (!list.length) { box.innerHTML = `<li class="empty">Nothing in the list matches yet.${SAMPLE ? ' Ask the assistant for more ideas.' : ''}</li>`; return; }
+  box.innerHTML = list.slice(0, 30).map(({ p, km }) => {
+    const G = p.guide, os = openState(p), gm = guideMetro(p), ref = 'gd:' + p.id;
+    const best = near ? rank(planRoute(near, p, sunday), 'mix')[0] : null;
+    return `<li class="gcard">
+      <div class="gtop"><div style="min-width:0"><h4><button class="nm" type="button" data-to="${esc(ref)}">${esc(p.n)}</button></h4><p class="meta">${esc(p.area)} · ${priceTag(G.price)}${G.spend ? ` · ${esc(G.spend)}` : ''}</p></div><span class="pill ${os.open ? 'good' : os.open === false ? 'bad' : 'info'}">${esc(os.text)}</span></div>
+      <p class="buy">${esc(G.buy || '')}</p>
+      <p class="meta">${esc(hoursText(p))} · ${esc(closedText(p))}</p>
+      ${gm ? `<p class="meta">Metro: ${esc(gm.st.n)}${gm.gate ? `, Gate ${esc(gm.gate)}` : ''} · ${gm.walk} min walk</p>` : ''}
+      ${p.tip ? `<p class="gtip">${esc(p.tip)}</p>` : ''}
+      <div class="foot"><span class="meta">${near ? `${fmtKm(km)} away${best ? ` · ${esc(best.label || MODES[best.k].name)} ${dur(best.t)}, ${best.k === 'walk' ? 'free' : rng(best.c)}` : ''}` : ''}</span>
+      <span class="row"><button class="btn small" type="button" data-route="${esc(ref)}">Route</button>${inTrip(ref) ? `<span class="pill good">In trip</span>` : `<button class="btn small" type="button" data-add="${esc(ref)}">Add</button>`}</span></div>
+    </li>`;
+  }).join('');
+}
+$('#guideList').addEventListener('click', e => {
+  const r = e.target.closest('[data-route],[data-to]'); if (r) { S.explore.from = S.guide.near || S.explore.from; S.explore.to = r.dataset.route || r.dataset.to; persist(); renderExplore(); showTab('explore'); return; }
+  const a = e.target.closest('[data-add]'); if (a) { addToTrip(a.dataset.add); renderGuide(); }
+});
+
+/* ------------------------------------------------------------------ assistant */
+// The AI assistant, with the page's route engine, guide, trip and budget as tools.
+const AI = { turns: [], ctl: null, tools: false, toolMax: 0 };
+const aiPanel = $('#ai'), aiLog = $('#aiLog'), aiInput = $('#aiInput');
+const findRef = q => { q = String(q || '').trim(); if (!q) return null; if (/^(pl|cu|gd|hub|st):/.test(q)) { const r = resolve(q); if (r) return r; } const hit = searchIndex(q)[0]; return hit ? resolve(hit.ref) : null; };
+function tripBrief() {
+  const c = computeTrip(), m = monthStats();
+  return { trip: { name: S.trip.name, date: S.trip.date, start: S.trip.start, from: c.start?.name, people: c.people, getting_around: S.trip.pref,
+      stops: c.rows.map(r => ({ name: r.r.name, arrive: hhmm(r.begin), leave: hhmm(r.begin + r.mins), tickets_inr: r.cost, travel_here: r.leg && !r.leg.none ? `${r.leg.opt.label || MODES[r.leg.opt.k].name}, ${dur(r.leg.t)}, ${inr(r.leg.cost)}` : null, warnings: r.warns.map(w => w[1]) })),
+      ends: hhmm(c.end), tickets_inr: Math.round(c.tickets), travel_inr: Math.round(c.travel), food_inr: Math.round(c.food), total_inr: Math.round(c.total), cheapest_possible_travel_inr: Math.round(c.cheapTravel) },
+    budget: { per_trip_inr: +S.tripBudget || 0, month: monthName(todayISO().slice(0, 7)), monthly_inr: +S.monthly || 0, spent_this_month_inr: Math.round(m.spent), by_category: m.parts } };
+}
+const AI_TOOLS = [
+  { name: 'plan_route', description: 'Every way to travel between two places in Delhi: metro (lines, where to change, boarding direction, exit gate), Airport Express, bus, auto, cab, bike taxi, e-rickshaw, walking, each with minutes and estimated rupees. Accepts plain names or ids from search_places.',
+    inputSchema: { type: 'object', properties: { from: { type: 'string' }, to: { type: 'string' } }, required: ['from', 'to'] },
+    execute: ({ from, to }) => { const o = findRef(from), d = findRef(to); if (!o) throw new Error('No place found for: ' + from); if (!d) throw new Error('No place found for: ' + to);
+      return { from: o.name, to: d.name, straight_km: +hav(o, d).toFixed(1), options: rank(planRoute(o, d, dayOf(todayISO()) === 0), 'mix').slice(0, 6).map(op => ({
+        mode: op.label || MODES[op.k].name, minutes: Math.round(op.t), cost: op.k === 'walk' ? 'free' : `${rng(op.c)} ${MODES[op.k].veh ? 'per vehicle' : 'per person'}`,
+        ...(op.segs ? { metro_fare_inr: op.fare, steps: routeSteps(op, d.name).map(stepText) } : { note: op.note || '' }) })) }; } },
+  { name: 'search_places', description: 'Look up sights, metro stations, transport hubs, shops and eateries the app knows, by name or keyword. Returns ids usable in other tools.',
+    inputSchema: { type: 'object', properties: { query: { type: 'string' } }, required: ['query'] },
+    execute: ({ query }) => searchIndex(String(query)).slice(0, 6).map(it => ({ id: it.ref, name: it.name, type: it.k, detail: it.sub })) },
+  { name: 'find_shops', description: 'The app’s checked list of Delhi markets, shops and eateries for a need (clothes, ethnic & wedding, wholesale, electronic components, speakers & audio, mobiles, laptops & PC parts, electrical, cameras, music instruments, books, jewellery, home & furniture, spices, street food, non-veg, veg food, sweets), nearest first.',
+    inputSchema: { type: 'object', properties: { need: { type: 'string' }, near: { type: 'string', description: 'optional place to measure distance from' } }, required: ['need'] },
+    execute: ({ need, near }) => { if (GUIDE.state !== 'ready') throw new Error('The shop list is not loaded in this view.');
+      const from = (near && findRef(near)) || resolve(S.explore.from);
+      return guideMatches(String(need), from).slice(0, 8).map(({ p, km }) => { const gm = guideMetro(p); return { id: 'gd:' + p.id, name: p.n, area: p.area, good_for: p.guide.buy, price: priceTag(p.guide.price), spend: p.guide.spend || null,
+        hours: hoursText(p), closed: closedText(p), now: openState(p).text, metro: gm ? `${gm.st.n}${gm.gate ? ', Gate ' + gm.gate : ''}` : null, km_away: from ? +km.toFixed(1) : null, tip: p.tip || null }; }); } },
+  { name: 'nearby_places', description: 'Sights, markets and eateries within a radius of a place, nearest first, with entry fees and hours.',
+    inputSchema: { type: 'object', properties: { place: { type: 'string' }, radius_km: { type: 'number' } }, required: ['place'] },
+    execute: ({ place, radius_km }) => { const p = findRef(place); if (!p) throw new Error('No place found for: ' + place); const r = Math.min(8, Math.max(0.5, +radius_km || 3));
+      return allPlaces().filter(x => x.ref !== p.ref).map(x => ({ x, km: hav(p, x.p) })).filter(y => y.km <= r).sort((a, b) => a.km - b.km).slice(0, 10)
+        .map(({ x, km }) => ({ id: x.ref, name: x.p.n, type: x.p.guide ? (x.p.guide.cats || []).map(c => NEED_LABEL[c]).join(', ') : CATS[x.p.cat], km: +km.toFixed(1), entry: ticketText(x.p), hours: hoursText(x.p), closed: closedText(x.p) })); } },
+  { name: 'get_trip_and_budget', description: "The user's day plan (stops, arrival times, warnings, costs) and their per-trip and monthly budget with this month's spending.", execute: () => tripBrief() },
+  { name: 'add_to_trip', description: "Add a place to the end of the user's day plan.", inputSchema: { type: 'object', properties: { place: { type: 'string' } }, required: ['place'] },
+    execute: ({ place }) => { const p = findRef(place); if (!p) throw new Error('No place found for: ' + place); addToTrip(p.ref, true); return { added: p.name, stops_now: S.trip.stops.length }; } },
+  { name: 'set_budget', description: 'Change the monthly budget and/or the per-trip budget, in rupees. Only when the user asks.', inputSchema: { type: 'object', properties: { monthly_inr: { type: 'number' }, per_trip_inr: { type: 'number' } } },
+    execute: ({ monthly_inr, per_trip_inr }) => { if (Number.isFinite(+monthly_inr) && monthly_inr != null) S.monthly = Math.max(0, Math.round(+monthly_inr)); if (Number.isFinite(+per_trip_inr) && per_trip_inr != null) S.tripBudget = Math.max(0, Math.round(+per_trip_inr)); persist(); renderAll(); return { monthly_inr: S.monthly, per_trip_inr: S.tripBudget }; } },
+  { name: 'show_route', description: "Open a route on the user's screen (Explore tab) so they can see the steps.", inputSchema: { type: 'object', properties: { from: { type: 'string' }, to: { type: 'string' } }, required: ['to'] },
+    execute: ({ from, to }) => { const d = findRef(to), o = from ? findRef(from) : resolve(S.explore.from); if (!d || !o) throw new Error('Could not find that place.'); S.explore.from = o.ref; S.explore.to = d.ref; persist(); showTab('explore'); renderExplore(); return { showing: `${o.name} to ${d.name}` }; } },
+];
+function aiBrief() {
+  const o = resolve(S.explore.from), d = resolve(S.explore.to), now = new Date();
+  return `You are Raahi, a friendly local guide inside a Delhi travel and budget web app. Today is ${now.toDateString()}, ${hhmm(now.getHours() * 60 + now.getMinutes())} in Delhi.
+On the user's screen: a route from "${o?.name || '?'}" to "${d?.name || '?'}". Their saved budgets: ${inr(+S.monthly || 0)} a month, ${inr(+S.tripBudget || 0)} a trip.
+How to answer:
+- ${AI.tools ? 'Use the tools for routes, metro lines, gates, fares, travel times, nearby places, shops and food, the day plan and the budget. Do not guess those numbers.' : 'You cannot look anything up here, so say that figures are rough.'}
+- The app’s prices and times are estimates; say so in a few words when you quote them.
+- Quote metro platform numbers, directions, branch warnings and gates exactly as plan_route gives them. Where it says a platform number is not on record, don’t invent one. Always pass on “IMPORTANT” branch notes (e.g. Vaishali vs Noida Electronic City trains splitting at Yamuna Bank).
+- For shopping and food, start from find_shops. You may add well-known places from your own knowledge, but say they aren’t in the app’s checked list and that timings should be confirmed.
+- Reply in the user’s language (English, Hindi or Hinglish). Keep it short: 2–6 lines or a short list. No tables or headings.
+- When you change something (trip, budget, what’s on screen), say exactly what you changed.`;
+}
+function md(s) {
+  const lines = esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').split('\n'); let out = '', inList = false;
+  for (const ln of lines) {
+    const m = ln.match(/^\s*(?:[-•*]|\d+[.)])\s+(.*)$/);
+    if (m) { if (!inList) { out += '<ul>'; inList = true; } out += `<li>${m[1]}</li>`; continue; }
+    if (inList) { out += '</ul>'; inList = false; }
+    out += ln.trim() ? `<p>${ln}</p>` : '';
+  }
+  return out + (inList ? '</ul>' : '');
+}
+const QUICK = ['Cheapest way from here to Red Fort?', 'Where do I buy Arduino and sensors?', 'Best kebabs near Jama Masjid', 'Plan a half day in Old Delhi under ₹500', 'How do I get from the airport to Paharganj?'];
+function drawAI() {
+  aiLog.innerHTML = AI.turns.length ? AI.turns.map(t => `<div class="msg ${t.role}">${t.role === 'user' ? esc(t.content).replace(/\n/g, '<br>') : md(t.content)}</div>`).join('')
+    : `<div class="msg assistant"><p>Namaste! Ask me how to get somewhere, where to shop or eat, or how to keep a trip on budget. I use this app’s routes, shop list and your plan.</p></div><div class="ai-quick">${QUICK.map(q => `<button class="chip" type="button" data-q="${esc(q)}">${esc(q)}</button>`).join('')}</div>`;
+  aiLog.scrollTop = aiLog.scrollHeight;
+}
+function aiStatus(text) { let el = aiLog.querySelector('.ai-status'); if (!text) { el?.remove(); return; } if (!el) { el = document.createElement('p'); el.className = 'ai-status'; aiLog.append(el); } el.textContent = text; aiLog.scrollTop = aiLog.scrollHeight; }
+function openAI(prefill) {
+  if (!SAMPLE) return;
+  aiPanel.hidden = false; $('#aiFab').setAttribute('aria-expanded', 'true'); drawAI();
+  if (prefill) aiInput.value = prefill;
+  aiInput.focus(); aiInput.setSelectionRange(aiInput.value.length, aiInput.value.length);
+}
+function closeAI() { aiPanel.hidden = true; $('#aiFab').setAttribute('aria-expanded', 'false'); $('#aiFab').focus(); }
+async function sendAI(q) {
+  q = String(q || '').trim(); if (!q || AI.ctl || !SAMPLE) return;
+  AI.turns.push({ role: 'user', content: q }); aiInput.value = ''; drawAI();
+  const bubble = document.createElement('div'); bubble.className = 'msg assistant'; bubble.innerHTML = '<p class="muted">Thinking…</p>'; aiLog.append(bubble); aiLog.scrollTop = aiLog.scrollHeight;
+  const ctl = AI.ctl = new AbortController(); $('#aiSend').hidden = true; $('#aiStop').hidden = false;
+  const tools = AI.tools ? AI_TOOLS.slice(0, AI.toolMax).map(t => ({ ...t, execute: (args, ctx) => { aiStatus({ plan_route: 'Working out routes…', find_shops: 'Checking the shop list…', search_places: 'Looking up places…', nearby_places: 'Finding what’s nearby…', get_trip_and_budget: 'Reading your plan and budget…', add_to_trip: 'Adding to your trip…', set_budget: 'Updating your budget…', show_route: 'Opening the route…' }[t.name] || 'Working…'); return t.execute(args || {}, ctx); } })) : null;
+  try {
+    const opts = { signal: ctl.signal, modelTier: 'default', onText: ({ text }) => { aiStatus(''); bubble.innerHTML = md(text); aiLog.scrollTop = aiLog.scrollHeight; } };
+    if (tools) opts.tools = tools; else opts.cache = false;
+    const r = await SAMPLE([{ role: 'user', content: aiBrief() }, ...AI.turns.slice(-12)], opts);
+    AI.turns.push({ role: 'assistant', content: r.text }); bubble.innerHTML = md(r.text) + (r.truncated ? '<p class="muted">The answer was cut short. Try a narrower question.</p>' : '');
+  } catch (e) {
+    aiStatus('');
+    const code = e?.code;
+    if (code === 'cancelled') { if (e.text) { AI.turns.push({ role: 'assistant', content: e.text }); bubble.innerHTML = md(e.text) + '<p class="muted">Stopped.</p>'; } else { AI.turns.pop(); bubble.innerHTML = '<p class="muted">Stopped.</p>'; } }
+    else {
+      AI.turns.pop();
+      const msg = { not_granted: 'The assistant isn’t allowed on this page. You can turn it on from the page’s permissions.', sampling_disabled: 'The assistant isn’t available on this account.', rate_limited: 'Too many questions just now. Try again in a minute.', session_expired: 'Sign in again, then retry.', refused: 'I can’t help with that one. Try asking differently.', tools_unavailable: 'Live lookups aren’t available here.' }[code] || 'Something went wrong. Try again.';
+      bubble.innerHTML = `<p class="err">${esc(msg)}</p>`;
+      if (code === 'tools_unavailable') AI.tools = false;
+      if (['not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed'].includes(code)) { SAMPLE = null; document.body.classList.remove('has-ai'); }
+    }
+  } finally { AI.ctl = null; $('#aiSend').hidden = false; $('#aiStop').hidden = true; }
+}
+$('#aiFab').addEventListener('click', () => aiPanel.hidden ? openAI() : closeAI());
+$('#aiClose').addEventListener('click', closeAI);
+$('#aiStop').addEventListener('click', () => AI.ctl?.abort());
+$('#aiForm').addEventListener('submit', e => { e.preventDefault(); sendAI(aiInput.value); });
+aiInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendAI(aiInput.value); } });
+aiLog.addEventListener('click', e => { const b = e.target.closest('[data-q]'); if (b) sendAI(b.dataset.q); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !aiPanel.hidden) closeAI(); });
+document.addEventListener('click', e => { const b = e.target.closest('[data-ask]'); if (b) openAI(b.dataset.ask); });
+async function initAI() {
+  if (!window.claude?.use) return;
+  const s = await claude.use('sample').catch(() => null); if (!s) return;
+  SAMPLE = s; document.body.classList.add('has-ai');
+  const lim = await s.limits().catch(() => null);
+  AI.tools = !!lim?.tools; AI.toolMax = lim?.tools ? Math.min(AI_TOOLS.length, lim.tools.maxCount || AI_TOOLS.length) : 0;
+  renderGuide();
+}
+
+/* ------------------------------------------------------------------ header, side, tabs, toast */
+function renderHeader() {
+  const mk = todayISO().slice(0, 7), m = monthStats(mk), b = +S.monthly || 0, el = $('#mm');
+  el.classList.toggle('over', b > 0 && m.spent > b);
+  el.innerHTML = `<span>${esc(new Date().toLocaleString('en-IN', { month: 'long' }))} budget</span> <strong>${inr(m.spent)}${b ? ` / ${inr(b)}` : ''}</strong><span class="bar"><i style="width:${b ? Math.min(100, m.spent / b * 100) : 0}%"></i></span>`;
+}
+function renderSide() {
+  const c = computeTrip(), T = S.trip, b = +S.tripBudget || 0, mk = todayISO().slice(0, 7), m = monthStats(mk), mb = +S.monthly || 0;
+  $('#tripCount').textContent = T.stops.length;
+  $('#exploreSide').innerHTML = `<div class="panel mini"><div class="row"><h3>${esc(T.name || 'My trip')}</h3>${T.example ? '<span class="pill info">Example</span>' : ''}</div>
+    ${c.rows.length ? `<ol class="mini-list">${c.rows.map(r => `<li><span>${esc(r.r.name)}</span></li>`).join('')}</ol>` : `<p class="muted" style="font-size:13.5px;margin-top:6px">Add places to plan a day.</p>`}
+    <div class="row" style="margin-top:12px;font-size:13px"><span class="muted">Estimate</span><span class="num">${inr(c.total)}${b ? ` of ${inr(b)}` : ''}</span></div>
+    <div class="meter${b && c.total > b ? ' over' : b && c.total > b * .85 ? ' warn' : ''}" style="margin-top:5px"><i style="width:${b ? Math.min(100, c.total / b * 100) : 0}%"></i></div>
+    <button class="btn" type="button" style="width:100%;margin-top:12px" data-tab-go="trip">Open trip</button></div>
+    <div class="panel mini"><div class="row"><h3>${esc(monthName(mk))}</h3></div>
+    <div class="row" style="margin-top:8px;font-size:13px"><span class="muted">Spent</span><span class="num">${inr(m.spent)}${mb ? ` of ${inr(mb)}` : ''}</span></div>
+    <div class="meter${mb && m.spent > mb ? ' over' : mb && m.spent > mb * .85 ? ' warn' : ''}" style="margin-top:5px"><i style="width:${mb ? Math.min(100, m.spent / mb * 100) : 0}%"></i></div>
+    <button class="btn" type="button" style="width:100%;margin-top:12px" data-tab-go="budget">Budget &amp; spending</button></div>`;
+  renderHeader();
+}
+document.addEventListener('click', e => { const g = e.target.closest('[data-tab-go]'); if (g) showTab(g.dataset.tabGo); });
+$('#mm').onclick = () => showTab('budget');
+const TABS = ['explore', 'guide', 'trip', 'budget'];
+function showTab(t) {
+  if (!TABS.includes(t)) t = 'explore';
+  TABS.forEach(x => { $('#' + x).hidden = x !== t; const b = $('#tab-' + x); b.setAttribute('aria-selected', String(x === t)); b.tabIndex = x === t ? 0 : -1; });
+  try { localStorage.setItem(LS_KEY + '.tab', t); } catch {}
+  if (t === 'trip') renderTrip(); if (t === 'budget') renderBudget(); if (t === 'guide') renderGuide();
+  window.scrollTo({ top: 0 });
+}
+document.querySelector('.tabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) showTab(b.dataset.tab); });
+document.querySelector('.tabs').addEventListener('keydown', e => { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; const cur = TABS.findIndex(x => !$('#' + x).hidden), n = TABS[(cur + (e.key === 'ArrowRight' ? 1 : TABS.length - 1)) % TABS.length]; showTab(n); $('#tab-' + n).focus(); });
+let toastTimer = null;
+function toast(msg, action, fn) { const el = $('#toast'); el.innerHTML = `<span>${esc(msg)}</span>${action ? `<button type="button">${esc(action)}</button>` : ''}`; el.hidden = false;
+  if (action) el.querySelector('button').onclick = () => { el.hidden = true; fn(); };
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 5000); }
+
+function renderAll() { renderExplore(); renderGuide(); renderTrip(); renderBudget(); renderSide(); }
+let startTab = (location.hash || '').slice(1);
+if (!TABS.includes(startTab)) { try { startTab = localStorage.getItem(LS_KEY + '.tab') || 'explore'; } catch { startTab = 'explore'; } }
+renderAll(); showTab(startTab);
+initCloud(); initAI();
+</script>

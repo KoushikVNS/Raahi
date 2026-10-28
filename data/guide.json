@@ -1,0 +1,1733 @@
+{
+ "updated": "2026-10-28",
+ "items": [
+  {
+   "addr": "Sarojini Nagar Market, next to Pink Line station",
+   "area": "Sarojini Nagar",
+   "buy": "Export-surplus tops, summer dresses, jeans, knock-offs, cheap jewellery",
+   "cats": [
+    "clothing",
+    "jewellery"
+   ],
+   "checked": "2026-10-28",
+   "close": "21:00",
+   "closed": [
+    1
+   ],
+   "gate": "1",
+   "id": "sarojini-nagar-market",
+   "lat": 28.57692,
+   "lng": 77.19626,
+   "metro": "Sarojini Nagar",
+   "name": "Sarojini Nagar Market",
+   "open": "10:00",
+   "price": 1,
+   "sources": [
+    "https://www.timeout.com/delhi/shopping/sarojini-nagar-market",
+    "https://en.wikipedia.org/wiki/Sarojini_Nagar_metro_station"
+   ],
+   "spend": "Monday stock-clearance items from ~₹30",
+   "tip": "Go on a weekday morning and haggle hard; stock changes weekly and Sundays are packed.",
+   "walk": 9
+  },
+  {
+   "addr": "Janpath Road, by Janpath metro",
+   "area": "Connaught Place",
+   "buy": "Oxidised jewellery, singing bowls, mirror-work bags, juttis, casual wear",
+   "cats": [
+    "clothing",
+    "jewellery",
+    "furniture_home"
+   ],
+   "checked": "2026-10-28",
+   "close": "20:00",
+   "closed": [
+    0
+   ],
+   "gate": "2",
+   "id": "janpath-tibetan-market",
+   "lat": 28.62906,
+   "lng": 77.2189,
+   "metro": "Janpath",
+   "name": "Janpath Market & Tibetan Market",
+   "open": "11:00",
+   "price": 1,
+   "sources": [
+    "https://www.zingbus.com/blog/janpath-market-delhi-timings-shopping-guide/",
+    "https://lbb.in/delhi/lbb-market-guide/"
+   ],
+   "spend": "Oxidised earrings ~₹50–200; juttis ~₹400–800",
+   "tip": "Counter at about 40% of the quoted price, compare three stalls and carry small cash.",
+   "walk": 1
+  },
+  {
+   "addr": "Underground market below CP Central Park",
+   "area": "Connaught Place",
+   "buy": "Earphones, Bluetooth speakers, phone accessories, gaming gear, first-copy clothes",
+   "cats": [
+    "clothing",
+    "mobiles",
+    "audio",
+    "computers"
+   ],
+   "checked": "2026-10-28",
+   "close": "19:30",
+   "closed": [
+    0
+   ],
+   "gate": "6",
+   "id": "palika-bazaar",
+   "lat": 28.63076,
+   "lng": 77.21892,
+   "metro": "Rajiv Chowk",
+   "name": "Palika Bazaar",
+   "open": "10:00",
+   "price": 1,
+   "sources": [
+    "https://www.magicpin.in/blog/india/delhi/Travel/palika-bazaar-delhi",
+    "https://delhitourism.gov.in/shopping/palika_bazar.html"
+   ],
+   "spend": "",
+   "tip": "Most goods are copies: test electronics before paying and start at 40–50% of the quote.",
+   "walk": 3
+  },
+  {
+   "addr": "Central Market, Lajpat Nagar",
+   "area": "Lajpat Nagar II",
+   "buy": "Lehengas, sarees, salwar suits, kurtis, dress fabric, faux jewellery",
+   "cats": [
+    "ethnic",
+    "clothing",
+    "jewellery"
+   ],
+   "checked": "2026-10-28",
+   "close": "21:00",
+   "closed": [
+    1
+   ],
+   "gate": "2",
+   "id": "lajpat-nagar-central-market",
+   "lat": 28.57009,
+   "lng": 77.24318,
+   "metro": "Lajpat Nagar",
+   "name": "Lajpat Nagar Central Market",
+   "open": "10:00",
+   "price": 2,
+   "sources": [
+    "https://www.zingbus.com/blog/lajpat-nagar-central-market-open-closing-timings/",
+    "https://lbb.in/delhi/lbb-market-guide/"
+   ],
+   "spend": "Kurtis ₹150–600; lehengas from ~₹2,000",
+   "tip": "Gate 2 is for Violet Line, Gate 5 for Pink Line; bargain 20–30% off and go on weekday mornings.",
+   "walk": 5
+  },
+  {
+   "addr": "Ajmal Khan Road, Karol Bagh",
+   "area": "Karol Bagh",
+   "buy": "Budget and branded garments, ethnic wear, footwear, snacks",
+   "cats": [
+    "clothing",
+    "ethnic"
+   ],
+   "checked": "2026-10-28",
+   "close": "22:00",
+   "closed": [
+    1
+   ],
+   "gate": "1",
+   "id": "karol-bagh-ajmal-khan-road",
+   "lat": 28.6544,
+   "lng": 77.19529,
+   "metro": "Karol Bagh",
+   "name": "Karol Bagh Market (Ajmal Khan Road)",
+   "open": "10:00",
+   "price": 2,
+   "sources": [
+    "https://lbb.in/delhi/lbb-market-guide/",
+    "https://metrogo.in/route/delhi-gate-delhi-metro-to-karol-bagh-delhi-metro"
+   ],
+   "spend": "",
+   "tip": "Come by metro since parking is scarce; a few shops open on Mondays but most shut.",
+   "walk": 5
+  },
+  {
+   "addr": "Tank Road, Karol Bagh",
+   "area": "Karol Bagh (Dev Nagar)",
+   "buy": "Wholesale readymade garments, women's suits, sarees, lehengas",
+   "cats": [
+    "wholesale",
+    "clothing",
+    "ethnic"
+   ],
+   "checked": "2026-10-28",
+   "close": "20:00",
+   "closed": [
+    1
+   ],
+   "gate": null,
+   "id": "tank-road-garment-market",
+   "lat": 28.64399,
+   "lng": 77.18853,
+   "metro": "Karol Bagh",
+   "name": "Tank Road Garment Market",
+   "open": "10:00",
+   "price": 1,
+   "sources": [
+    "https://en.wikipedia.org/wiki/Karol_Bagh",
+    "https://anar.biz/blog/top-12-wholesale-markets-in-delhi-for-clothes"
+   ],
+   "spend": "",
+   "tip": "Sources disagree on the weekly off (Monday vs Sunday), so call ahead; buy in bulk for best rates.",
+   "walk": 12
+  },
+  {
+   "addr": "Off Ajmal Khan Road, Karol Bagh",
+   "area": "Karol Bagh",
+   "buy": "Phones, refurbished handsets, accessories, consoles, camera gear, speakers",
+   "cats": [
+    "mobiles",
+    "computers",
+    "cameras",
+    "audio"
+   ],
+   "checked": "2026-10-28",
+   "close": "21:00",
+   "closed": [
+    1
+   ],
+   "gate": "1",
+   "id": "gaffar-market",
+   "lat": 28.64985,
+   "lng": 77.19114,
+   "metro": "Karol Bagh",
+   "name": "Gaffar Market",
+   "open": "11:00",
+   "price": 1,
+   "sources": [
+    "https://www.captureatrip.com/blog/gaffar-market",
+    "https://metrogo.in/route/delhi-gate-delhi-metro-to-karol-bagh-delhi-metro"
+   ],
+   "spend": "",
+   "tip": "Compare several shops, check for fakes and get a bill or warranty on phones.",
+   "walk": 6
+  },
+  {
+   "addr": "Bank Street, Karol Bagh",
+   "area": "Karol Bagh",
+   "buy": "Gold and bridal trousseau jewellery",
+   "cats": [
+    "jewellery"
+   ],
+   "checked": "2026-10-28",
+   "close": null,
+   "closed": [
+    1
+   ],
+   "gate": null,
+   "id": "karol-bagh-bank-street",
+   "lat": 28.64843,
+   "lng": 77.19813,
+   "metro": "Karol Bagh",
+   "name": "Bank Street, Karol Bagh",
+   "open": null,
+   "price": 3,
+   "sources": [
+    "https://en.wikipedia.org/wiki/Karol_Bagh",
+    "https://www.jaypeehotels.com/blog/karol-bagh-delhi"
+   ],
+   "spend": "",
+   "tip": "Ask for hallmarking and itemised making charges, and compare quotes across jewellers.",
+   "walk": 8
+  },
+  {
+   "addr": "Gandhi Nagar, near Seelampur",
+   "area": "Gandhi Nagar (East Delhi)",
+   "buy": "Wholesale kurtis, jeans, suits, lehengas, dupattas, kids' wear",
+   "cats": [
+    "wholesale",
+    "clothing",
+    "ethnic"
+   ],
+   "checked": "2026-10-28",
+   "close": "19:00",
+   "closed": [
+    1
+   ],
+   "gate": null,
+   "id": "gandhi-nagar-market",
+   "lat": 28.66992,
+   "lng": 77.26676,
+   "metro": "Seelampur",
+   "name": "Gandhi Nagar Market",
+   "open": "10:00",
+   "price": 1,
+   "sources": [
+    "https://lbb.in/delhi/gandhi-nagar-market/",
+    "https://lbb.in/delhi/lbb-market-guide/"
+   ],
+   "spend": "Wholesale tops from ~₹90; jeans from ~₹380",
+   "tip": "Many shops sell only in minimum quantities; go on a weekday and use the metro.",
+   "walk": 10
+  },
+  {
+   "addr": "Kamla Nagar, near Delhi University",
+   "area": "Kamla Nagar (North Campus)",
+   "buy": "Budget fashion, footwear and accessories",
+   "cats": [
+    "clothing"
+   ],
+   "checked": "2026-10-28",
+   "close": "22:00",
+   "closed": [
+    1
+   ],
+   "gate": null,
+   "id": "kamla-nagar-market",
+   "lat": 28.69816,
+   "lng": 77.20642,
+   "metro": "GTB Nagar",
+   "name": "Kamla Nagar Market",
+   "open": "10:00",
+   "price": 1,
+   "sources": [
+    "https://lbb.in/delhi/lbb-market-guide/",
+    "https://delhitourism.gov.in/shopping/kamla_nagar.html"
+   ],
+   "spend": "",
+   "tip": "Bargain at street stalls; some sources list a Tuesday–Sunday week, so avoid Mondays.",
+   "walk": 15
+  },
+  {
+   "addr": "Shahpur Jat village, near Siri Fort",
+   "area": "Shahpur Jat",
+   "buy": "Designer bridal and festive wear from independent boutiques",
+   "cats": [
+    "ethnic"
+   ],
+   "checked": "2026-10-28",
+   "close": "19:00",
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "shahpur-jat",
+   "lat": 28.54959,
+   "lng": 77.21227,
+   "metro": "Green Park",
+   "name": "Shahpur Jat",
+   "open": "11:00",
+   "price": 3,
+   "sources": [
+    "https://delhitourism.gov.in/dt/shop_in_delhi/shahpur_jat.html",
+    "https://lbb.in/delhi/lbb-market-guide/"
+   ],
+   "spend": "",
+   "tip": "Book bridal consultations ahead at high-end stores; take an auto from the metro.",
+   "walk": 20
+  },
+  {
+   "addr": "Lane off Chandni Chowk main road",
+   "area": "Chandni Chowk",
+   "buy": "Wholesale silk, satin, crepe, cotton and muslin fabric for wedding wear",
+   "cats": [
+    "ethnic",
+    "wholesale"
+   ],
+   "checked": "2026-10-28",
+   "close": "20:00",
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "katra-neel",
+   "lat": 28.6575,
+   "lng": 77.2287,
+   "metro": "Chandni Chowk",
+   "name": "Katra Neel",
+   "open": "10:00",
+   "price": 1,
+   "sources": [
+    "https://traveltriangle.com/blog/shopping-in-chandni-chowk/",
+    "https://www.zingbus.com/blog/chandni-chowk-market-timings-shopping-guide/"
+   ],
+   "spend": "",
+   "tip": "Buy fabric by the metre in bulk for better rates, and bargain.",
+   "walk": 6
+  },
+  {
+   "addr": "Behind Gurudwara Sisganj Sahib",
+   "area": "Chandni Chowk",
+   "buy": "Gota, zari, lace, sequins, bridal trims and accessories",
+   "cats": [
+    "ethnic"
+   ],
+   "checked": "2026-10-28",
+   "close": "20:00",
+   "closed": [
+    0
+   ],
+   "gate": "5",
+   "id": "kinari-bazaar",
+   "lat": 28.6563,
+   "lng": 77.2333,
+   "metro": "Chandni Chowk",
+   "name": "Kinari Bazaar",
+   "open": "10:00",
+   "price": 1,
+   "sources": [
+    "https://www.zingbus.com/blog/chandni-chowk-market-timings-shopping-guide/",
+    "https://metrogo.in/route/chandni-chowk-delhi-metro-to-lajpat-nagar-delhi-metro"
+   ],
+   "spend": "",
+   "tip": "Ideal for DIY wedding embellishment; bargain on bulk lace and gota.",
+   "walk": 8
+  },
+  {
+   "addr": "Dariba Kalan lane off Chandni Chowk",
+   "area": "Chandni Chowk",
+   "buy": "Silver jewellery, antique and oxidised pieces",
+   "cats": [
+    "jewellery"
+   ],
+   "checked": "2026-10-28",
+   "close": "20:00",
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "dariba-kalan",
+   "lat": 28.65456,
+   "lng": 77.2334,
+   "metro": "Chandni Chowk",
+   "name": "Dariba Kalan",
+   "open": "10:00",
+   "price": 2,
+   "sources": [
+    "https://www.zingbus.com/blog/chandni-chowk-market-timings-shopping-guide/",
+    "https://magicpin.com/blog/best-silver-stores-chandni-chowk"
+   ],
+   "spend": "",
+   "tip": "Bargain on making charges, not on the silver weight.",
+   "walk": 7
+  },
+  {
+   "addr": "Khari Baoli Road, near Fatehpuri Masjid",
+   "area": "Chandni Chowk",
+   "buy": "Wholesale spices, dry fruits, nuts, dried apricots and figs, herbs",
+   "cats": [
+    "spices_dryfruits",
+    "wholesale"
+   ],
+   "checked": "2026-10-28",
+   "close": "20:00",
+   "closed": [
+    0
+   ],
+   "gate": "5",
+   "id": "khari-baoli",
+   "lat": 28.65714,
+   "lng": 77.22099,
+   "metro": "Chandni Chowk",
+   "name": "Khari Baoli Spice Market",
+   "open": "10:00",
+   "price": 1,
+   "sources": [
+    "https://www.zingbus.com/blog/chandni-chowk-market-timings-shopping-guide/",
+    "https://metrogo.in/route/chandni-chowk-delhi-metro-to-lajpat-nagar-delhi-metro"
+   ],
+   "spend": "",
+   "tip": "Go on a weekday morning; Fridays and Saturdays are overcrowded.",
+   "walk": 10
+  },
+  {
+   "addr": "Opposite Dilli Haat, Aurobindo Marg",
+   "area": "INA",
+   "buy": "Imported foodstuffs and hard-to-find spices",
+   "cats": [
+    "spices_dryfruits"
+   ],
+   "checked": "2026-10-28",
+   "close": "20:00",
+   "closed": [
+    1
+   ],
+   "gate": "3",
+   "id": "ina-market",
+   "lat": 28.57418,
+   "lng": 77.20972,
+   "metro": "Dilli Haat - INA",
+   "name": "INA Market",
+   "open": "10:00",
+   "price": 2,
+   "sources": [
+    "https://delhitourism.gov.in/shopping/ina_market.html",
+    "https://housing.com/news/ina-market-delhi"
+   ],
+   "spend": "",
+   "tip": "Best for specialty ingredients; pair it with a Dilli Haat visit across the road.",
+   "walk": 4
+  },
+  {
+   "addr": "Aurobindo Marg, opposite INA Market",
+   "area": "INA",
+   "buy": "Handloom sarees, crafts, blue pottery, tribal jewellery, regional food stalls",
+   "cats": [
+    "furniture_home",
+    "ethnic",
+    "jewellery",
+    "spices_dryfruits",
+    "street_food"
+   ],
+   "checked": "2026-10-28",
+   "close": "22:00",
+   "closed": [],
+   "gate": "5",
+   "id": "dilli-haat-ina",
+   "lat": 28.57365,
+   "lng": 77.20759,
+   "metro": "Dilli Haat - INA",
+   "name": "Dilli Haat (INA)",
+   "open": "10:30",
+   "price": 2,
+   "sources": [
+    "https://www.captureatrip.com/blog/dilli-haat-ina",
+    "https://magicpin.com/blog/dilli-haat-market"
+   ],
+   "spend": "Entry ₹30 adults; décor ₹300–5,000",
+   "tip": "Stalls rotate every 15 days; bargaining is limited but polite haggling can work.",
+   "walk": 3
+  },
+  {
+   "addr": "Opposite Red Fort, next to Lal Quila metro",
+   "area": "Chandni Chowk",
+   "buy": "Arduino boards, sensors, ICs, modules, speakers, amplifiers, phone parts",
+   "cats": [
+    "electronics_components",
+    "audio",
+    "mobiles",
+    "electrical"
+   ],
+   "checked": "2026-10-28",
+   "close": null,
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "lajpat-rai-market",
+   "lat": 28.65736,
+   "lng": 77.23598,
+   "metro": "Lal Quila",
+   "name": "Lajpat Rai Market",
+   "open": null,
+   "price": 1,
+   "sources": [
+    "https://www.deccanherald.com/amp/story/india%2Fdelhi%2Fred-fort-blast-shopkeepers-recall-chaos-as-lajpat-rai-market-reopens-say-recovery-will-take-time-3799472",
+    "https://m.indiamart.com/sharmaelectronics-33213679"
+   ],
+   "spend": "Sensor modules ~₹40–80 (listed prices)",
+   "tip": "Compare with online prices and bargain; watch for counterfeit branded goods.",
+   "walk": 2
+  },
+  {
+   "addr": "Old Lajpat Rai Market, Chandni Chowk",
+   "area": "Chandni Chowk",
+   "buy": "Arduino kits, sensors, motor drivers, Raspberry Pi Pico, displays",
+   "cats": [
+    "electronics_components"
+   ],
+   "checked": "2026-10-28",
+   "close": null,
+   "closed": [],
+   "gate": null,
+   "id": "stem-bazaar-lajpat-rai",
+   "lat": 28.6572,
+   "lng": 77.23614,
+   "metro": "Lal Quila",
+   "name": "STEM Bazaar",
+   "open": null,
+   "price": 1,
+   "sources": [
+    "https://m.indiamart.com/stembazaar/profile.html",
+    "https://m.indiamart.com/stembazaar/arduino.html"
+   ],
+   "spend": "HC-SR04 ultrasonic sensor ~₹80 (listed)",
+   "tip": "Hours aren't published, so call before visiting.",
+   "walk": 3
+  },
+  {
+   "addr": "Bhagirath Palace, Chandni Chowk",
+   "area": "Chandni Chowk",
+   "buy": "Wires, switches, fans, LED and decorative lights, fittings",
+   "cats": [
+    "electrical",
+    "electronics_components"
+   ],
+   "checked": "2026-10-28",
+   "close": "19:00",
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "bhagirath-palace",
+   "lat": 28.6576,
+   "lng": 77.2321,
+   "metro": "Chandni Chowk",
+   "name": "Bhagirath Palace",
+   "open": "11:00",
+   "price": 1,
+   "sources": [
+    "https://lbb.in/delhi/bhagirath-palace-65fd19/",
+    "https://www.dailypioneer.com/2018/delhi/bhagirath-palace-of-electrical-equipment.html"
+   ],
+   "spend": "",
+   "tip": "Bargain hard on unbranded goods and ask for wholesale rates on bulk.",
+   "walk": 6
+  },
+  {
+   "addr": "Nehru Place market complex",
+   "area": "Nehru Place",
+   "buy": "Laptops, desktops, PC parts, cables, quick repairs",
+   "cats": [
+    "computers"
+   ],
+   "checked": "2026-10-28",
+   "close": "19:00",
+   "closed": [
+    0
+   ],
+   "gate": "2",
+   "id": "nehru-place",
+   "lat": 28.55142,
+   "lng": 77.25174,
+   "metro": "Nehru Place",
+   "name": "Nehru Place",
+   "open": "10:00",
+   "price": 2,
+   "sources": [
+    "https://www.captureatrip.com/blog/nehru-place",
+    "https://metrogo.in/route/nehru-place-delhi-metro-to-sikanderpur-delhi-metro"
+   ],
+   "spend": "",
+   "tip": "Compare quotes across shops and insist on brand warranty and a GST bill.",
+   "walk": 4
+  },
+  {
+   "addr": "Kucha Choudhary, off Chandni Chowk main road",
+   "area": "Chandni Chowk",
+   "buy": "New and used DSLRs, vintage film cameras, flashes, tripods, repairs",
+   "cats": [
+    "cameras"
+   ],
+   "checked": "2026-10-28",
+   "close": null,
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "kucha-choudhary-camera-market",
+   "lat": 28.65598,
+   "lng": 77.23219,
+   "metro": "Chandni Chowk",
+   "name": "Kucha Choudhary Camera Market",
+   "open": null,
+   "price": 2,
+   "sources": [
+    "https://lbb.in/delhi/chandini-chowk-camera-market-Kucha-Choudhary",
+    "https://www.zingbus.com/blog/chandni-chowk-market-timings-shopping-guide/"
+   ],
+   "spend": "Vintage cameras ~₹5,000–10,000",
+   "tip": "Test used gear thoroughly and get a bill; Madan Jee & Co. does in-house repairs.",
+   "walk": 6
+  },
+  {
+   "addr": "N-40 Outer Circle, opp. Statesman House",
+   "area": "Connaught Place",
+   "buy": "Canon cameras, lenses, printers and accessories",
+   "cats": [
+    "cameras"
+   ],
+   "checked": "2026-10-28",
+   "close": "20:30",
+   "closed": [],
+   "gate": null,
+   "id": "canon-image-square-cp",
+   "lat": 28.63177,
+   "lng": 77.21938,
+   "metro": "Rajiv Chowk",
+   "name": "Canon Image Square, Connaught Place",
+   "open": "10:30",
+   "price": 3,
+   "sources": [
+    "https://imagesquare.in.canon/canon-image-square-fotocolor-emporium-retail-cameras-film-connaught-place-new-delhi-94076/Home"
+   ],
+   "spend": "",
+   "tip": "Authorised brand store, so buy here for genuine warranty after comparing prices.",
+   "walk": 8
+  },
+  {
+   "addr": "Mahila Haat, opposite Delite Cinema, near Delhi Gate",
+   "area": "Daryaganj",
+   "buy": "Second-hand novels, textbooks, rare and old books",
+   "cats": [
+    "books"
+   ],
+   "checked": "2026-10-28",
+   "close": "18:00",
+   "closed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "gate": null,
+   "id": "daryaganj-sunday-book-market",
+   "lat": 28.64609,
+   "lng": 77.24305,
+   "metro": "Delhi Gate",
+   "name": "Daryaganj Sunday Book Market (Mahila Haat)",
+   "open": "09:00",
+   "price": 1,
+   "sources": [
+    "https://www.outlooktraveller.com/amp/story/destinations/india/experiences/shopping/guide-to-sunday-delhi-book-market-daryaganj",
+    "https://www.magicpin.com/blog/india/delhi/Others/cheapest-book-markets-delhi"
+   ],
+   "spend": "",
+   "tip": "Runs on Sundays only; go early for the best stock, and expect closures around Republic and Independence Day.",
+   "walk": 5
+  },
+  {
+   "addr": "Between Chandni Chowk Road and Chawri Bazar",
+   "area": "Chandni Chowk",
+   "buy": "Wholesale school and college textbooks, exam guides, stationery",
+   "cats": [
+    "books",
+    "wholesale"
+   ],
+   "checked": "2026-10-28",
+   "close": null,
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "nai-sarak",
+   "lat": 28.6538,
+   "lng": 77.2299,
+   "metro": "Chandni Chowk",
+   "name": "Nai Sarak",
+   "open": null,
+   "price": 1,
+   "sources": [
+    "https://www.delhitourism.gov.in/shopping/chandni_chowk.html",
+    "https://en.wikipedia.org/wiki/Nai_Sarak"
+   ],
+   "spend": "~10–25% off textbooks, more on bulk",
+   "tip": "Bring a list of the exact editions you need and ask for bulk discounts.",
+   "walk": 6
+  },
+  {
+   "addr": "Centre of Khan Market",
+   "area": "Khan Market",
+   "buy": "New fiction, non-fiction, Indian writing and children's books",
+   "cats": [
+    "books"
+   ],
+   "close": "20:00",
+   "closed": [],
+   "gate": null,
+   "id": "bahrisons-khan-market",
+   "lat": 28.59955,
+   "lng": 77.22595,
+   "metro": "Khan Market",
+   "name": "Bahrisons Booksellers",
+   "open": "10:30",
+   "price": 2,
+   "sources": [
+    "https://lbb.in/delhi/best-bookstores-delhi/",
+    "https://www.magicpin.com/blog/india/delhi/Others/cheapest-book-markets-delhi"
+   ],
+   "spend": "",
+   "tip": "Ask staff for recommendations; listed hours vary (up to 9 PM), so check on holidays.",
+   "walk": 4
+  },
+  {
+   "addr": "Khan Market",
+   "area": "Khan Market",
+   "buy": "Eclectic stock at a family-run independent bookshop",
+   "cats": [
+    "books"
+   ],
+   "close": null,
+   "closed": [],
+   "gate": null,
+   "id": "faqir-chand-and-sons",
+   "lat": 28.5811,
+   "lng": 77.21961,
+   "metro": "Khan Market",
+   "name": "Faqir Chand & Sons",
+   "open": null,
+   "price": 2,
+   "sources": [
+    "https://theprint.in/feature/delhis-khan-market-loses-a-familiar-smile-faqir-chand-bookshop-owner-anup-bahmi/2824452/",
+    "https://www.thedelhiwalla.com/2016/04/11/city-landmark-faqir-chand-and-sons-khan-market/"
+   ],
+   "spend": "",
+   "tip": "Browse slowly through the piled stock; hours aren't published, so call ahead.",
+   "walk": 4
+  },
+  {
+   "addr": "Shop 20 & 24, Aurobindo Market",
+   "area": "Aurobindo Market, Hauz Khas",
+   "buy": "Fiction, academic, art, cookbooks, graphic novels, Delhi history",
+   "cats": [
+    "books"
+   ],
+   "close": "20:30",
+   "closed": [],
+   "gate": null,
+   "id": "midland-book-shop-aurobindo",
+   "lat": 28.55531,
+   "lng": 77.20627,
+   "metro": "Hauz Khas",
+   "name": "Midland Book Shop",
+   "open": "10:30",
+   "price": 2,
+   "sources": [
+    "https://www.timeout.com/delhi/shopping/midland-book-shop",
+    "https://housing.com/news/hauz-khas-metro-station/"
+   ],
+   "spend": "",
+   "tip": "Check their Instagram for restocks, deals and signed editions.",
+   "walk": 15
+  },
+  {
+   "addr": "Near Kirti Nagar metro and Moments Mall",
+   "area": "Kirti Nagar",
+   "buy": "Wooden and modern furniture, sofas, beds, décor",
+   "cats": [
+    "furniture_home"
+   ],
+   "close": "20:00",
+   "closed": [],
+   "gate": "1",
+   "id": "kirti-nagar-furniture-market",
+   "lat": 28.65454,
+   "lng": 77.15136,
+   "metro": "Kirti Nagar",
+   "name": "Kirti Nagar Furniture Market",
+   "open": "11:00",
+   "price": 2,
+   "sources": [
+    "https://lbb.in/delhi/lbb-market-guide/",
+    "https://metrogo.in/route/kirti-nagar-delhi-metro-to-anand-vihar-rrts"
+   ],
+   "spend": "",
+   "tip": "The weekly off varies by shop (Monday and Tuesday are both cited), so call ahead.",
+   "walk": 10
+  },
+  {
+   "addr": "Panchkuian Road, near Gol Market",
+   "area": "Near Connaught Place",
+   "buy": "Ready-made and custom furniture",
+   "cats": [
+    "furniture_home"
+   ],
+   "close": "21:00",
+   "closed": [
+    1
+   ],
+   "gate": null,
+   "id": "panchkuian-road-furniture",
+   "lat": 28.63922,
+   "lng": 77.20857,
+   "metro": "Ramakrishna Ashram Marg",
+   "name": "Panchkuian Road Furniture Market",
+   "open": "10:00",
+   "price": 2,
+   "sources": [
+    "https://housing.com/news/panchkuian-furniture-market",
+    "https://www.squareyards.com/panchkuian-road-in-delhi-overview-94921"
+   ],
+   "spend": "",
+   "tip": "Inspect wood and joinery closely and agree on delivery costs upfront.",
+   "walk": 3
+  },
+  {
+   "addr": "Amar Colony, Lajpat Nagar IV",
+   "area": "Lajpat Nagar IV",
+   "buy": "Old and new furniture, antique-style and refurbished pieces",
+   "cats": [
+    "furniture_home"
+   ],
+   "close": "20:00",
+   "closed": [],
+   "gate": null,
+   "id": "amar-colony-furniture-market",
+   "lat": 28.56168,
+   "lng": 77.24148,
+   "metro": "Moolchand",
+   "name": "Amar Colony Furniture Market",
+   "open": "10:00",
+   "price": 2,
+   "sources": [
+    "https://housing.com/news/amar-colony-furniture-market-delhi",
+    "https://homegrown.co.in/amp/story/homegrown-explore/finding-treasures-old-and-new-in-amar-colonys-furniture-market"
+   ],
+   "spend": "",
+   "tip": "The weekly off is disputed (Monday vs Sunday); check restoration quality and bargain.",
+   "walk": 15
+  },
+  {
+   "addr": "Sadar Bazaar, Old Delhi",
+   "area": "Old Delhi",
+   "buy": "Wholesale home décor, kitchenware, toys, stationery, festive goods",
+   "cats": [
+    "wholesale",
+    "furniture_home"
+   ],
+   "close": "19:00",
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "sadar-bazaar",
+   "lat": 28.6585,
+   "lng": 77.2115,
+   "metro": "Pul Bangash",
+   "name": "Sadar Bazaar",
+   "open": "10:00",
+   "price": 1,
+   "sources": [
+    "https://www.captureatrip.com/blog/shopping-in-sadar-bazar",
+    "https://lbb.in/delhi/lbb-market-guide/"
+   ],
+   "spend": "",
+   "tip": "Carry cash and go 10 AM–noon on a weekday; avoid festival eves.",
+   "walk": 10
+  },
+  {
+   "addr": "B-14 Basement, Lajpat Nagar II",
+   "area": "Lajpat Nagar II",
+   "buy": "Guitars, keyboards, pianos, music equipment and DJ gear",
+   "cats": [
+    "music_instruments",
+    "audio"
+   ],
+   "close": null,
+   "closed": [],
+   "gate": null,
+   "id": "furtados-lajpat-nagar",
+   "lat": 28.57009,
+   "lng": 77.24318,
+   "metro": "Lajpat Nagar",
+   "name": "Furtados Music, Lajpat Nagar",
+   "open": null,
+   "price": 3,
+   "sources": [
+    "https://lbb.in/delhi/best-music-stores-in-delhi",
+    "https://lbb.in/places/Furtados-Music-lajpat-nagar-2-eaaf02"
+   ],
+   "spend": "",
+   "tip": "Try instruments in store; there's also a Saket (DLF Avenue) outlet.",
+   "walk": 7
+  },
+  {
+   "addr": "789 Nai Sarak",
+   "area": "Chandni Chowk",
+   "buy": "Handmade harmoniums, tabla and Indian classical instruments",
+   "cats": [
+    "music_instruments"
+   ],
+   "close": null,
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "bina-musical-stores-nai-sarak",
+   "lat": 28.6538,
+   "lng": 77.2299,
+   "metro": "Chandni Chowk",
+   "name": "Bina Musical Stores",
+   "open": null,
+   "price": 2,
+   "sources": [
+    "https://emuseum.nmmusd.org/people/6954/bina-musical-stores",
+    "https://www.delhitourism.gov.in/shopping/chandni_chowk.html"
+   ],
+   "spend": "",
+   "tip": "Best known for harmoniums; there are also branches in Daryaganj and Lajpat Nagar.",
+   "walk": 6
+  },
+  {
+   "addr": "Netaji Subhash Marg, Daryaganj",
+   "area": "Daryaganj",
+   "buy": "Indian and Western instruments at Bhargava's Music and Lahore Music House",
+   "cats": [
+    "music_instruments"
+   ],
+   "close": null,
+   "closed": [],
+   "gate": "3",
+   "id": "daryaganj-music-shops",
+   "lat": 28.64609,
+   "lng": 77.24305,
+   "metro": "Delhi Gate",
+   "name": "Daryaganj Music Shops (Netaji Subhash Marg)",
+   "open": null,
+   "price": 2,
+   "sources": [
+    "https://so.city/delhi/article/6-lesser-known-absolutely-legendary-music-stores-that-delhi-can-boast-of",
+    "https://www.delhicapitals.in/vocal-for-local-with-okcredit"
+   ],
+   "spend": "",
+   "tip": "Compare a few of the old shops and ask about tuning and repairs.",
+   "walk": 6
+  },
+  {
+   "addr": "Gali Kababian, near Jama Masjid",
+   "area": "Jama Masjid",
+   "buy": "Mughlai mutton korma, burra and seekh kebabs",
+   "cats": [
+    "non_veg"
+   ],
+   "close": "00:30",
+   "closed": [],
+   "gate": "2",
+   "id": "karims-jama-masjid",
+   "lat": 28.65068,
+   "lng": 77.23296,
+   "metro": "Jama Masjid",
+   "name": "Karim's",
+   "open": "09:00",
+   "price": 2,
+   "sources": [
+    "https://delhitourism.gov.in/dt/food_tour/karim_hotels.html",
+    "https://www.district.in/dining/ncr/karims-jama-masjid-jama-masjid-new-delhi"
+   ],
+   "spend": "~₹1,600 for two",
+   "tip": "Go off-peak to skip queues, and avoid Friday prayer-time crowds.",
+   "walk": 6
+  },
+  {
+   "addr": "Matia Mahal Bazaar, opp. Jama Masjid Gate 1",
+   "area": "Jama Masjid",
+   "buy": "Mutton korma, nihari and kebabs with khamiri roti",
+   "cats": [
+    "non_veg"
+   ],
+   "close": "00:00",
+   "closed": [],
+   "gate": "2",
+   "id": "al-jawahar",
+   "lat": 28.65068,
+   "lng": 77.23296,
+   "metro": "Jama Masjid",
+   "name": "Al Jawahar",
+   "open": "07:00",
+   "price": 2,
+   "sources": [
+    "https://delhitourism.gov.in/dt/food_tour/al-jawahar.html",
+    "https://www.eazydiner.com/delhi-ncr/al-jawahar-jama-masjid-110261"
+   ],
+   "spend": "₹600–1,500 for two",
+   "tip": "Expect waits at peak hours; it's a busy iftar stop during Ramzan.",
+   "walk": 6
+  },
+  {
+   "addr": "3704 Netaji Subhash Marg, Daryaganj",
+   "area": "Daryaganj",
+   "buy": "Butter chicken, tandoori chicken, dal makhani",
+   "cats": [
+    "non_veg"
+   ],
+   "close": "23:00",
+   "closed": [],
+   "gate": "3",
+   "id": "moti-mahal-daryaganj",
+   "lat": 28.64609,
+   "lng": 77.24305,
+   "metro": "Delhi Gate",
+   "name": "Moti Mahal (Daryaganj)",
+   "open": "12:00",
+   "price": 2,
+   "sources": [
+    "https://oteats.outlooktraveller.com/features/guides/a-butter-chicken-lover-these-hotspots-in-delhi-will-never-disappoint",
+    "https://metrogo.in/route/delhi-gate-delhi-metro-to-karol-bagh-delhi-metro"
+   ],
+   "spend": "~₹1,300 for two",
+   "tip": "Order the butter chicken it claims to have invented (the claim is disputed).",
+   "walk": 6
+  },
+  {
+   "addr": "Haveli Azam Khan, Chitli Qabar",
+   "area": "Chitli Qabar, Jama Masjid",
+   "buy": "Nihari with khamiri roti",
+   "cats": [
+    "non_veg"
+   ],
+   "close": "21:00",
+   "closed": [],
+   "gate": null,
+   "id": "haji-shabrati-nihari",
+   "lat": 28.65004,
+   "lng": 77.23769,
+   "metro": "Jama Masjid",
+   "name": "Haji Shabrati Nihari Wale",
+   "open": "06:00",
+   "price": 1,
+   "sources": [
+    "https://www.eazydiner.com/delhi-ncr/haji-shabrati-nihari-wale-jama-masjid-112196",
+    "https://so.city/delhi/article/a-handful-of-choice-underrated-places-in-delhi-that-ladle-out-the-most-delish-nihari"
+   ],
+   "spend": "",
+   "tip": "Go in the 6–10 AM slot before the nihari sells out; there's a second 6–9 PM slot.",
+   "walk": 8
+  },
+  {
+   "addr": "Near Jama Masjid",
+   "area": "Jama Masjid",
+   "buy": "Mutton, chicken and buff seekh kebabs",
+   "cats": [
+    "non_veg",
+    "street_food"
+   ],
+   "close": "00:00",
+   "closed": [],
+   "gate": "2",
+   "id": "qureshi-kabab-corner",
+   "lat": 28.65068,
+   "lng": 77.23296,
+   "metro": "Jama Masjid",
+   "name": "Abdul Ghani Qureshi Kabab Corner",
+   "open": "17:00",
+   "price": 1,
+   "sources": [
+    "https://www.delhitourism.gov.in/dt/food_tour/abdul_ghani_qureshi_kabab_corner.html",
+    "https://www.district.in/dining/ncr/qureshi-kabab-corner-jama-masjid-new-delhi"
+   ],
+   "spend": "~₹400–500 for two",
+   "tip": "It's self-service: order at the counter and expect a wait at night.",
+   "walk": 5
+  },
+  {
+   "addr": "540 Bazar Matia Mahal",
+   "area": "Jama Masjid",
+   "buy": "Tandoori chicken drowned in butter sauce",
+   "cats": [
+    "non_veg"
+   ],
+   "close": "00:30",
+   "closed": [],
+   "gate": "2",
+   "id": "aslam-chicken-corner",
+   "lat": 28.65068,
+   "lng": 77.23296,
+   "metro": "Jama Masjid",
+   "name": "Aslam Chicken Corner",
+   "open": "16:00",
+   "price": 1,
+   "sources": [
+    "https://www.delhitourism.gov.in/dt/food_tour/aslam_butter_chicken_corner.html",
+    "https://homegrown.co.in/article/800404/binge-on-the-best-butter-chicken-at-these-12-delhi-restaurants"
+   ],
+   "spend": "~₹300 per butter chicken portion",
+   "tip": "Go after sunset; it gets busiest during Ramzan.",
+   "walk": 6
+  },
+  {
+   "addr": "AB-14, DDA Market, Safdarjung Enclave",
+   "area": "Safdarjung Enclave",
+   "buy": "Galouti kebab, tandoori chicken, mutton curry",
+   "cats": [
+    "non_veg"
+   ],
+   "close": "00:00",
+   "closed": [],
+   "gate": null,
+   "id": "rajinder-da-dhaba",
+   "lat": 28.56502,
+   "lng": 77.19256,
+   "metro": "A.I.I.M.S.",
+   "name": "Rajinder Da Dhaba",
+   "open": "16:00",
+   "price": 2,
+   "sources": [
+    "https://oteats.outlooktraveller.com/features/guides/a-butter-chicken-lover-these-hotspots-in-delhi-will-never-disappoint",
+    "https://yappe.in/delhi/new-delhi/rajinder-da-dhaba/323022"
+   ],
+   "spend": "~₹1,200 for two",
+   "tip": "Takeaway is much cheaper than sitting in; go early evening to beat crowds.",
+   "walk": 8
+  },
+  {
+   "addr": "6 Pandara Road Market, near India Gate",
+   "area": "Pandara Road",
+   "buy": "Butter chicken, dal makhani, kebabs",
+   "cats": [
+    "non_veg"
+   ],
+   "close": "00:00",
+   "closed": [],
+   "gate": null,
+   "id": "gulati-pandara-road",
+   "lat": 28.60785,
+   "lng": 77.23007,
+   "metro": "Khan Market",
+   "name": "Gulati",
+   "open": "12:00",
+   "price": 3,
+   "sources": [
+    "https://oteats.outlooktraveller.com/features/guides/a-butter-chicken-lover-these-hotspots-in-delhi-will-never-disappoint",
+    "https://yometro.com/metro-station-near-pandara-road-delhi"
+   ],
+   "spend": "~₹2,200 for two",
+   "tip": "Book or arrive early on weekends, when Pandara Road fills up by dinner.",
+   "walk": 12
+  },
+  {
+   "addr": "ITC Maurya hotel, Chanakyapuri",
+   "area": "Chanakyapuri",
+   "buy": "Dal Bukhara, tandoori kebabs, giant naan",
+   "cats": [
+    "non_veg"
+   ],
+   "close": "23:45",
+   "closed": [],
+   "gate": null,
+   "id": "bukhara-itc-maurya",
+   "lat": 28.59468,
+   "lng": 77.18852,
+   "metro": "Durgabai Deshmukh South Campus",
+   "name": "Bukhara (ITC Maurya)",
+   "open": "12:30",
+   "price": 3,
+   "sources": [
+    "https://en.wikipedia.org/wiki/Bukhara_(restaurant)",
+    "https://curlytales.com/?p=578752"
+   ],
+   "spend": "~₹8,000 for two",
+   "tip": "Reserve ahead; lunch runs 12:30–3 PM and dinner from 7 PM.",
+   "walk": null
+  },
+  {
+   "addr": "50 Khan Market (middle circle)",
+   "area": "Khan Market",
+   "buy": "Chicken tikka and mutton seekh kebab rolls",
+   "cats": [
+    "non_veg",
+    "street_food"
+   ],
+   "close": "23:00",
+   "closed": [],
+   "gate": null,
+   "id": "khan-chacha",
+   "lat": 28.59955,
+   "lng": 77.22595,
+   "metro": "Khan Market",
+   "name": "Khan Chacha",
+   "open": "11:00",
+   "price": 2,
+   "sources": [
+    "https://tripxl.com/blog/street-food-in-khan-market/",
+    "https://www.outlookindia.com/society/rolling-the-joint-news-265176"
+   ],
+   "spend": "~₹500–650 for two",
+   "tip": "Stick to the rolls, and confirm the spot since it has moved within the market.",
+   "walk": 4
+  },
+  {
+   "addr": "Church Mission Road, Fatehpuri",
+   "area": "Fatehpuri, Chandni Chowk",
+   "buy": "Giant stuffed naans, dal makhani, Amritsari kulche",
+   "cats": [
+    "veg_food"
+   ],
+   "close": "01:00",
+   "closed": [],
+   "gate": null,
+   "id": "kake-di-hatti",
+   "lat": 28.65842,
+   "lng": 77.23037,
+   "metro": "Chandni Chowk",
+   "name": "Kake Di Hatti",
+   "open": "08:00",
+   "price": 2,
+   "sources": [
+    "https://www.delhitourism.gov.in/dt/food_tour/kake_di_hatti.html",
+    "https://www.swiggy.com/restaurants/7614/dineout"
+   ],
+   "spend": "~₹1,100 for two",
+   "tip": "Share a naan since they're huge; it stays open till 1 AM.",
+   "walk": 12
+  },
+  {
+   "addr": "Lane off Chandni Chowk, near Sisganj Gurudwara",
+   "area": "Chandni Chowk",
+   "buy": "Deep-fried stuffed parathas with many fillings, no onion or garlic",
+   "cats": [
+    "street_food",
+    "veg_food"
+   ],
+   "close": "23:00",
+   "closed": [],
+   "gate": "5",
+   "id": "paranthe-wali-gali",
+   "lat": 28.65608,
+   "lng": 77.23048,
+   "metro": "Chandni Chowk",
+   "name": "Paranthe Wali Gali",
+   "open": "09:00",
+   "price": 1,
+   "sources": [
+    "https://oteats.outlooktraveller.com/features/guides/check-out-these-6-top-breakfast-places-in-old-delhi",
+    "https://en.wikipedia.org/wiki/Gali_Paranthe_Wali"
+   ],
+   "spend": "₹200–400 for two",
+   "tip": "Try Pt. Gaya Prasad Shiv Charan; the parathas are rich, so order one at a time.",
+   "walk": 5
+  },
+  {
+   "addr": "Dariba Kalan corner, Chandni Chowk",
+   "area": "Chandni Chowk",
+   "buy": "Fat, crisp jalebis fried fresh",
+   "cats": [
+    "sweets",
+    "street_food"
+   ],
+   "close": "22:00",
+   "closed": [],
+   "gate": null,
+   "id": "old-famous-jalebi-wala",
+   "lat": 28.656,
+   "lng": 77.233,
+   "metro": "Chandni Chowk",
+   "name": "Old Famous Jalebi Wala",
+   "open": "08:00",
+   "price": 1,
+   "sources": [
+    "https://www.delhitourism.gov.in/dt/food_tour/old_famous_jalebi_wala.html",
+    "https://www.eazydiner.com/delhi-ncr/old-famous-jalebi-wala-chandni-chowk-111166"
+   ],
+   "spend": "~₹500 per kg",
+   "tip": "Eat them hot from the kadhai; buy a single portion first before ordering by the kilo.",
+   "walk": 6
+  },
+  {
+   "addr": "Chandni Chowk main road",
+   "area": "Chandni Chowk",
+   "buy": "Dahi bhalle with sweet and spicy chutneys",
+   "cats": [
+    "street_food"
+   ],
+   "close": "21:30",
+   "closed": [],
+   "gate": null,
+   "id": "natraj-dahi-bhalle",
+   "lat": 28.65622,
+   "lng": 77.2305,
+   "metro": "Chandni Chowk",
+   "name": "Natraj Dahi Bhalle Wala",
+   "open": "10:30",
+   "price": 1,
+   "sources": [
+    "https://www.delhitourism.gov.in/dt/food_tour/natraj_dahi_bhalla.html",
+    "https://www.eazydiner.com/delhi-ncr/natraj-dahi-bhalle-wala-chandni-chowk-110764"
+   ],
+   "spend": "",
+   "tip": "It's a tiny stall where you eat standing; go before the evening rush.",
+   "walk": 5
+  },
+  {
+   "addr": "1104 Gali Bhojpura, Kinari Bazar",
+   "area": "Chandni Chowk",
+   "buy": "Urad dal kachori with aloo sabzi and kachalu chutney",
+   "cats": [
+    "street_food",
+    "veg_food"
+   ],
+   "close": "20:00",
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "jung-bahadur-kachori-wala",
+   "lat": 28.65569,
+   "lng": 77.22999,
+   "metro": "Chandni Chowk",
+   "name": "Jung Bahadur Kachori Wala",
+   "open": "08:30",
+   "price": 1,
+   "sources": [
+    "https://oteats.outlooktraveller.com/features/guides/check-out-these-6-top-breakfast-places-in-old-delhi",
+    "https://delhitourism.gov.in/dt/food_tour/jung_bahadur_kachori_wala_(jb_kachori_wala).html"
+   ],
+   "spend": "~₹200 for two",
+   "tip": "Go for breakfast, and remember it's shut on Sundays.",
+   "walk": 8
+  },
+  {
+   "addr": "112 Manohar Market, Chawri Bazar",
+   "area": "Chawri Bazar",
+   "buy": "Bedmi puri with aloo, nagori halwa, jalebis",
+   "cats": [
+    "street_food",
+    "sweets",
+    "veg_food"
+   ],
+   "close": "21:30",
+   "closed": [],
+   "gate": null,
+   "id": "shyam-sweets-chawri-bazar",
+   "lat": 28.65107,
+   "lng": 77.22813,
+   "metro": "Chawri Bazaar",
+   "name": "Shyam Sweets",
+   "open": "08:00",
+   "price": 1,
+   "sources": [
+    "https://oteats.outlooktraveller.com/features/guides/check-out-these-6-top-breakfast-places-in-old-delhi",
+    "https://lbb.in/delhi/a-super-heavy-breakfast-at-shyam-sweets-chawri-bazaar-c0dfc1/"
+   ],
+   "spend": "~₹300 for two",
+   "tip": "Go early in the morning and take the metro, because parking is hopeless.",
+   "walk": 5
+  },
+  {
+   "addr": "Chuna Mandi, near Imperial Cinema, Paharganj",
+   "area": "Paharganj",
+   "buy": "Chole bhature",
+   "cats": [
+    "street_food",
+    "veg_food"
+   ],
+   "close": "17:30",
+   "closed": [],
+   "gate": null,
+   "id": "sita-ram-diwan-chand",
+   "lat": 28.6415,
+   "lng": 77.21406,
+   "metro": "Ramakrishna Ashram Marg",
+   "name": "Sita Ram Diwan Chand",
+   "open": "08:00",
+   "price": 1,
+   "sources": [
+    "https://so.city/delhi/article/10-best-restaurants-in-central-delhi-serving-delish-meals-under-a-mere-rs-500-per-person",
+    "https://housing.com/news/chole-bhature-corners-in-delhi/"
+   ],
+   "spend": "~₹100 per person",
+   "tip": "Arrive by late morning, since it closes in the evening.",
+   "walk": 10
+  },
+  {
+   "addr": "Bengali Market, near Mandi House",
+   "area": "Bengali Market",
+   "buy": "Mithai, chaat and raj kachori",
+   "cats": [
+    "sweets",
+    "street_food",
+    "veg_food"
+   ],
+   "close": null,
+   "closed": [],
+   "gate": "4",
+   "id": "nathus-sweets-bengali-market",
+   "lat": 28.63098,
+   "lng": 77.23012,
+   "metro": "Mandi House",
+   "name": "Nathu's Sweets, Bengali Market",
+   "open": null,
+   "price": 2,
+   "sources": [
+    "https://www.district.in/dining/ncr/nathus-sweets-mandi-house-new-delhi",
+    "https://www.captureatrip.com/blog/bengali-market-delhi"
+   ],
+   "spend": "~₹800 for two",
+   "tip": "Combine it with the other sweet shops in Bengali Market; evenings get busy.",
+   "walk": 5
+  },
+  {
+   "addr": "6499 Fatehpuri, near Fatehpuri Masjid",
+   "area": "Fatehpuri, Chandni Chowk",
+   "buy": "Karachi halwa, dodha, paneer jalebi, besan ladoo",
+   "cats": [
+    "sweets"
+   ],
+   "close": "20:00",
+   "closed": [],
+   "gate": null,
+   "id": "chaina-ram-sindhi-confectioners",
+   "lat": 28.65842,
+   "lng": 77.23037,
+   "metro": "Chandni Chowk",
+   "name": "Chaina Ram Sindhi Confectioners",
+   "open": "08:00",
+   "price": 1,
+   "sources": [
+    "https://oteats.outlooktraveller.com/features/guides/these-are-old-delhis-best-spots-for-some-piping-hot-halwa-this-winter",
+    "https://so.city/delhi/article/kuch-meetha-ho-jaye-we-bring-to-you-a-list-of-the-best-mithai-shops-in-delhi"
+   ],
+   "spend": "",
+   "tip": "Karachi halwa travels well and makes a good gift box.",
+   "walk": 12
+  },
+  {
+   "addr": "1972, corner of Paranthe Wali Gali",
+   "area": "Chandni Chowk",
+   "buy": "Dal biji namkeen and traditional mithai",
+   "cats": [
+    "sweets",
+    "street_food"
+   ],
+   "close": "22:00",
+   "closed": [],
+   "gate": "5",
+   "id": "kanwarjis-chandni-chowk",
+   "lat": 28.65598,
+   "lng": 77.23219,
+   "metro": "Chandni Chowk",
+   "name": "Kanwarji's",
+   "open": "09:00",
+   "price": 1,
+   "sources": [
+    "https://www.eazydiner.com/delhi-ncr/kanwarjis-chandni-chowk-112890",
+    "https://lbb.in/places/Kanwarjis-chandni-chowk-6e4cd8"
+   ],
+   "spend": "",
+   "tip": "Pick up namkeen to take home after a paratha meal next door.",
+   "walk": 5
+  },
+  {
+   "addr": "Chandni Chowk (revived shop)",
+   "area": "Chandni Chowk",
+   "buy": "Sohan halwa and traditional mithai",
+   "cats": [
+    "sweets"
+   ],
+   "close": null,
+   "closed": [],
+   "gate": null,
+   "id": "ghantewala-chandni-chowk",
+   "lat": 28.6563,
+   "lng": 77.2297,
+   "metro": "Chandni Chowk",
+   "name": "Ghantewala",
+   "open": null,
+   "price": 2,
+   "sources": [
+    "https://en.wikipedia.org/wiki/Ghantewala",
+    "https://openthemagazine.com/art-culture/dessert-trail"
+   ],
+   "spend": "",
+   "tip": "It reopened in 2024 with AC seating upstairs; confirm hours before going.",
+   "walk": null
+  },
+  {
+   "addr": "Kucha Pati Ram, Sita Ram Bazar, Chawri Bazar",
+   "area": "Chawri Bazar",
+   "buy": "Fruit-stuffed kulfi (mango, anaar, orange, apple)",
+   "cats": [
+    "sweets"
+   ],
+   "close": null,
+   "closed": [],
+   "gate": null,
+   "id": "kuremal-mohanlal-kulfi",
+   "lat": 28.64993,
+   "lng": 77.22979,
+   "metro": "Chawri Bazaar",
+   "name": "Kuremal Mohan Lal Kulfi Wale",
+   "open": null,
+   "price": 1,
+   "sources": [
+    "https://www.thebetterindia.com/331511/story-behind-kuremal-mohanlal-kulfi-iconic-brand-old-delhi-haryana-farmer/",
+    "https://blog.delhifoodwalks.com/tag/kuremal-kulfi/"
+   ],
+   "spend": "₹80–250 per kulfi",
+   "tip": "Try the stuffed mango or anaar kulfi; the lanes are narrow, so walk from the metro.",
+   "walk": 8
+  },
+  {
+   "addr": "651/52 Church Mission Road, Fatehpuri",
+   "area": "Fatehpuri, Chandni Chowk",
+   "buy": "Rabri falooda and kulfi",
+   "cats": [
+    "sweets"
+   ],
+   "close": "23:00",
+   "closed": [],
+   "gate": null,
+   "id": "gianis-di-hatti-fatehpuri",
+   "lat": 28.65842,
+   "lng": 77.23037,
+   "metro": "Chandni Chowk",
+   "name": "Giani's Di Hatti",
+   "open": "08:30",
+   "price": 1,
+   "sources": [
+    "https://www.delhitourism.gov.in/dt/food_tour/giani%27s_di_hatti.html",
+    "https://lbb.in/delhi/best-falooda-delhi"
+   ],
+   "spend": "~₹125 per falooda",
+   "tip": "Rabri falooda is the order, and it works well after a meal at Kake Di Hatti nearby.",
+   "walk": 12
+  },
+  {
+   "addr": "Chandni Chowk (Kucha Mahajani)",
+   "area": "Chandni Chowk",
+   "buy": "Chaat, thalis, sweets and namkeen",
+   "cats": [
+    "veg_food",
+    "sweets",
+    "street_food"
+   ],
+   "close": "22:30",
+   "closed": [],
+   "gate": null,
+   "id": "haldirams-chandni-chowk",
+   "lat": 28.65639,
+   "lng": 77.23162,
+   "metro": "Chandni Chowk",
+   "name": "Haldiram's, Chandni Chowk",
+   "open": "09:00",
+   "price": 1,
+   "sources": [
+    "https://www.eazydiner.com/delhi-ncr/haldirams-chandni-chowk-old-delhi-698947/reviews",
+    "https://www.explurger.com/pd/5v4pfymb9uf0el0ws"
+   ],
+   "spend": "",
+   "tip": "Weekday mornings are calmest; listed hours vary by listing.",
+   "walk": 5
+  },
+  {
+   "addr": "382 Kucha Seth Road, Fatehpuri",
+   "area": "Fatehpuri, Chandni Chowk",
+   "buy": "North Indian snacks, chaat and mithai",
+   "cats": [
+    "veg_food",
+    "sweets"
+   ],
+   "close": "22:00",
+   "closed": [],
+   "gate": null,
+   "id": "bikanervala-chandni-chowk",
+   "lat": 28.65842,
+   "lng": 77.23037,
+   "metro": "Chandni Chowk",
+   "name": "Bikanervala, Chandni Chowk",
+   "open": "10:00",
+   "price": 1,
+   "sources": [
+    "https://www.eazydiner.com/delhi-ncr/bikanervala-chandni-chowk-119618",
+    "https://joinpearl.co/restaurants/delhi-india/bikanervala-chandni-chowk-delhi"
+   ],
+   "spend": "",
+   "tip": "This is the brand's Old Delhi original, dating to around 1950.",
+   "walk": 12
+  },
+  {
+   "addr": "46 Janpath",
+   "area": "Connaught Place",
+   "buy": "Dosas, idli-vada and South Indian meals",
+   "cats": [
+    "veg_food"
+   ],
+   "close": "23:00",
+   "closed": [],
+   "gate": null,
+   "id": "saravana-bhavan-janpath",
+   "lat": 28.62695,
+   "lng": 77.21975,
+   "metro": "Janpath",
+   "name": "Saravana Bhavan, Janpath",
+   "open": "08:00",
+   "price": 1,
+   "sources": [
+    "https://www.eazydiner.com/delhi-ncr/saravana-bhavan-janpath-110230",
+    "https://www.eazydiner.com/delhi-ncr/saravana-bhavan-connaught-place-110027"
+   ],
+   "spend": "~₹500 for two",
+   "tip": "Expect a lunch queue; a second outlet is at P-13 Connaught Circus.",
+   "walk": 5
+  },
+  {
+   "addr": "18 Defence Colony Market",
+   "area": "Defence Colony",
+   "buy": "Dosas, uttapam, South Indian thalis",
+   "cats": [
+    "veg_food"
+   ],
+   "close": "23:00",
+   "closed": [],
+   "gate": "3",
+   "id": "sagar-ratna-defence-colony",
+   "lat": 28.57311,
+   "lng": 77.23018,
+   "metro": "Lajpat Nagar",
+   "name": "Sagar Ratna, Defence Colony",
+   "open": "08:00",
+   "price": 1,
+   "sources": [
+    "https://www.eazydiner.com/delhi-ncr/sagar-ratna-defence-colony-119702",
+    "https://metrogo.in/route/chandni-chowk-delhi-metro-to-lajpat-nagar-delhi-metro"
+   ],
+   "spend": "~₹400 for two",
+   "tip": "This is the chain's first branch (1986); there's no parking on site.",
+   "walk": 15
+  },
+  {
+   "addr": "1 Ashoka Road, near India Gate",
+   "area": "India Gate",
+   "buy": "Unlimited Andhra thali; Hyderabadi biryani on Sundays",
+   "cats": [
+    "veg_food",
+    "non_veg"
+   ],
+   "close": "21:00",
+   "closed": [],
+   "gate": null,
+   "id": "andhra-bhavan-canteen",
+   "lat": 28.61293,
+   "lng": 77.22949,
+   "metro": "Khan Market",
+   "name": "Andhra Bhavan Canteen",
+   "open": "08:00",
+   "price": 1,
+   "sources": [
+    "https://oteats.outlooktraveller.com/features/these-state-canteens-in-delhi-are-serving-up-serious-flavour-on-a-budget",
+    "https://www.makemytrip.com/tripideas/attractions/andhra-bhawan-canteen"
+   ],
+   "spend": "~₹450 for two",
+   "tip": "Meals run in slots (8–10:30, 12–4, 7–9); arrive by noon on Sundays.",
+   "walk": null
+  },
+  {
+   "addr": "1832 Bhagirath Palace, Chandni Chowk",
+   "area": "Chandni Chowk",
+   "buy": "Chandeliers, decorative and LED fittings, and fancy lights for homes.",
+   "cats": [
+    "electrical"
+   ],
+   "checked": "2026-10-28",
+   "close": null,
+   "closed": [
+    0
+   ],
+   "gate": null,
+   "id": "jainsons-lights-bhagirath-palace",
+   "lat": 28.6559834,
+   "lng": 77.2321937,
+   "metro": "Chandni Chowk",
+   "name": "Jainsons Lights",
+   "open": null,
+   "price": 2,
+   "sources": [
+    "https://m.indiamart.com/fmlights/about-us.html",
+    "https://so.city/delhi/article/6-places-selling-shimmering-chandeliers-stunning-turkish-lights-more-in-bhagirath-palace"
+   ],
+   "spend": "",
+   "tip": "Hours are not published, so call ahead; compare with neighbouring Bhagirath Palace lighting shops before buying.",
+   "walk": null
+  }
+ ]
+}
